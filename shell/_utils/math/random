@@ -1,0 +1,76 @@
+#!/bin/bash
+
+. "${SCRIPTS_ROOT}/_utils/math/load_types"
+
+_random_digits()
+{
+	# _random_digits [length]
+	#     print random digits
+	#   length
+	#     number of random digits to print (default 1)
+
+	length="$(_to_natural "${1:-1}")"
+    [ "${length}" -lt 0 ] && length=1
+	tr -cd 0-9 </dev/urandom | head -c "${length}"	# print random number
+}
+
+_random_float()
+{
+	# _random_float [precision]
+	#     print a value between 0 and 1 (1 excluded)
+	#   precision
+	#     number of digits after the decimal point (default 2)
+
+	echo '0.'"$(_random_digits "${1:-2}")"
+}
+
+_random_int_max()
+{
+	# _random_int_max <max>
+	#     print a value between 0 and ‘max’ (‘max’ excluded)
+
+	local max min_length length float res
+
+	# read input
+	max="$(_to_natural "${1:-2}")"
+	# compute needed length for random float
+	min_length="$(_math_log 10 "${max}")"	# mandatory to avoid losses of information: length >= log_10(max)
+	let "length = 2 + $(_to_natural "${min_length}")"
+	# get random float
+	float="$(_random_float "${length}")"
+	# compute result
+	res="$(echo "scale=${length}; ${max} * ${float};" | bc -ql)"
+	# round and print result
+	printf "$(_to_natural "${res}")"
+}
+
+_random_int()
+{
+	# _random_int <min> <max>
+	#     return a number between ‘min’ and ‘max’ (‘max’ excluded)
+
+	local min max range res
+
+	# read input
+	min="$(_to_natural "${1:-0}")"
+	max="$(_to_natural "${2:-100}")"
+
+	# check input
+    [ "${min}" -lt 0 ] && min=0
+    [ "${max}" -lt 0 ] && max=0
+    if [ "${max}" -le "${min}" ]; then  # switch max and min
+        res="${min}"
+        min="${max}"
+        max="${res}"
+    fi
+	let 'range=max-min'
+	if [ "${range}" -lt 1 ]; then
+		echo "“ ${SCRIPTS_ROOT}/_utils/math/random ” (line ${LINENO}) : _random_int() : max = min"
+        let 'max=min+2'    # default range 2 because max is excluded
+	fi
+	# calculations
+	let "res=min+$(_random_int_max "${range}")"
+
+	# output result
+	printf "${res}"
+}

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+verbose=true
+
+# paths relative to script folder
+src_folder="src"
+bin_folder="bin"
+script_folder="$(dirname "${0}")"
+
+cd "${script_folder}/${bin_folder}" || { printf '%s\n' 'compile.sh: error: cd failed' "${script_folder}/${bin_folder}" >&2; exit 1; }
+
+main='life.Map'
+files=( ../"${src_folder}"/life/*.java )
+
+javac -d . "${files[@]}" || exit 1
+"${verbose}" && printf "\nlaunching app...\n\n"
+java -ea "${main}"

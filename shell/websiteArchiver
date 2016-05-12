@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# websiteArchiver <domain> [root]
+# saves a website to current working directory
+# example:
+#   websiteArchiver 'www.cs.cf.ac.uk' '/Dave/C/'
+# will save www.cs.cf.ac.uk/Dave/C/*
+
+domain="${1}"
+root="${2:-/}"
+
+wget \
+     --recursive \
+     --no-clobber \
+     --page-requisites \
+     --convert-links \
+     --domains "${domain}" \
+     --no-parent "${domain}${root}"

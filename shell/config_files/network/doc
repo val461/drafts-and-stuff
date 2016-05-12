@@ -1,0 +1,47 @@
+################################################
+
+DNS
+    Use ~/bin/setDNS to choose the DNS setup. This edits the target of alias “ /etc/resolv.conf ”. The path of the target must match “ /etc/resolvconf.conf.* ”.
+    The syntax of the target file is pretty straightforward (several nameservers must be separated by spaces), but at most 3 nameservers are allowed by file (the blacklist removes a nameserver from the list).
+
+################################################
+
+Network interfaces
+    ip link
+
+################################################
+
+Wifi
+    if no password
+        wifi-menu
+    else
+        wifi-menu -o
+
+wifi-menu prompts the user for which accessible network to use, creates the corresponding netctl profile, and enables the profile (automatic load at startup).
+
+################################################
+
+netctl
+    profiles are located at /etc/netctl
+    man netctl.profile
+
+netctl start <profile>
+    activate the profile
+netctl stop <profile>
+    deactivate the profile
+netctl enable <profile>
+    enable automatic load at startup (the profile must already be started before running this)
+netctl reenable <profile>
+    updates an already enabled profile to take into account the latest modifications to its file
+netctl disable <profile>
+    disable automatic load at startup
+
+################################################
+
+Ethernet
+
+For a manual config, first stop ifplugd:
+    systemctl stop ifplugd
+    (It can also be disabled to prevent automatic launch at boot with command ‘disable’ instead of ‘stop’.)
+
+################################################

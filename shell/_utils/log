@@ -1,0 +1,142 @@
+#!/bin/bash
+
+# . log
+# not supposed to be run separately
+# load functions and stuff for error handling
+
+abort_on_bug=true
+
+BUG=-1
+ERROR=0
+WARNING=1
+INFO=2
+DEBUG=3
+
+[ -n "${PROGNAME}" ] || PROGNAME="process $$"
+
+max_verbosity="${max_verbosity:-${INFO}}"
+let 'max_verbosity=max_verbosity'	# integer typecast
+if [ "${max_verbosity}" -lt "${BUG}" ] || [ "${max_verbosity}" -gt "${DEBUG}" ]; then
+	max_verbosity="${INFO}"
+fi
+
+_abort()
+{
+	_console 'aborting' >&2
+	exit 1
+}
+
+_confirm()
+{
+	# _confirm [question] [<alt1> <alt2>]
+	# ask ‘question’ to user with possible answers ‘alt1’ (default answer) and ‘alt2’
+	# return true if user selects ‘alt2’
+	local question='Continue?' alt1='n' alt2='y' ans
+	if [ "${#}" -gt 0 ]; then
+	    if [ "${#}" -eq 1 ] || [ "${#}" -gt 2 ]; then
+            question="${1}"
+            shift
+        fi
+	    if [ "${#}" -gt 1 ]; then
+	        alt1="${1}"
+	        alt2="${2}"
+	        shift 2
+	    fi
+	fi
+	while :
+	do
+		printf "${question} [%s]/%s : " "${alt1}" "${alt2}"
+		read ans
+		case "${ans}" in
+			''|"${alt1}")
+				return 1
+				;;
+			"${alt2}")
+				return 0
+				;;
+			*)
+				_info 'Answer not understood. Please type the letter n or y and validate with enter.'
+				;;
+		esac
+	done
+}
+
+_ultim_confirm()
+{
+	_confirm "${@}" || _abort
+}
+
+_bug()
+{
+	# _bug [message]
+	#	signal error too grave to allow the program to keep running; abort ASAP
+	prefix="${BOLD}${F}${WHITE}${B}${RED}bug"
+	[ "${#}" -eq 0 ] && text="${prefix}${PLAIN}" || text="${prefix}:${PLAIN} ${*}"
+	_log "${BUG}" "${text}"
+	"${abort_on_bug}" && _abort
+}
+
+_error()
+{
+	# usage:
+	#	_error [message]
+	#		display ‘message’
+	# TODO:
+	#	_error [-c error_code] [-P process] [-l line] [-t param_type] [-p param] [comment]
+	#		print a formatted output
+	#			_log "${ERROR}" "error: code ${1} returned by process [${2}] (line ${3}), ${4} “ ${5} ”"
+	prefix="${BOLD}${F}${RED}error"
+	if [ "${#}" -eq 0 ]; then
+		_log "${ERROR}" "${prefix}${PLAIN}"
+	else
+		_log "${ERROR}" "${prefix}: ${*}${PLAIN}"
+	fi
+}
+
+_warning()
+{
+	# _warning [message]
+	[ "${#}" -eq 0 ] && _log "${WARNING}" 'warning' || _log "${WARNING}" "warning: ${*}"
+}
+
+_fixme()
+{
+	# _fixme [message]
+	[ "${#}" -eq 0 ] && _log "${WARNING}" 'fixme' || _log "${WARNING}" "fixme: ${*}"
+}
+
+_info()
+{
+	# _info <message>
+	[ "${#}" -eq 0 ] && _bug "line ${LINENO}: no parameter supplied" || _log "${INFO}" "${*}"
+}
+
+_debug()
+{
+	# _debug [message]
+	[ "${#}" -eq 0 ] && _log "${DEBUG}" 'debug' || _log "${DEBUG}" "debug: ${*}"
+}
+
+_console()
+{
+	# _console [message]
+	printf "${PROGNAME}: ${*}\n"
+}
+
+_log()
+{
+	# usage:
+	# _log <msg_verbosity> [message]
+	# display ‘message’ if allowed by verbosity settings
+	let "msg_verbosity=${1}"
+	shift
+	if [ "${msg_verbosity}" -le "${max_verbosity}" ]; then	# if not too verbose
+		if [ "${msg_verbosity}" = "${INFO}" ]; then			# if msg_verbosity = INFO
+			printf "${*}\n"
+		elif [ "${msg_verbosity}" -le "${WARNING}" ]; then	# if msg_verbosity < INFO
+			_console "${*}" >&2
+		else												# if msg_verbosity > INFO
+			_console "(${msg_verbosity}) ${*}"
+		fi
+	fi
+}

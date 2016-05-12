@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Timer.js - test page</title>
+        <script src="Timer.js"></script>
+    </head>
+    <body>
+<!--
+        <canvas>canvas</canvas>
+-->
+        <p>a</p>
+        <p>b</p>
+        <p>c</p>
+        <script>
+            var ps = document.getElementsByTagName("p");
+            var ts = [];
+
+            function makeUpdater(p, t) {
+                "use strict";
+                return function () {
+                    p.innerHTML = t.elapsedReset();
+                };
+            }
+
+            var i = 0;
+            while (i < ps.length) {
+                ts.push(makeTimer());
+                i += 1;
+            }
+
+            for (i = 0; i < ps.length; i += 1) {
+                ps[i].addEventListener("mouseover", makeUpdater(ps[i], ts[i]));
+            }
+        </script>
+    </body>
+</html>

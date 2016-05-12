@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# tests
+
+_is_int()
+{
+	# _is_int <value>
+    value="${1}"
+#	value="${1#[+-]}"	# strip sign
+	case "${value}" in          # value mustn't:
+		'')         return 1;;	#   be null
+		*[!0-9]*)   return 1;;	#   contain other symbols than 0-9 and [dot]
+		*)          return 0;;
+	esac
+}
+
+_is_float()
+{
+	# _is_float <value>
+
+	value="${1#[+-]}"	# strip sign
+	case "${value}" in          # value mustn't:
+		'')         return 1;;	#   be null
+		*[!0-9.]*)  return 1;;	#   contain other symbols than 0-9 and [dot]
+		*.*.*)      return 1;;	#   contain more than one dot
+		*)          return 0;;
+	esac
+}
+
+# conversions
+
+_to_natural()
+{
+	# _to_natural <float_value>
+
+	local n="${1#[+-]}"
+	n="${n%%[!0-9]*}"   # remove biggest junk suffix
+	let 'n=n'           # int typecast
+	echo "${n}"
+}

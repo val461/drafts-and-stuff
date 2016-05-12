@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ! type _random_digits 2>/dev/null 1>&2  # include_once _utils/math/random
+then
+    [ -n "${SCRIPTS_ROOT}" ]  || SCRIPTS_ROOT='/home/val/Documents/Dev/languages/scripting/shell'
+    . "${SCRIPTS_ROOT}/_utils/math/random"
+fi

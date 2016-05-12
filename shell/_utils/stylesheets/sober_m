@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# . stylesheets/sober_m
+# set a list of tags based on constants defined in file _utils/colors
+
+COLOR1="${F}${WHITE}"
+COLOR2="${F}${BLACK}"
+COLOR3="${F}${MAGENTA}"
+
+TEXT="${PLAIN}${COLOR1}"
+STRONG="${BOLD}${COLOR3}"
+TITLE="${BOLD}${COLOR1}"
+DESC="${TEXT}"
+PARAM="${TITLE}"
+SECTION="${BOLD}${COLOR2}"

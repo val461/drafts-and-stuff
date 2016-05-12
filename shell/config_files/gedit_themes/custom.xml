@@ -1,0 +1,116 @@
+<style-scheme name="custom" id="custom" version="1.0">
+	<author>aaron hawthorne</author>
+	<description>a custom color scheme</description>
+
+	<!-- Palette -->
+	<color name="color1"    value="#000000" /><!-- black -->
+	<color name="color2"    value="#0000FF" /><!-- blue -->
+	<color name="color3"    value="#1e90ff" /><!-- light blue -->
+	<color name="color4"   	value="#d900d9" /><!-- dark magenta -->
+	<color name="color5"    value="#ff24ff" /><!-- light magenta -->
+	<color name="color6"    value="#a40000" /><!-- maroon -->
+	<color name="color7"    value="#ce5c00" /><!-- dark ocher -->
+	<color name="color8"    value="#f57900" /><!-- ocher -->
+	<color name="color9"    value="#B07E00" /><!-- pale ocher -->
+	<color name="color10"   value="#008000" /><!-- dark green -->
+	<color name="color11"   value="#babdb6" /><!-- light grey -->
+	<color name="color12"   value="#808080" /><!-- grey -->
+	<color name="color13"   value="#FFFFFF" /><!-- white -->
+	<color name="color14"   value="#FF00FF" /><!-- magenta -->
+	<color name="color15"   value="#FF0000" /><!-- red -->
+	<color name="color16"   value="#FFFF00" /><!-- yellow -->
+	<color name="color17"   value="#00FF00" /><!-- green -->
+	<color name="color18"   value="#00FFFF" /><!-- cyan -->
+
+	<!-- Settings -->
+<!--
+	Example:
+	<style name="def:preprocessor"  foreground="color7" background="#000000" italic="true" bold="true" underline="true" strikethrough="true" />
+-->
+	<style name="text"                          foreground="color11"        background="color1" />
+	<style name="selection"                     foreground="color13"        background="color3" />
+	<style name="current-line"                                              background="#262626" />
+	<style name="line-numbers"                  foreground="color1"         background="color12" />
+	<style name="right-margin"                                              background="color18" />
+	<style name="bracket-match"                                                                         bold="true" />
+	<style name="bracket-mismatch"                                          background="color15"        bold="true" />
+	<style name="draw-spaces"                   foreground="#d3d7cf" />
+	<style name="search-match"                  foreground="color1"         background="#a1ff44" />
+	<style name="bookmark"                                                  background="#E5E5FF" />
+	<style name="Others"                        foreground="color6" />
+	<style name="Others 2"                                                                              bold="true" />
+	<style name="Others 3"                      foreground="color17" />
+	<style name="def:comment"                   foreground="color12"                                    italic="true" />
+	<style name="def:shebang"                   foreground="color7" />
+	<style name="def:doc-comment"               foreground="color2" />
+	<style name="def:doc-comment-element"                                                               bold="true" />
+	<style name="def:type"                      foreground="color4" />
+	<style name="def:constant"                  foreground="color4" />
+	<style name="def:decimal"                   foreground="color9" />
+	<style name="def:base-n-integer"            foreground="color9" />
+	<style name="def:floating-point"            foreground="color9" />
+	<style name="def:complex"                   foreground="color9" />
+	<style name="def:character"                 foreground="color4" />
+	<style name="def:string"                    foreground="color5" />
+	<style name="def:special-char"              foreground="color5" />
+	<style name="def:builtin"                   foreground="color5" />
+	<style name="def:identifier"                foreground="color5" />
+	<style name="def:function"                  foreground="color5" />
+	<style name="def:statement"                                                                         bold="true" />
+	<style name="def:preprocessor"              foreground="color7" />
+	<style name="def:note"                      foreground="color1"         background="color16"        bold="true" />
+	<style name="def:error"                     foreground="color15"                                    underline="true" />
+	<style name="def:warning"                   foreground="color9"                                     underline="true" />
+	<style name="def:underlined"                                                                        underline="true" />
+	<style name="c:included-file"               foreground="color8" />
+	<style name="c:common-defines"              foreground="color3"                                     bold="true" />
+	<style name="diff:diff-file"                                                                        bold="true" />
+	<style name="diff:added-line"               foreground="color9" />
+	<style name="diff:removed-line"             foreground="color15" />
+	<style name="diff:changed-line"             foreground="color17" />
+	<style name="diff:special-case"  />
+	<style name="diff:location"                 foreground="color4" />
+	<style name="xml:attribute-name"            foreground="color8" />
+	<style name="xml:element-name"                                                                      bold="true" />
+	<style name="xml:entity"                    foreground="color2" />
+	<style name="xml:cdata-delim"               foreground="#008080"                                    bold="true" />
+	<style name="xml:processing-instruction"                                                            bold="true" />
+	<style name="xml:doctype"                   foreground="color6"                                     bold="true" />
+	<style name="docbook-element"               foreground="#004141"                                    bold="true" />
+	<style name="docbook:header-elements"       foreground="#004141"                                    bold="true" />
+	<style name="docbook:formatting-elements"   foreground="#004141"                                    bold="true" />
+	<style name="docbook:gui-elements"          foreground="#004141"                                    bold="true" />
+	<style name="docbook:structural-elements"   foreground="#004141"                                    bold="true" />
+	<style name="js:object"                     foreground="color10" />
+	<style name="js:constructors"                                                                       bold="true" />
+	<style name="mooscript:special-vars"        foreground="color10" />
+	<style name="latex:display-math"                                        background="#C0FFC0" />
+	<style name="latex:inline-math"             foreground="color10" />
+	<style name="latex:math-bound"                                                                      bold="true" />
+	<style name="latex:common-commands"         foreground="color6" />
+	<style name="latex:command"                 foreground="#7000DF" />
+	<style name="latex:include"                 foreground="color6" />
+	<style name="changelog:date"                foreground="color4" />
+	<style name="changelog:email"               foreground="color10" />
+	<style name="changelog:file"                foreground="color4" />
+	<style name="changelog:bullet"              foreground="color4" />
+	<style name="changelog:release"             foreground="color3"                                     bold="true" />
+	<style name="perl:pod"                      foreground="#808080" />
+	<style name="python:string-conversion"                                  background="#BEBEBE" />
+	<style name="python:module-handler"         foreground="color4" />
+	<style name="python:special-variable"       foreground="color4" />
+	<style name="python:builtin-constant"       foreground="color4" />
+	<style name="python:builtin-object"         foreground="color4" />
+	<style name="python:builtin-function"       foreground="color4" />
+	<style name="python:boolean"                foreground="color4" />
+	<style name="scheme:parens"                                                                         bold="true" />
+	<style name="scheme:any-function"                                                                   bold="true" />
+	<style name="sh:dollar"                     foreground="color10"                                    bold="true" />
+	<style name="makefile:trailing-tab"                                     background="#FFC0CB" />
+	<style name="t2t:italic"                                                                            italic="true" />
+	<style name="t2t:bold"                                                                              bold="true" />
+	<style name="t2t:verbatim"                                              background="color11" />
+	<style name="t2t:verbatim-block" />
+	<style name="t2t:comment"                   foreground="color10" />
+	<style name="t2t:option"                    foreground="color10" />
+</style-scheme>

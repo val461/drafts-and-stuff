@@ -1,0 +1,14 @@
+LowOp   = "+" | "-"
+HighOp  = "*" | "/"
+
+Expression  = Expression LowOp Term
+            | Term
+
+Term    = Term HighOp Factor
+        | Factor
+
+Factor  = Number
+        | Identifier
+        | Identifier "=" Expression
+        | LowOp Factor
+        | "(" Expression ")"

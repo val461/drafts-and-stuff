@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "${#}" -eq 3 ]; then
+    source="$1"
+    subs="$2"
+    dest="$3"
+    
+    ffmpeg -i "${source}" -vf subtitles="${subs}" "${dest}"
+else
+    echo 'bad usage' >&2
+    echo "${0} <source> <subs> <dest>"
+    exit 2
+fi

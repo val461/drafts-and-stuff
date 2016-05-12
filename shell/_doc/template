@@ -1,0 +1,13 @@
+_usage()
+{
+	cat <<-EOF
+
+	${PROGNAME} - interactive template generator
+	Usage:
+	  ${PROGNAME} <file>
+	Parameter:
+	  <file>
+	      where to save the template
+
+	EOF
+}

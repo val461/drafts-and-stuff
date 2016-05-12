@@ -1,0 +1,14 @@
+_usage()	# FIXME
+{
+	cat <<-EOF
+
+	substring - extract a substring from a string
+	Usage:
+	   ${PROGNAME} <pattern_to_keep> <string>
+	      extract from ‘string’ the shortest prefix matching ‘pattern_to_keep’
+	Example:
+	   ${PROGNAME} ' [0-9]* ' 'foo   3_bar baz   '
+	      outputs ...
+
+	EOF
+}

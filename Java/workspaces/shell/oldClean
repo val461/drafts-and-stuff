@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# delete folders except the following separated by spaces:
+foldersToPreserve=('src')
+
+cd "$(dirname "${0}")"
+echo
+
+for dir in $(ls -d */)
+do
+  preserve='false'
+  for f in "${foldersToPreserve[@]}"
+  do
+    if [ "X${dir}" = "X${f}/" ]; then
+      preserve='true'
+      break
+    fi
+  done
+  if [ "X${preserve}" = 'Xfalse' ]; then
+    echo "Deleting '${dir}' : [enter]/ctrl-c"
+    read
+    rm -vR "${dir}"
+  fi
+done
+echo
+

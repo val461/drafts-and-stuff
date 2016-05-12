@@ -1,0 +1,41 @@
+#!/bin/bash
+
+_usage()
+{
+	cat <<-'EOF'
+
+	 Type an action and validate with [enter].
+	 This program doesn’t resume until you quit VLC.
+
+	EOF
+#	"${move_to_target_dir}" && echo "      y: move video to “ ${target_dir} ”"
+	cat <<-'EOF'
+	      n: next video
+	      q: quit
+	      r: replay video
+	      d: delete video
+	      p: show folder in file viewer
+	      h: print this help
+
+	EOF
+}
+
+_usageOLD()
+{
+	cat <<-'EOF'
+
+	 Type all your actions then validate with [enter].
+	 This program doesn’t resume before you quit VLC.
+	 Once all your actions are processed, the next video is launched automatically.
+
+	EOF
+	"${move_to_target_dir}" && echo "      y: move video to “ ${target_dir} ”"
+	cat <<-'EOF'
+	      n: skip next actions
+	      q: quit
+	      d: delete video
+	      p: show folder in file viewer
+	      h: print this help
+
+	EOF
+}

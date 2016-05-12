@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# random
+# move files from ${source_dir} to ${target_dir}, renamed with
+# random names composed of ${length} digits
+
+## parameters
+
+source_dir='/home/val/mnt/Data/Downloads/Deluge/v/sas'
+target_dir='/home/val/mnt/Data/Downloads/Deluge/v/watched/'
+length=2
+specificNamesOnly=true  # if true, apply only to names formed of digits
+
+## code
+
+# TODO: use logging lib
+
+PROGNAME="$(basename "${0}")"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+newRand() { tr -cd 0-9 </dev/urandom | head -c "${length}"; }
+
+cd "${source_dir}" || { _error "code $? returned by cd (line ${LINENO}), directory “ ${source_dir} ”" ; _abort; }
+mkdir -vp "${target_dir}" || { _error "code $? returned by mkdir (line ${LINENO}), directory “ ${target_dir} ”" ; _abort; }
+_info "Current directory: “ ${PWD} ”"
+
+for file in *
+do
+	[ -e "${file}" ] || break
+	"${specificNamesOnly}" && case "${file}" in *[!0-9]*) break ;; esac
+	_info "file ${file}"
+	rand="$(newRand)"
+	newname="${target_dir}/${rand}"
+	i=0
+	while [ -e "${newname}" ]
+	do
+		let 'i++'
+		if [ "${i}" -gt 20 ]; then
+			_error "Name already taken: ${newname}"
+			_info "(${i} random names attempted yet.)"
+			_ultim_confirm
+		fi
+		rand="$(newRand)"
+		newname="${target_dir}/${rand}"
+	done
+	_info 'GOOD'
+	mv -v "${file}" "${target_dir}/${rand}" || { _error "code $? returned by mv (line ${LINENO}), params “ ${file} ” and “ ${target_dir}/${rand} ”" ; _ultim_confirm ; }
+done

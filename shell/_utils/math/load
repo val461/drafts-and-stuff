@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# load <library>...
+# load specified math libraries
+
+[ -n "${SCRIPTS_ROOT}" ]  || SCRIPTS_ROOT='/home/val/Documents/Dev/languages/scripting/shell'
+if [ "${1}" = 'all' ]; then
+    for file in "${SCRIPTS_ROOT}/_utils/math"/load_*
+    do
+        . "${file}"
+    done
+else                        # parse arguments
+    while [ "${#}" -gt 0 ]
+    do
+        file="${SCRIPTS_ROOT}/_utils/math/load_${1}"
+        if [ -f "${file}" ]; then
+            . "${file}"
+        else
+            echo "_utils/math/load (line ${LINENO}): file “ ${file} ” not found" >&2
+        fi
+        shift
+    done
+fi

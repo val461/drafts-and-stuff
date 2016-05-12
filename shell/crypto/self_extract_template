@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# self_extract
+# extract the archive encrypted at the bottom of this file
+
+lineWhereArchiveBegins='10'
+tail -n +"${lineWhereArchiveBegins}" "${0}" | openssl enc -bf -d -a -out "/dev/stderr" 2>&1 1>/dev/null | tar -xz
+exit
+# ARCHIVE STARTS

@@ -1,0 +1,24 @@
+#!/bin/bash
+# enc <file | folder>
+
+# TODO: options management: force overwrite, target folder
+
+input_file="${1}"
+output_file="${input_file}.tar.gz.enc"
+
+if [ -e "${input_file}" ]; then
+    if [ -e "${output_file}" ]; then
+        echo "enc: file already exists: ${output_file}" >&2
+        echo "enc: Overwrite? y/[n]"
+        read ans
+        case "${ans}" in
+            y|Y) ;;
+            *)  echo 'enc: user aborted' >&2
+                exit 2
+                ;;
+        esac
+    fi
+    tar -cz --to-stdout "${input_file}" | openssl enc -bf -a -salt -out "${output_file}"
+else
+    echo "enc: error: invalid path: ${input_file}" >&2
+fi

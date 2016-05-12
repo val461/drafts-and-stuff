@@ -1,0 +1,20 @@
+/usr/share/X11/xkb/rules/evdev.xml
+list of allowed layouts
+
+/usr/share/X11/xkb/symbols/
+layouts
+
+/usr/include/X11/keysymdef.h
+character constants
+
+/usr/share/X11/xkb/keycodes/evdev
+translation of scancodes to keycodes
+
+xkbcomp -xkb $DISPLAY map.xkb
+save current config to map.xkb
+
+xkbcomp -I -I. map.xkb $DISPLAY
+load config from map.xkb
+
+https://wiki.archlinux.org/index.php/Keyboard_configuration_in_Xorg
+https://wiki.archlinux.org/index.php/Extra_keyboard_keys

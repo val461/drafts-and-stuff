@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# . stylesheets/fancy
+# set a list of tags based on constants defined in file _utils/colors
+
+COLOR1="${F}${YELLOW}"
+COLOR2="${F}${CYAN}"
+COLOR3="${F}${GREEN}"
+COLOR4="${F}${MAGENTA}"
+
+TEXT="${PLAIN}${COLOR1}"
+STRONG="${BOLD}${COLOR4}"
+TITLE="${BOLD}${COLOR1}"
+DESC="${TEXT}"
+PARAM="${BOLD}${COLOR3}"
+SECTION="${BOLD}${COLOR2}"

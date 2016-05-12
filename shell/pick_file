@@ -1,0 +1,96 @@
+#!/bin/bash
+
+# pick_file - select one or several random files in a folder hierarchy
+
+PROGNAME="pick_file"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+SCRIPTS_ROOT="${HOME}/mnt/Data/Documents/Dev/languages/scripting/shell"
+
+# load libraries
+. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+. "${SCRIPTS_ROOT}/_utils/math/load_types" || _bug "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/load_types ”"
+
+if [ "${#}" -eq 0 ]; then
+    _usage
+    exit 0
+fi
+
+# default values
+asked_quantity=1
+unicity=true
+# process options
+while [ "${#}" -gt 0 ]
+do
+    arg="${1}"
+    case "${arg}" in
+        -h|--help)
+            shift
+            _usage
+            exit 0
+            ;;
+        -r)
+            shift
+            unicity=false
+            ;;
+        --)     # end of options
+            shift
+            break
+            ;;
+        -?|--*) # unknown option
+            shift
+            echo "invalid option: ${arg}" >&2
+            _usage
+            exit 1
+            ;;
+        -??*)   # several short options
+            shift
+            while [ "${arg}" != '-' ]   # parse
+            do
+                new_arg="${arg%?}"  # remove last option
+                option="${arg##${new_arg}}" # read it
+                # add option to the list of single options to process
+                [ "${option}" != '-' ] && set -- "-${option}" "${@}"
+                arg="${new_arg}"
+            done
+            ;;
+        '')     # null parameter
+            shift ;;
+        *)
+            if _is_int "${arg}"; then
+                arg="$(_to_natural "${arg}")"
+                if [ "${arg}" -gt 0 ]; then
+                    shift
+                    asked_quantity="${arg}"
+                fi
+            fi
+            break
+            ;;
+    esac
+done
+
+# build the list of files
+while [ "${#}" -gt 0 ]
+do
+    file="${1}"
+    shift
+    if [ -e "${file}" ] && ! [ -h "${file}" ]; then # file exists and is not a symbolic link
+        if [ -d "${file}" ]; then                   #   file is a directory
+            set -- "${@}" "${file}"/*               #       add its content to the list of files to process
+        elif [ -f "${file}" ]; then                 #   file is not a directory
+            files[ ${#files[@]} ]="${file}"         #       add to the list of files to choose from
+        fi
+    fi
+done
+
+# choose random files in that list
+i=0
+while [ "$[i++]" -lt "${asked_quantity}" ]
+do
+    length="${#files[@]}"
+    [ "${length}" -gt 0 ] || exit 1
+    j="$("${SCRIPTS_ROOT}/new_rand" 0 "${length}")"    # get random index
+    file="${files[j]}"    # select file at random index
+    echo "${file}"
+    ${unicity} && files=("${files[@]:0:${j}}" "${files[@]:$[j+1]}")    # remove file from the list
+done
+exit 0

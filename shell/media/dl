@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# ./dl: wrapper for youtube-dl
+# download videos listed in ‘playlist_file’ into ‘video_dir’.
+
+# ‘tmp_playlist_file’ should not be edited manually, especially while ./dl is running.
+
+working_dir='/home/val/mnt/Data/Downloads/sh'
+video_dir='../YouTube'
+playlist_file='list'
+tmp_playlist_file="${playlist_file}.tmp"
+
+ask_to_delete_tmp_after_success=false
+#ask_to_delete_tmp_after_success=true
+format='bestaudio'
+playlist_policy='--no-playlist'
+#playlist_policy=''
+
+cd "${working_dir}" || { echo "dl: error: cd failed to access directory “${working_dir}”" >&2 ; exit "${?}" ; }
+pwd
+
+tmp_file_ready=false
+if [ -f "${tmp_playlist_file}" ]; then
+    echo "File “${tmp_playlist_file}” exists. Delete it? [y]/n"
+    read ans
+    case "${ans}" in
+        n*|N*)
+            tmp_file_ready=true
+            echo 'Attempting to download from “${tmp_playlist_file}”.'
+            ;;
+        *)
+            rm -v "${tmp_playlist_file}"
+    esac
+fi
+
+if ! "${tmp_file_ready}"; then
+    if [ -f "${playlist_file}" ]; then
+        mv -v "${playlist_file}" "${tmp_playlist_file}" || { echo "dl: mv failed with code ${?}" >&2; exit 2; }
+        tmp_file_ready=true
+        touch "${playlist_file}"
+    else
+        echo 'dl: error: no playlist file found' >&2
+        exit 2
+    fi
+fi
+
+youtube-dl -f "${format}" "${playlist_policy}" -o "${video_dir}/%(title)s (%(id)s).%(ext)s" -a "${tmp_playlist_file}"
+
+err="${?}"
+if [ "${err}" = 0 ]; then
+    echo 'youtube-dl exited successfully.'
+    if "${ask_to_delete_tmp_after_success}"; then
+        echo 'If everything is fine, you should delete “${tmp_playlist_file}”.'
+        echo "Delete “${tmp_playlist_file}”? [y]/n"
+        read ans
+        case "${ans}" in
+            n*|N*)
+                ;;
+            *)
+                rm -v "${tmp_playlist_file}"
+        esac
+    else
+        rm -v "${tmp_playlist_file}"
+    fi
+else
+    echo "dl: error: youtube-dl exited with code ${err}" >&2
+fi

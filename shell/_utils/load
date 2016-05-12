@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# . load
+# load constants and functions
+
+[ -n "${SCRIPTS_ROOT}" ]  || SCRIPTS_ROOT="${HOME}/mnt/Data/Documents/Dev/languages/scripting/shell"
+[ -n "${PROGDIR}" ]       || PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
+[ -n "${PROGNAME}" ]      || PROGNAME="process $$"
+
+# load logging lib
+. "${SCRIPTS_ROOT}/_utils/log" || { echo "${PROGNAME}: _utils/load: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/log ”" >&2 ; exit 1; }
+
+# load colors
+. "${SCRIPTS_ROOT}/_utils/colors" || _bug "line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/colors ”"
+. "${SCRIPTS_ROOT}/_utils/stylesheets/sexy" || _bug "_utils/load: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/stylesheets/... ”"
+
+# load doc
+file="${SCRIPTS_ROOT}/_doc/${PROGNAME}"
+if [ -e "${file}" ]; then
+	. "${file}" || _bug "line ${LINENO}: error code ${?} while sourcing “ ${file} ”"
+fi

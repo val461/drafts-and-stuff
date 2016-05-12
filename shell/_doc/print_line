@@ -1,0 +1,18 @@
+#!/bin/bash
+
+_usage()	#FIXME
+{
+	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'print specified line of a file'
+	printf "\n${SECTION}%s${PLAIN}\n"                             'Usage:'
+	printf "  ${TITLE}%s"                                             "${PROGNAME}"
+	str=" ${SECTION}%s${PARAM}%s${SECTION}%s"
+	printf "${str}"                                                     '<' 'line' '>'
+	printf "${str}${PLAIN}\n"                                           '<' 'file' '>'
+	str="  ${PARAM}%s${PLAIN}\n"
+	printf "\n${SECTION}%s${PLAIN}\n"                               'Parameters:'
+	str2="      ${TEXT}%s${PLAIN}\n"
+	printf "${str}"                                                    'line'
+	printf "${str2}"                                                        'line to print'
+	printf "${str}"                                                    'file'
+	printf "${str2}\n"                                                      'file to print'
+}

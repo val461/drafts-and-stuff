@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# ./mp4subencoder.sh $source $sub_file_1 [$sub_file_2 [$sub_file_3 [$sub_file_4]]] $destination
+
+if [ "$#" = 3 ]; then
+	MP4Box -add "${1}" -add "${2}:size=50" "${3}"
+elif [ "$#" = 4 ]; then
+	MP4Box -add "${1}" -add "${2}:size=50" -add "${3}" "${4}"
+elif [ "$#" = 5 ]; then
+	MP4Box -add "${1}" -add "${2}:size=50" -add "${3}" -add "${4}" "${5}"
+elif [ "$#" = 6 ]; then
+	MP4Box -add "${1}" -add "${2}:size=50" -add "${3}" -add "${4}" -add "${5}" "${6}"
+else
+	echo 'mp4subencoder: wrong usage.';
+fi

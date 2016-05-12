@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# clipcreator - create an mp4 video clip from diverse files
+# example:
+#	clipcreator image.jpg song.ogg result.mp4
+
+PROGNAME="clipcreator"
+PROGDIR="$(dirname "${0}")"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+if [ "${#}" -lt 3 ]; then	# misuse
+	if [ "${#}" = 0 ]; then
+		_usage
+		exit 0
+	else
+		_usage >&2
+		exit 1
+	fi
+fi
+
+command="MP4Box"
+i=0
+while [ "${#}" -gt 1 ];
+do
+		if [ -e "${1}" ]; then
+			if [ -d "${1}" ]; then
+				echo "error: file “${1}” is a directory" >&2
+				echo -n "Continue? [y]/ctrl-c "
+				read
+			else
+				command="${command} -add '${1}'"
+				let 'i++'
+			fi
+		else
+			echo "error: file “${1}” doesn’t exist" >&2
+			echo -n "Continue? [y]/ctrl-c "
+			read
+		fi
+		shift
+done
+echo
+echo "save to “${1}”"
+if [ -e "${1}" ]; then
+	if [ -d "${1}" ]; then
+		echo "error: file “${1}” is a directory" >&2
+		echo 'exiting' >&2
+		exit 1
+	else
+		echo "warning: file “${1}” already exists" >&2
+		echo 'overwrite? [y]/ctrl-c '
+		read
+	fi
+fi
+command="${command} '${1}'"
+echo 'Command:'
+echo "${command}"
+[ "${i}" -lt 2 ] && echo 'warning: less than 2 elements specified' >&2
+echo "Run? [y]/ctrl-c "
+read
+echo 'running'
+eval "${command}" && exit 0
+echo "error: code ${?} returned by MP4Box" >&2
+exit 1

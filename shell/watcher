@@ -1,0 +1,116 @@
+#!/bin/bash
+
+# watcher - launch files with VLC
+
+## parameters
+
+source_dir='/home/val/mnt/Data/Downloads/Deluge/v/watched'
+#source_dir='/home/val/mnt/Data/Downloads/Deluge/v/2'
+move_to_target_dir=false
+#move_to_target_dir=true
+target_dir='./watched'
+print_help_at_launch=true
+
+file_viewer='spacefm'
+
+## code
+
+PROGNAME="watcher"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+cd "${source_dir}" || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while changing directory"; exit 1; }
+
+# make target dir if necessary
+if "${move_to_target_dir}"; then
+    mkdir -vp "${target_dir}" || { move_to_target_dir=false ; echo "Problem while creating directory ${target_dir}" >&2 ; }
+fi
+
+# debug mode
+no_video=false
+[ "${#}" -gt 0 ] && no_video=true
+
+"${print_help_at_launch}" && _usage
+
+_question()
+{
+    printf '“ %s ”. Action ? ' "${file}"
+    "${move_to_target_dir}" && printf '[y]/n/' || printf '[n]/'
+    printf '%s\n' 'q/r/d/p/h'
+}
+
+_play_vid()
+{
+    "${no_video}" || vlc "${file}" 1>/dev/null 2>&1
+}
+
+#~ while true
+#~ do
+# launch up to 20 files
+"${PROGDIR}/pick_file" 20 . | while read file
+do
+    [ -e "${file}" ] || break   # check if user removed file
+    dir="$(dirname "${file}")"
+    _question
+    _play_vid
+    reask=true
+    while "${reask}"
+    do
+        read ans < /dev/tty
+        set -- "${ans}"
+        #~ while [ "${#}" -gt 0 ] # process answer
+        #~ do
+            case "${1}" in
+                #~ ??*)   # several actions
+                    #~ arg="${1}"
+                    #~ shift
+                    #~ while [ -n "${arg}" ]   # parse
+                    #~ do
+                        #~ new_arg="${arg%?}"  # remove last action
+                        #~ action="${arg##${new_arg}}" # and read it
+                        #~ # add action to the list of actions to process
+                        #~ set -- "${action}" "${@}"
+                        #~ arg="${new_arg}"
+                    #~ done
+                    #~ ;;
+                p|P)    # file viewer
+                    shift
+                    [ -d "${dir}" ] && "${file_viewer}" "${dir}" >/dev/null 2>&1 &
+                    ;;
+                r|R)    # replay
+                    shift
+                    _play_vid
+                    ;;
+                d|D)    # delete file
+                    shift
+                    rm -v "${file}"
+                    ;;
+                ''|n|N)    # skip next actions
+                    shift
+                    reask=false
+                    #~ break
+                    ;;
+                q|Q)    # exit
+                    echo 'Quit.'
+                    exit 0
+                    ;;
+                ' ')    # skip argument
+                    shift
+                    ;;
+                y|Y)   # move file
+                    shift
+                    "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+                    ;;
+                *)    # print help
+                    _usage
+                    ;;
+            esac
+        if "${reask}"; then
+            _question
+        fi
+        #~ done
+    done
+done
+#~ done

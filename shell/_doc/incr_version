@@ -1,0 +1,29 @@
+#!/bin/bash
+
+_usage()
+{
+	str1="\n${SECTION}%s${PLAIN}\n"
+	str2=" ${SECTION}%s${PARAM}%s${SECTION}%s"
+	str3="  ${PARAM}%s${PLAIN}\n"
+	str4="      ${TEXT}%s${PARAM}%s ${TEXT}%s${PARAM}%s ${TEXT}%s${PARAM}%s ${TEXT}%s${PLAIN}\n"
+	str5="      ${TEXT}%s${PLAIN}\n"
+	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'determine next version'
+	printf "${str1}"                                                'Usage:'
+	printf "  ${TITLE}%s"                                             "${PROGNAME}"
+	printf "${str2}"                                                     '[' 'update_type' ']'
+	printf "${str2}${PLAIN}\n"                                           '<' 'current' '>'
+	printf "${str1}"                                                'Parameters:'
+	printf "${str3}"                                                    'update_type'
+	printf "${str4}"                                                        'Any of the following values: ' 'M' '(major), ' 'm' '(minor), ' 'p' '(patch).'
+	printf "${str5}"                                                        'Default is patch.'
+	printf "${str3}"                                                    'current'
+	printf "      ${TEXT}%s"                                                    'Version to increment. Must be formatted like'
+	printf " ${STRONG}%s${TEXT}%s ${STRONG}%s${TEXT}%s ${STRONG}%s${TEXT}%s"    'X.Y.Z' ', where' 'X' ',' 'Y' ' and' 'Z'
+	printf "\n${str5}"                                                          'are non-negative integers.'
+	printf "${str1}"                                                'Semantic Versioning:'
+	printf "    ${TEXT}%13s %s${PLAIN}\n"                               'major update:'  'new incompatible API changes' \
+	                                                                    'minor update:'  'new backwards-compatible functionality' \
+	                                                                    'patch:'         'backwards-compatible bug fixes'
+	printf "    ${TEXT}%s ${STRONG}%s ${TEXT}%s${PLAIN}\n"               '(more information on' 'http://semver.org/' ').'
+	printf "\n\n"
+}

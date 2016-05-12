@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Color.js – test page</title>
+        <script src="Math.js"></script>
+        <script src="Color.js"></script>
+    </head>
+    <body>
+        <p>a</p>
+        <p>b</p>
+        <p>c</p>
+        <script>
+            var ps = document.getElementsByTagName("p");
+            var ts = [];
+
+            function makeUpdater(p, t) {
+                "use strict";
+                return function () {
+                    t.initialize();
+                    p.innerHTML = t.toString();
+                };
+            }
+
+            var i = 0;
+            while (i < ps.length) {
+                ts.push(new Color());
+                i += 1;
+            }
+
+            for (i = 0; i < ps.length; i += 1) {
+                ps[i].addEventListener("mouseover", makeUpdater(ps[i], ts[i]));
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# extract - extract particular tracks from mp4 files
+
+PROGNAME="extract"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+
+## parameters
+
+track=2			# default track
+careful=true	# redundantly asks for confirmations from the user
+
+## code
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+_get_track_ID()
+{
+	local ans
+	echo -n "enter track ID [${track}]: "
+	read ans
+	[ -n "${ans}" ] && let 'track=ans'
+}
+
+_extract_track()
+{
+	echo "extract track ${track} from ${file}"
+	"${careful}" && _ultim_confirm
+	MP4Box -raw "${track}" "${file}" || { _error "code $? returned by MP4Box (line ${LINENO})"; "${bulk}" && _ultim_confirm; }
+}
+
+[ "$#" = 0 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ] && { _usage; exit 0; }
+[ "$#" = 1 ]	|| { _error "bad usage: takes exactly one parameter"; _usage >&2; _abort; }
+[ -e "${1}" ]	|| { _error "file “${1}” doesn't exist"; _usage >&2; _abort; }
+
+if [ -d "${1}" ]; then	# bulk mode
+	bulk=true
+	cd "${1}" || { _error "failed to change to directory “${1}” (line ${LINENO})"; _abort; }
+	_get_track_ID
+	for file in *.mp4
+	do
+		_extract_track
+	done
+	nautilus .
+else	# single file mode
+	bulk=false
+	file="${1}"
+	MP4Box -info "${file}"
+	_get_track_ID
+	_extract_track
+fi

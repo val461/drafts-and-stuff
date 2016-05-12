@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xkbConfigRegistry SYSTEM "xkb.dtd">
+<xkbConfigRegistry version="1.1">
+  <layoutList>
+    <layout>
+      <configItem>
+        <name>val</name>
+        <shortDescription>en</shortDescription>
+        <description>val English (enhanced qwerty)</description>
+      </configItem>
+      <variantList>
+        <variant>
+          <configItem>
+            <name>t1</name>
+            <description>val English (t1)</description>
+          </configItem>
+        </variant>
+        <variant>
+          <configItem>
+            <name>t2</name>
+            <description>val English (t2)</description>
+          </configItem>
+        </variant>
+      </variantList>
+    </layout>
+  </layoutList>
+</xkbConfigRegistry>

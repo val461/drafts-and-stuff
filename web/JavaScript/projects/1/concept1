@@ -1,0 +1,19 @@
+grid
+initially:
+    grid divided in two groups of cells: yours and your opponent’s
+    no bomb is on the grid
+    you have a reserve of bombs apart from the grid
+your turn:
+    you can remove any of your bombs from the grid and put them back into your reserve
+    you can place any bomb of your reserve onto any of your cells
+    your opponent does not know which of your cells are trapped
+    when you’re done, click a cell of your opponent
+    if it contains a bomb:
+        one of your cells becomes the opponent’s (chosen randomly or by the opponent, who still ignores if it is trapped when choosing)
+        if it was trapped, the bomb is removed from the cell and put into the opponent’s reserve
+    otherwise:
+        the cell is yours
+    if you no longer have cells:
+        you lost!
+    otherwise:
+        it is the opponent’s turn

@@ -1,0 +1,27 @@
+<style-scheme name="custom" id="custom" version="1.0">
+	<author>aaron hawthorne</author>
+	<description>palette</description>
+
+	<!-- primary -->
+	<color name="black"         value="#000000" />
+	<color name="blue"          value="#0000FF" />
+	<color name="cyan"          value="#00FFFF" />
+	<color name="green"         value="#00FF00" />
+	<color name="yellow"        value="#FFFF00" />
+	<color name="red"           value="#FF0000" />
+	<color name="magenta"       value="#FF00FF" />
+	<color name="white"         value="#FFFFFF" />
+
+	<!-- others -->
+	<color name="grey"          value="#808080" />
+	<color name="lightgrey"     value="#babdb6" />
+	<color name="lightblue"     value="#1e90ff" />
+	<color name="darkmagenta"   value="#d900d9" />
+	<color name="lightmagenta"  value="#ff24ff" />
+	<color name="flesh"         value="#FF80E0" />
+	<color name="maroon"        value="#a40000" />
+	<color name="ocher"         value="#f57900" />
+	<color name="darkocher"     value="#ce5c00" />
+	<color name="paleyellow"    value="#B07E00" />
+	<color name="darkgreen"     value="#008000" />
+</style-scheme>

@@ -1,0 +1,1 @@
+/etc/php-zts.d

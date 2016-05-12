@@ -1,0 +1,17 @@
+_usage()
+{
+	cat <<-EOF
+
+	${PROGNAME} - interactive script to create an mp4 video clip from diverse files
+	Example:
+	  clipcreator image.jpg song.ogg result.mp4
+	Usage:
+	  ${PROGNAME} <element>{2,} <destination>
+	Parameters:
+	  <element>{2,}
+	      list of the files to piece together
+	  <destination>
+	      file where to save the result
+
+	EOF
+}

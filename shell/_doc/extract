@@ -1,0 +1,12 @@
+_usage()
+{
+	cat <<-EOF
+
+	Usages:
+	  ${PROGNAME} <file>
+	      extract a track from specified mp4 file
+	  ${PROGNAME} <folder>
+	      extract a track from ‘folder’/*.mp4
+
+	EOF
+}

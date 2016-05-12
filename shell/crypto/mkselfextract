@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# mkselfextract <file | folder>
+# create an encrypted self-extracting archive
+
+PROG='mkselfextract'
+
+input_file="${1}"
+output_file="${input_file}_extract.sh"
+
+script_folder="$(dirname "${0}")"
+
+if [ -e "${input_file}" ]; then
+    if [ -e "${output_file}" ]; then
+        echo "${PROG}: file already exists: ${output_file}" >&2
+        echo "${PROG}: Overwrite? y/[n]"
+        read ans
+        case "${ans}" in
+            y|Y) ;;
+            *) exit 2 ;;
+        esac
+    fi
+    cat "${script_folder}/self_extract_template" > "${output_file}" || exit
+    tar -cz --to-stdout "${input_file}" 2>/dev/null | openssl enc -bf -a -salt >> "${output_file}" || exit
+    chmod a+x "${output_file}" || exit
+    echo 'Done!'
+else
+    echo "${PROG}: error: invalid path: ${input_file}" >&2
+fi

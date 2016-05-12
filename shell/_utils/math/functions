@@ -1,0 +1,37 @@
+#!/bin/bash
+
+. "${SCRIPTS_ROOT}/_utils/math/load_types"
+
+_math_log()
+{
+	# _math_log [base] <x>
+	#     outputs logarithm base ‘base’ of ‘x’
+	#   base
+	#     default 10
+
+	local base x
+
+	# read input
+	if [ "${#}" = 2 ]; then
+		base="$(_to_natural "${1:-10}")"
+		x="$(_to_natural "${2:-1}")"
+	elif [ "${#}" = 1 ]; then
+		base=10
+		x="$(_to_natural "${1:-1}")"
+	else
+		_bug "“ ${SCRIPTS_ROOT}/_utils/math/functions ” (line ${LINENO}) : _math_log() : bad usage"
+		return 1
+	fi
+
+	# check input
+	if [ "${x}" -le 0 ]; then
+		_bug "“ ${SCRIPTS_ROOT}/_utils/math/functions ” (line ${LINENO}) : _math_log() : x <= 0"
+		return 1
+	elif [ "${base}" -le 1 ]; then
+		_bug "“ ${SCRIPTS_ROOT}/_utils/math/functions ” (line ${LINENO}) : _math_log() : base <= 1"
+		return 1
+	fi
+
+	# calculate and output result
+	printf '%s\n' "scale=2; l(${x}) / l(${base});" | bc -ql
+}

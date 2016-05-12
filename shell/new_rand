@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# new_rand - print random integers
+
+PROGNAME="new_rand"
+PROGDIR="$(dirname "${0}")"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+. "${PROGDIR}/_utils/math/load" 'all' || _bug "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/types ”"
+
+if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+fi
+
+case "${#}" in
+	1)
+		_random_digits "${1}"
+		;;
+	2)
+		_random_int "${1}" "${2}"
+		;;
+	3)
+		i=0
+		while [ "${i}" -lt "${1}" ]
+		do
+    		_random_int "${2}" "${3}"
+    		let 'i++'
+    	done
+    	;;
+	*)
+		_error "bad usage. Use option -h or --help to get help."
+		exit 1
+esac
+echo

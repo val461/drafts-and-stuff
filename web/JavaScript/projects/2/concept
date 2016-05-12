@@ -1,0 +1,4 @@
+grid
+pixel.onMouseOver
+    pixel.setColor(c)
+    randomly slightly change c

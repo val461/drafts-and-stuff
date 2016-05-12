@@ -1,0 +1,22 @@
+#!/bin/bash
+
+_usage()
+{
+	printf "${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'interactive HTML template-filler'
+	return 0
+	str1="\n${SECTION}%s${PLAIN}\n"
+	str2=" ${SECTION}%s${PARAM}%s${SECTION}%s"
+	str3="  ${PARAM}%s${PLAIN}\n"
+	str4="      ${TEXT}%s %s${STRONG}%s${TEXT}%s${PLAIN}\n"
+	str5="      ${TEXT}%s${PLAIN}\n"
+	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'interactive HTML template-filler'
+	printf "${str1}"                                                'Usage:'
+	printf "  ${TITLE}%s"                                             "${PROGNAME}"
+	printf "${str2}"                                                     '[' 'min' ']'
+	printf "${str2}${PLAIN}\n"                                           '<' 'max' '>'
+	printf "${str1}"                                                'Parameters:'
+	printf "${str3}"                                                    'min'
+	printf "${str4}"                                                        'included minimal value' '(default ' '0' ')'
+	printf "${str3}"                                                    'max'
+	printf "${str5}\n\n"                                                    'excluded maximal value'
+}

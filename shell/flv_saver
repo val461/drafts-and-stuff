@@ -1,0 +1,115 @@
+#!/bin/sh
+
+# interactive saver for flv videos in flash cache
+# this saves these videos into ${target_dir}
+# ${target_dir} should be empty before the script is launched
+# use with a nonempty argument to merely open the flash directory and quit thereafter
+
+target_dir='/home/val/mnt/Data/Downloads/Deluge/v/sas'
+names_file='/home/val/mnt/Data/Downloads/Deluge/v/names'
+#use_names_file=true
+use_names_file=false
+manual=false
+
+FILE_VIEWER="${FILE_VIEWER:-spacefm}"
+PROGNAME="flv_saver"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
+
+_line()
+{
+	cat <<-'EOF'
+###############################################################################
+	EOF
+}
+
+_getPID()
+{
+	# usage:
+	#	_getPID <process_name>
+	# output PID of process (doesn’t work for process names containing “grep”)
+	[ "${#}" = 1 ] || { echo '_getPID: bad usage' >&2; exit 1 ; }
+	local output=($(ps ax | grep "${1}" | grep -v "grep"))  # parse information about process ${1} into an array
+	echo "${output[0]}"                         # PID is the first element
+}
+
+# find out flash videos folder
+pid="$(_getPID 'plugin-container')"
+let 'pid=pid'	# cast to integer
+path="/proc/${pid}/fd"	# path to the flash videos folder
+
+if "${manual}" || ! [ -d "${path}" ]; then	# manual mode enabled or failure to parse PID
+	_line
+	cat <<-'EOF'
+		At any time, press ctrl-c to exit.
+		You are going to be asked the PID of flash plugin, because it could not
+		be determined automatically or the ‘manual’ parameter was set to ‘true’.
+		This PID is a number with at least one digit but usually more.
+		It should be the first number in the following message;
+		other numbers should not matter for our purpose.
+	EOF
+	_line
+	ps ax | grep plugin-container	# display relevant information
+	_line
+	echo 'Please type the PID of flash plugin (aka “plugin-container”).'
+	echo -n ' PID: '
+	read pid
+	path="/proc/${pid}/fd"	# path to the flash videos folder
+fi
+
+# cd to flash videos folder
+cd "${path}" || { echo "$? failed to cd to “ ${path} ”" >&2 ; exit 1; }
+echo "Current directory: ${PWD}"
+"${FILE_VIEWER}" . 1>/dev/null 2>&1 &
+
+[ -n "${1}" ] && exit 0
+
+# prepare copy
+mkdir -vp "${target_dir}" || { echo "$? failed to create directory “ ${target_dir} ”" >&2 ; exit 1; }
+_line
+printf 'For each file, please type a letter if it seems to be a video. Otherwise, simply\ntype enter.\n'
+echo 'Files:'
+
+_getSavePath()
+{
+	if "${use_names_file}" && [ -e "${names_file}" ]; then
+		name="$(head -n 1 "${names_file}" | tr ' ' '_')"    # take name from first line in names_file
+		name="$("${PROGDIR}/_utils/strings/stripchar" '_' "${name}")"   # strip trailing underscores
+		if [ -n "${name}" ]; then
+			save_path="${target_dir}/${name}.flv"
+		else
+			save_path="${target_dir}/${file}.flv"
+		fi
+		printf '%s\n' "$(tail -n +2 "${names_file}")" > "${names_file}"	# remove processed line
+	else
+		save_path="${target_dir}/${file}.flv"
+	fi
+}
+
+# backup names_file
+if [ -e "${names_file}" ]; then
+	cat "${names_file}" > "${names_file}.bak"
+fi
+
+# move files
+for file in *
+do
+	echo -n "${file} ? [n]: "
+	read ans
+	case "${ans}" in
+		n|'')
+			echo 'not copied';;
+		*)
+			_getSavePath
+			echo "Copying ${file} to ${save_path}"
+			cp -i "${file}" "${save_path}" || echo "error ${?} returned by cp while copying “ ${file} ” to “ ${save_path} ”" >&2 &
+	esac
+done
+
+${FILE_VIEWER} "${target_dir}"
+
+cat <<'EOF'
+
+Done.
+If everything went well, you should probably launch script ‘random’.
+
+EOF

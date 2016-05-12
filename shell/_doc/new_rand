@@ -1,0 +1,20 @@
+#!/bin/bash
+
+_usage()
+{
+	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'print random integers'
+	printf "\n${SECTION}%s${PLAIN}\n"                             'Usage:'
+	printf "  ${TITLE}%s"                                             "${PROGNAME}"
+	str=" ${SECTION}%s${PARAM}%s${SECTION}%s"
+	printf "${str}"                                                     '[' 'length' ']'
+	printf "${str}${PLAIN}\n"                                           '[' '<min> <max>' ']'
+	str="  ${PARAM}%s${PLAIN}\n"
+	printf "\n${SECTION}%s${PLAIN}\n"                               'Parameters:'
+	str2="      ${TEXT}%-30s %s${STRONG}%s${TEXT}%s${PLAIN}\n"
+	printf "${str}"                                                    'length'
+	printf "${str2}"                                                        'quantity of numbers to print' '(default ' '1' ')'
+	printf "${str}"                                                    'min'
+	printf "${str2}"                                                        'included minimal value' '(default ' '0' ')'
+	printf "${str}"                                                    'max'
+	printf "${str2}\n\n"                                                    'excluded maximal value' '(default ' '10' ')'
+}

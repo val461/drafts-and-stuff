@@ -1,0 +1,10 @@
+#!/usr/bin/sh
+
+# Run as root
+
+file_to_save="/home/val"
+where_to_save="/home/val.old"
+file_to_retrieve="/home/val.new"
+where_to_retrieve="/home/val"
+
+./retrieveUtility "${file_to_save}" "${where_to_save}" "${file_to_retrieve}" "${where_to_retrieve}"

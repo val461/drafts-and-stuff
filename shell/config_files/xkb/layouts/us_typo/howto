@@ -1,0 +1,5 @@
+edit /usr/share/X11/xkb/symbols/us
+	add the content of file ./xkb
+edit /usr/share/X11/xkb/rules/evdev.xml
+	add the <variant> contained in ./evdev.xml at the location indicated by its context
+

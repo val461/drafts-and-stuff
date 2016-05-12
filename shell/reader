@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# reader [del | episode_number]
+
+# read episodes in script folder
+# type x and enter to exit
+# type enter to watch episode
+# type something else and enter to skip the episode
+
+# set parameter ‘del’ to delete file ‘reader_data’, which stores episode information
+# set parameter ‘episode_number’ to override data in ‘reader_data’
+
+## Options
+
+ext='mkv'
+move_to_target_dir=false
+target_dir='../watched'
+
+## Code
+
+cd "$(dirname ${0})"
+
+if [ -n "${1}" ]; then
+	if [ "${1}" = 'del' ]; then
+		rm -vi reader_data
+	else
+		echo "${1}" > reader_data
+	fi
+fi
+if "${move_to_target_dir}"; then
+	mkdir -vp "${target_dir}" || { move_to_target_dir=false ; echo "Problem while creating directory ${target_dir}" >&2 ; }
+fi
+i="$(cat reader_data 2>/dev/null)" || i=1
+until [ "${ans}" = 'x' ];
+do
+	if [ "${i}" -gt 9 ]; then
+		file="$(echo *S??E${i}*."${ext}")"
+	else
+		file="$(echo *S??E0${i}*."${ext}")"
+	fi
+	echo "${file}"
+	read ans
+	[ -z "${ans}" ] && vlc "${file}" 1>/dev/null 2>&1 && "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+	echo "$[i++]" > reader_data
+done

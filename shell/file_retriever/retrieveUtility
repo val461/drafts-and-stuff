@@ -1,0 +1,13 @@
+#!/usr/bin/sh
+
+# Run as root
+
+[ "X$#" != "X4" ] && echo "retrieveUtility takes 4 arguments." >&2 && exit 1
+
+file_to_save="${1}"
+where_to_save="${2}"
+file_to_retrieve="${3}"
+where_to_retrieve="${4}"
+
+sudo mv -v "${file_to_save}" "${where_to_save}" && sudo mv -v "${file_to_retrieve}" "${where_to_retrieve}" && echo "Success" || echo "Error $?"
+

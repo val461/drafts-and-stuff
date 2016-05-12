@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# stripchar - strip the leading and trailing occurrences of the specified character in the specified string
+
+PROGNAME="stripchar"
+PROGDIR="$(dirname "${0}")"
+SCRIPTS_ROOT="${HOME}/mnt/Data/Documents/Dev/languages/scripting/shell"
+
+# load libraries
+. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+
+if [ "${#}" -eq 0 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+    _usage
+    exit 0
+elif [ "${#}" -gt 2 ]; then
+    _error "stripchar: bad usage"
+    _usage >&2
+    exit 1
+fi
+
+char=' '
+if [ "${#}" -gt 1 ]; then
+    char="${1:- }"
+    shift
+fi
+char="$(echo "${char}" | head -c 1)"    # only one character
+
+string="${1}"
+if [ -z "${string}" ]; then
+    exit 0
+fi
+
+_charRemoved()
+{
+    case "${string}" in
+        "${char}"*)                         # present at the beginning
+            string="${string#[${char}]}"    # remove prefix
+            return 1;;
+        *"${char}")                         # present at the end
+            string="${string%[${char}]}"    # remove suffix
+            return 1;;
+        *)
+            return 0;;              # absent from both the beginning and the end
+    esac
+    _bug "${PROGNAME}: line ${LINENO}: _charPresent: reached unreachable"
+}
+
+until _charRemoved
+do
+    _charRemoved
+done
+
+echo "${string}"

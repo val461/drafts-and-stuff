@@ -1,0 +1,137 @@
+#!/bin/bash
+
+# writer - interactive HTML template-filler
+
+## parameter
+
+root_dir="${HOME}/Documents/Texts/Mine/Thoughts/Classement_par_date"
+
+## code
+
+PROGNAME="writer"
+PROGDIR="$(dirname "${0}")"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+    _usage
+    exit 0
+fi
+
+# parse date
+date="$(date '+%F')"                # YYYY-MM-DD
+year="${date%%-*}"                  # YYYY
+date="${date#*-}"                   # MM-DD
+day="${date#*-}"                    # DD
+month="${date%-*}"                  # MM
+date="${year}\/${month}\/${day}"    # YYYY\/MM\/DD (escaped slashes for ed)
+
+# make directories
+target_dir="${root_dir}/${year}/${month}"
+mkdir -p "${target_dir}"    || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while making directory “ ${target_dir} ”"; exit 1; }
+cd "${target_dir}"          || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while changing to directory “ ${target_dir} ”"; exit 1; }
+file="${day}.html"
+nautilus .
+
+_setHR()
+{
+    [ -z "${hr}" ] && hr='\t\t<hr/>\n'
+}
+
+_retrieveTitle()
+{
+    local file="${root_dir}/TITLES"
+    if [ -f "${file}" ]; then
+        printf '%s\n'   \
+            '1'         \
+            'd'         \
+            'wq'        \
+            | ed -s "${file}" || echo "${date}"
+    else
+        echo "${date}"
+    fi
+}
+
+if [ -f "${file}" ]; then   # file already created
+    _setHR  # prepare appending a new article
+elif [ -e "${file}" ]; then # not a regular file
+    _error '${PROGNAME}: line ${LINENO}: “ ${file} ” is not a regular file'
+    _abort
+else                        # file not created yet
+    # create file
+    cp '../../template.html' "${file}" || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while copying template.html"; exit 1; }
+    # start filling in the template
+    nautilus "${target_dir}"
+    title="$(_retrieveTitle)"
+    printf '%s\n'                   \
+        ",s/__D__/${title}/g"       \
+        'wq'                        \
+        | ed -s "${file}" 1>/dev/null || { _error "${PROGNAME}: line ${LINENO}: error code ${?} returned by ed"; exit 1; }
+    # update hyperlinks between previous and current file
+    previous_file="$(cat "${root_dir}/PREVIOUS")"
+    case "${previous_file}" in
+        */*)
+            # update previous file
+            address="..\/${year}\/${month}\/${file}"
+            printf '%s\n'                   \
+                ",s/__NEXT__/${address}/g"       \
+                'wq'                        \
+                | ed -s "${previous_file}" 1>/dev/null || { _error "${PROGNAME}: line ${LINENO}: error code ${?} returned by ed"; exit 1; }
+            # update current file
+            address="..\/${year}\/${month}\/${previous_file}"
+            printf '%s\n'                                               \
+                ",s/__PREVIOUS__/${address}/g"    \
+                'wq'                                                    \
+                | ed -s "${file}" 1>/dev/null || { _error "${PROGNAME}: line ${LINENO}: error code ${?} returned by ed"; exit 1; }
+            ;;
+    esac
+    # log file name
+    echo "../${year}/${month}/${file}" > "${root_dir}/PREVIOUS"
+fi
+
+# articles loop
+while :
+do
+    # choose a name
+    title=""
+    while _confirm "Title: “ ${title} ”. Change?"
+    do
+        printf 'Title: '
+        read title
+    done
+    title="\t\t<h2><i>${title}</i></h2>\n"
+    par_begin='\t\t<p>\n\t\t\t'
+    par_end='\n\t\t</p>'
+    text="${hr}${title}"
+    # let user fill the body
+cat <<'EOF'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type <ctrl-D> to quit editing.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EOF
+    # edit mode
+    while read paragraph
+    do
+        if [ "${paragraph}" = '.' ]; then
+            break
+        else
+            paragraph="$(printf '%s' "${paragraph}" | replace '...' '&hellip;')"
+            paragraph="$(printf '%s' "${paragraph}" | replace '||' '</i>')"
+            paragraph="$(printf '%s' "${paragraph}" | replace '|' '<i>')"
+            paragraph="$(printf '%s' "${paragraph}" | replace ''' '’')"
+            paragraph="$(printf '%s' "${paragraph}" | replace '’' '&rsquo;')"
+        fi
+        text="${text}${par_begin}${paragraph}${par_end}"
+    done
+    # save changes
+    printf '%b\n'                   \
+        '/<!--CONTENT_END-->/'      \
+        'i'                         \
+        "${text}"                   \
+        '.'                         \
+        'wq'                        \
+        | ed -s "${file}" 1>/dev/null || { _error "${PROGNAME}: line ${LINENO}: error code ${?} returned by ed"; exit 1; }
+    _confirm 'New article?' || exit 0
+    _setHR
+done

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+PROGNAME="$(basename "${0}")"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+
+. "${PROGDIR}/_utils/colors" || exit 1
+
+disp()
+{
+	# shows a code applied to itself
+	# usage:
+	#	disp [PLAIN]
+	#		reset display
+	#   disp <font_type>
+	#		set display
+	#   disp <color_mode> <color>
+	#		set display
+	printf "${PLAIN}"
+	if [ "$#" = 1 ]; then
+		tag='${'"${1}"'}'
+		eval "printf ${tag}"
+		printf "\"${tag}\"\n"
+	elif [ "$#" = 2 ]; then
+		tag='${'"${1}"'}${'"${2}"'}'
+		eval "printf ${tag}"
+		printf "\"${tag}\""
+		if [ "${1}" = 'F' ]; then
+			$onetab && printf "\t${BOLD}\"${tag}\"" || printf "\t\t${BOLD}\"${tag}\""
+		fi
+		echo
+	fi
+}
+
+clear
+onetab=false
+disp UNDERLINED
+disp REVERSE
+disp F BLACK
+disp F RED
+disp F GREEN
+disp F YELLOW
+disp F BLUE
+onetab=true
+disp F MAGENTA
+onetab=false
+disp F CYAN
+printf "${B}${BLACK}"
+disp F WHITE
+disp B BLACK
+disp B RED
+disp B GREEN
+disp B YELLOW
+disp B BLUE
+disp B MAGENTA
+disp B CYAN
+printf "${F}${BLACK}"
+disp B WHITE
+disp PLAIN

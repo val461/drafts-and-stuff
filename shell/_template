@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# _template - a template for shell scripts	#FIXME
+
+integer=1	#FIXME
+
+PROGNAME="$(basename "${0}")"
+PROGDIR="$(dirname "${0}")"
+
+_usage()	#FIXME
+{
+	cat <<-EOF
+
+	${PROGNAME} - a template for shell scripts
+	Usage:
+	  ${PROGNAME} [integer] <file>
+	Parameters:
+	  [integer]
+	      a number
+	  <file>
+	      a file
+
+	EOF
+}
+
+if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+fi
+
+# load libraries
+#. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+let "integer=${1:-${integer}}"	# if set, cast ${1} to integer (otherwise use default value)	#FIXME

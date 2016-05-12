@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo '### USE XTERM ! ###'
+if sudo pacman -Syyu; then
+    echo 'updating mirror list with reflector'
+    sudo reflector --sort score --save /etc/pacman.d/mirrorlist
+else
+    echo "erreur code ${?} retournée par reflector"
+fi
+zsh

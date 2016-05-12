@@ -1,0 +1,8 @@
+#ed command to add gnome-compatibility
+ed /usr/share/X11/xkb/rules/evdev.xml
+    /<layout>/
+    i
+    # add here the contents of ./evdev.xml from <layout> to </layout>
+    .
+    wq
+cp xkb /usr/share/X11/xkb/symbols/val

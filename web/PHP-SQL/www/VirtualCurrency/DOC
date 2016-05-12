@@ -1,0 +1,9 @@
+Some parameters need to be set in the following files:
+phptools/constants.php
+phptools/sql.php
+
+Don't use address 0 to store any amount, its only purposes are to store admin password and fees that are not yet redistributed.
+
+If you need to reset your admin password, you can do so by editing and loading the following page:
+admin/resetpassword.php
+

@@ -1,0 +1,95 @@
+#!/bin/sh
+
+# sudo ./luminosity
+# interactive script to set screen brightness
+
+#modifier=200
+slowness=3
+
+folder="/sys/class/backlight/intel_backlight"
+file_brightness="${folder}/brightness"
+file_max="${folder}/max_brightness"
+
+echo
+printf '%7s+[enter]: %s\n'                  \
+        'q'         'quit'                  \
+        'number'    'new slowness'          \
+        '[+]'       'go upwards'            \
+        '[-]'       'go downwards'          \
+        'nothing'   'change luminosity'
+#printf  '\ncurrent modifier: %s ' "${modifier}"
+#printf  '\ncurrent slowness: %s\n\n' "${slowness}"
+echo
+
+_switchSign()
+{
+    case "${op}" in
+        '-') op='+';;
+         * ) op='-';;
+    esac
+    _printDirection
+}
+
+_printDirection()
+{
+    case "${op}" in
+        '-') str='descending' ;;
+        '+') str='ascending'  ;;
+    esac
+
+#    if [ -z "${1}" ]; then
+#        echo "${str}"
+#    else
+        echo "(${str})"
+#    fi
+}
+
+op='-'
+#_printDirection 1
+#echo
+
+max="$(cat "${file_max}")"
+brightness="$(cat "${file_brightness}")"
+
+printf  '%s: %s\n'                          \
+        'max brightness'        "${max}"    \
+        'current brightness'    "${brightness}"
+
+while true
+do
+    let "modifier = ${brightness} / ${slowness}"
+    [ "${modifier}" -ge 1 ] || modifier=1
+    printf  'current slowness: %s ' "${slowness}"
+	_printDirection
+	read ans
+	case "${ans}" in
+            '') ;;
+           x|X|q|Q) break ;;
+            +*) op='+' ; _printDirection ; continue ;;
+            -*) op='-' ; _printDirection ; continue ;;
+      *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
+             *) [ "${ans}" -ge 1 ] && let "slowness=${ans}"
+	            printf 'slowness: %s ' "${slowness}"
+	            _printDirection 1
+	            continue
+	            ;;
+#           +*) op='+'; _printDirection ; continue ;;
+#           -*) _switchSign ; continue ;;
+             #~ *) let "modifier=${ans}"
+	            #~ printf 'modifier: %s ' "${modifier}"
+	            #~ _printDirection 1
+	            #~ continue
+	            #~ ;;
+	esac
+    let "new=brightness ${op} ${modifier}"
+    if [ "${new}" -lt 1 ]; then
+        echo "error: brightness (${new}) must be positive." >&2
+        new=1
+    elif [ "${new}" -gt "${max}" ]; then
+        echo "error: brightness (${new}) must be inferior to ${max}" >&2
+        new="${max}"
+    fi
+    echo "${new}" > ${file_brightness}
+	brightness="$(cat "${file_brightness}")"
+	echo "current brightness: ${brightness}"
+done

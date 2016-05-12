@@ -1,0 +1,151 @@
+#!/bin/bash
+
+# incr_version - determine next version
+
+PROGNAME="incr_version"
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+SCRIPTS_ROOT="${HOME}/Documents/Dev/languages/scripting/shell"
+
+# load libraries
+. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+. "${SCRIPTS_ROOT}/_utils/math/load_types" || _bug "line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/load_types ”"
+
+if [ "${#}" -eq 0 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+fi
+
+while [ "${#}" -gt 0 ]
+do
+    arg="${1}"
+    case "${arg}" in
+        -h|--help)
+            shift
+            _usage
+            exit 0
+            ;;
+        M|major|Major|MAJOR)
+            shift
+            update_type='major'
+            ;;
+        m|minor|Minor|MINOR)
+            shift
+            update_type='minor'
+            ;;
+        p|P|patch|Patch|PATCH)
+            shift
+            update_type='patch'
+            ;;
+        *.*.*.*)
+            shift
+            _error "line ${LINENO}: bad format (“${arg}”)"
+            exit 1
+            ;;
+        *.*.*)
+            shift
+            if [ -z "${M}" ] && [ -z "${m}" ] && [ -z "${p}" ]; then
+                M="${arg%%.*}"
+                p="${arg##*.}"
+                m="${arg##${M}.}"
+                m="${m%%.${p}}"
+                echo "m ${m}"
+                if _is_int "${M}" && _is_int "${m}" && _is_int "${p}"; then
+                    M="${M}"
+                    m="${m}"
+                    p="${p}"
+                else
+                    _error "line ${LINENO}: bad format (“${arg}” understood as “${M}.${m}.${p}”)"
+                    exit 1
+                fi
+            else
+                _error "line ${LINENO}: bad usage (“${arg}”)"
+                exit 1
+            fi
+            ;;
+        *.*)
+            shift
+            if [ -z "${M}" ] && [ -z "${m}" ] && [ -z "${p}" ]; then
+                M="${arg%.*}"
+                m="${arg#*.}"
+            else
+                _error "line ${LINENO}: bad usage (“${arg}”)"
+                exit 1
+            fi
+            ;;
+        '')
+            shift
+            ;;
+        *[!0-9]*) # NaN
+            shift
+            _error "line ${LINENO}: bad format (“${arg}”)"
+            exit 1
+            ;;
+        *)          # integer
+            shift
+            if _is_int "${arg}"; then
+                if   [ -z "${M}" ]; then M="${arg}"
+                elif [ -z "${m}" ]; then m="${arg}"
+                elif [ -z "${p}" ]; then p="${arg}"
+                fi
+            else
+                _error "line ${LINENO}: bad format (“${arg}”)"
+                exit 1
+            fi
+            ;;
+    esac
+    if [ -n "${M}" ] && [ -n "${m}" ]; then
+        if [ -n "${p}" ]; then
+            if _is_int "${M}" && _is_int "${m}" && _is_int "${p}"; then
+                break
+            else
+                _error "line ${LINENO}: bad format (“${M}.${m}.${p}”)"
+                exit 1
+            fi
+        else
+            if _is_int "${M}" && _is_int "${m}"; then
+                continue
+            else
+                _error "line ${LINENO}: bad format (“${M}.${m}”)"
+                exit 1
+            fi
+        fi
+    elif [ "${#}" -lt 1 ]; then
+        _error "line ${LINENO}: bad format (“${M}.${m}”)"
+        exit 1
+    fi
+done
+
+if [ -n "${p}" ]; then
+    case "${update_type}" in
+        ''|patch)
+            let 'p++'
+            ;;
+        minor)
+            let 'm++'
+            ;;
+        major)
+            let 'M++'
+            ;;
+        *)
+            _bug "line ${LINENO}: reached unreachable"
+            ;;
+    esac
+    printf "${M}.${m}.${p}\n"
+else
+    case "${update_type}" in
+        ''|minor)
+            let 'm++'
+            ;;
+        major)
+            let 'M++'
+            ;;
+        patch)
+            _error "line ${LINENO}: no patch version specified"
+            exit 1
+            ;;
+        *)
+            _bug "line ${LINENO}: reached unreachable"
+            ;;
+    esac
+    printf "${M}.${m}\n"
+fi

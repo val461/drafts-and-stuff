@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# . colors
+# set colors and font types constants
+
+# if it doesn't work, try replacing '' by '\e'
+
+# reset colors and font type
+PLAIN='[0m'
+# specify font type (can be used simultaneously with colors)
+BOLD='[1m'
+UNDERLINED='[4m'
+BLINKING='[5m'		# blinking doesn't work
+REVERSE='[7m'		# use background color as foreground and viceversa
+
+# specify colors
+#	usage: <${color_mode}><${color}>
+#	‘color_mode’ possible values:
+F='[3'	# foreground
+B='[4'	# background
+# 		‘color’ possible values:
+BLACK='0m'
+RED='1m'
+GREEN='2m'
+YELLOW='3m'
+BLUE='4m'
+MAGENTA='5m'
+CYAN='6m'
+WHITE='7m'

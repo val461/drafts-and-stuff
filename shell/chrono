@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# usage: chrono [n] [unit]
+#   ‘n’: number of units of time to wait (must be an integer).
+#        If unspecified, wait indefinitely.
+#   ‘unit’: either of ‘s’, ‘m’, ‘h’ or ‘d’ (default: ‘m’)
+#       A message shows up every ${step} ${unit}.
+
+unit='m'
+step=1
+
+_manual()
+{
+    # launch chronometer
+    i=0
+    echo "${i}${unit}"
+    while :
+    do
+        sleep "${step}${unit}"
+        let 'i++'
+        echo "${i}${unit}"
+    done
+}
+
+case "${#}" in
+    0)
+        _manual
+        exit
+        ;;
+	1)
+        # parse first argument
+        case "${1}" in
+            s|m|h|d)    # manual mode
+                unit="${2}"
+                _manual
+                exit
+                ;;
+            *)          # automatic mode
+        esac
+		;;
+	2)
+        # parse second argument
+        case "${2}" in
+            s|m|h|d)
+                unit="${2}"
+                ;;
+            *)
+                echo "chrono: error: second argument is invalid" >&2
+                exit 1
+        esac
+		;;
+	*)
+		echo "error: bad usage" >&2
+		exit 1
+esac
+
+# parse first argument
+tmp_var="${1}"
+let 'total_time=tmp_var'
+
+# launch chronometer
+i=0
+echo "${i} / ${total_time}${unit}"
+while [ "${i}" -lt "${total_time}" ]
+do
+    sleep "${step}${unit}"
+    let 'i++'
+    echo "${i} / ${total_time}${unit}"
+done

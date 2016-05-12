@@ -1,0 +1,133 @@
+#!/bin/bash
+
+# do_backup [s]
+# When run, create a backup from given files/folders.
+# Option s enables silent mode
+
+target='/home/val/mnt/Data/BAK'
+
+debug=false
+#debug=true  # line uncommented by ed at the end of the script
+
+interactive=true
+
+if [ "${#}" -gt 1 ]; then
+    _errorUsage
+else
+    case "${1}" in
+        '') ;;
+        s)  interactive=false;;
+        *)  _errorUsage;;
+    esac
+fi
+
+_errorUsage()
+{
+	echo "do_backup: bad usage; read source" >&2
+	exit 1
+}
+
+_line()
+{
+cat<<'EOF'
+###############################################################################
+EOF
+}
+
+_proceed()
+{
+    local ans
+    _line
+    if ! "${debug}"; then
+        mkdir -p "${destination}"
+        unset error
+        cp -auvL -t "${destination}" "${files[@]}" || error="${?}"
+        if [ -n "${error}" ]; then
+            echo "do_backup: error ‘${error}’ returned by cp" >&2
+            "${interactive}" || exit 1
+        fi
+    fi
+    unset files
+    if "${interactive}"; then
+        echo 'Press [enter] to continue'
+        read ans
+        [ -z "${ans}" ] || { echo "User aborted ; exiting." >&2;  exit 1; }
+    fi
+}
+
+_encrypt()
+{
+    source="${1}"
+    aim="${target}/${source}_extract.sh"
+    if ! "${debug}" && /home/val/bin/crypto/mkselfextract "${source}"; then
+        mv -v "${source}_extract.sh" "${destination}"
+    else
+        echo "do_backup: error while encrypting “${source}”" >&2
+        if "${interactive}"; then
+            echo 'Press [enter] to continue'
+            read ans
+            [ -z "${ans}" ] || { echo "User aborted ; exiting." >&2;  exit 1; }
+        fi
+    fi
+}
+
+destination="${target}/home"
+files[${#files[*]}]='/home/val/Documents'
+#~ files[${#files[*]}]='/home/val/.cabal'
+#~ files[${#files[*]}]='/home/val/.elinks'
+#~ files[${#files[*]}]='/home/val/.i3'
+_encrypt '/home/val/.mozilla'
+#~ files[${#files[*]}]='/home/val/.Skype'
+#~ files[${#files[*]}]='/home/val/tmp'
+~ files[${#files[*]}]='/home/val/.vimrc'
+#~ files[${#files[*]}]='/home/val/.xinitrc'
+#~ files[${#files[*]}]='/home/val/.Xdefaults'
+#~ files[${#files[*]}]='/home/val/.xsession'
+#~ files[${#files[*]}]='/home/val/.zlogin'
+#~ files[${#files[*]}]='/home/val/.zshrc'
+_proceed
+
+#~ destination="${target}/home/.config"
+#~ files[${#files[*]}]='/home/val/.config/cherrytree'
+#~ files[${#files[*]}]='/home/val/.config/evince'
+#~ files[${#files[*]}]='/home/val/.config/filezilla'
+#~ files[${#files[*]}]='/home/val/.config/geany'
+#~ files[${#files[*]}]='/home/val/.config/gummi'
+#~ files[${#files[*]}]='/home/val/.config/spacefm'
+#~ files[${#files[*]}]='/home/val/.config/transmission'
+#~ files[${#files[*]}]='/home/val/.config/vlc'
+#~ _proceed
+
+#~ destination="${target}/boot"
+#~ files[${#files[*]}]='/boot'
+#~ _proceed
+
+#~ destination="${target}/etc"
+#~ files[${#files[*]}]='/etc/i3status.conf'
+#~ files[${#files[*]}]='/etc/nanorc'
+#~ files[${#files[*]}]='/etc/netctl'
+#~ files[${#files[*]}]='/etc/resolv.conf'
+#~ files[${#files[*]}]='/etc/resolvconf.conf'
+#~ files[${#files[*]}]='/etc/resolvconf.default.conf'
+#~ files[${#files[*]}]='/etc/resolvconf.odns.conf'
+#~ files[${#files[*]}]='/etc/resolvconf.resgp.conf'
+~ files[${#files[*]}]='/etc/vimrc'
+#~ _proceed
+
+#~ destination="${target}/etc/X11/xorg.conf.d"
+#~ files[${#files[*]}]='/etc/X11/xorg.conf.d/10-keyboard.conf'
+#~ files[${#files[*]}]='/etc/X11/xorg.conf.d/50-synaptics.conf'
+#~ _proceed
+
+#~ destination="${target}/usr/share/X11/xkb/symbols"
+#~ files[${#files[*]}]='/usr/share/X11/xkb/symbols/val'
+#~ _proceed
+
+#~ if ! "${debug}"; then
+    #~ # enable debug mode for next time
+    #~ printf '%s\n' \
+        #~ '/#debug=true/' \
+        #~ 's/#debug=true/debug=true/' \
+        #~ 'wq' \
+        #~ | ed -s "${0}" >/dev/null
+#~ fi

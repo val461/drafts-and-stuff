@@ -1,0 +1,18 @@
+#!/bin/sh
+
+bin_folder="$(dirname "${0}")/bin"
+
+cd "${bin_folder}" || { echo "could not change to directory “${bin_folder}”" >&2; exit 1; }
+if [ "$(echo *)" = '*' ]; then
+	echo "clean.sh: directory “${bin_folder}” is empty!" >&2
+	exit 1
+else
+	echo
+	printf 'Delete contents of %s%n? [enter]/ctrl-c %s' "${PWD}"
+	read ans
+	rm -vR * || exit $?
+	echo
+	exit 0
+fi
+echo "bug: reached unreachable (line ${LINENO})"
+exit 2

@@ -1,0 +1,18 @@
+_usage()	#FIXME
+{
+	cat <<-EOF
+
+	${TITLE}stripchar${DESC} - strip a character from a string${PLAIN}
+
+	${SECTION}Usage:${PLAIN}
+	  ${TITLE}${PROGNAME} ${SECTION}[${PARAM}character${SECTION}] <${PARAM}string${SECTION}>${PLAIN}
+	      ${DESC}strip the leading and trailing occurrences of ${PARAM}character${TEXT} in ${PARAM}string${PLAIN}
+
+	${SECTION}Parameters:${PLAIN}
+	  ${PARAM}character${PLAIN}
+	      ${TEXT}character to strip from ${PARAM}string${TEXT} (default is ${PARAM}[space]${TEXT})${PLAIN}
+	  ${PARAM}string${PLAIN}
+	      ${TEXT}string to strip${PLAIN}
+
+	EOF
+}

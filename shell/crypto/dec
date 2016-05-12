@@ -1,0 +1,12 @@
+#!/bin/bash
+# dec <file>
+# ‘file’ should have extension .tar.gz.enc
+
+source="${1}"
+
+if [ -e "${source}" ]; then
+    openssl enc -bf -d -a -in "${source}" -out "/dev/stderr" 2>&1 1>/dev/null | tar -xz
+else
+    echo "dec: error: invalid path: ${source}" >&2
+    exit 2
+fi

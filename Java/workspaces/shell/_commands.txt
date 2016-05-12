@@ -1,0 +1,12 @@
+# ${bin_folder} defaults to current working directory.
+
+# compile:
+javac [-d "${bin_folder}"] *.java
+
+# run:
+java [-cp "${bin_folder}"] ${Qualified name to class}
+# e.g., to run class 'MyClass' of package 'Project', type "java Project.MyClass".
+
+# run with assertions enabled:
+java -ea ${Qualified name to class}
+

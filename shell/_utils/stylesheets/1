@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# . stylesheets/1
+# set a list of tags based on constants defined in file _utils/colors
+
+TEXT="${PLAIN}${F}${BLUE}"
+STRONG="${BOLD}${F}${CYAN}"
+TITLE="${BOLD}${F}${WHITE}"
+DESC="${TEXT}"
+PARAM="${BOLD}${F}${CYAN}"
+SECTION="${BOLD}${F}${BLUE}"

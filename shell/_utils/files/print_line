@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# print_line - print specified line of a file
+
+PROGNAME="print_line"
+PROGDIR="$(dirname "${0}")"
+SCRIPTS_ROOT="${HOME}/Documents/Dev/languages/scripting/shell"
+
+# load libraries
+. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+. "${SCRIPTS_ROOT}/_utils/math/load_types" || _bug "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/load_types ”"
+
+if [ "${#}" -eq 0 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+elif [ "${#}" -eq 1 ]; then
+    line=1
+else
+    line="$(_to_natural ${1:-1})"
+    shift
+fi
+
+if [ "${line}" -lt 1 ]; then
+    _error "${PROGNAME}: bad value of ‘line’"
+    exit 1
+fi
+
+while [ "${#}" -gt 0 ]
+do
+    file="${1}"
+    shift
+    if [ -e "${file}" ]; then
+        if [ -f "${file}" ]; then
+            echo "${line}p" | ed --silent "${file}"
+        else
+            _error "${PROGNAME}: not a regular file: ${file}"
+        fi
+    else
+        _error "${PROGNAME}: file not found: ${file}"
+    fi
+done

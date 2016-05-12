@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# ./keyboard [set]
+# Set keyboard config.
+# Without ‘set’ parameter, information will only be retrieved.
+
+# Parameters
+
+	verbose=false
+	layouts=('val+t2' 'fr+bepo' 'us' 'val+t1')
+#	layouts=('us')
+
+	#options=('terminate:ctrl_alt_bksp' 'shift:both_capslock' 'caps:none')
+	# comment unwanted options:
+
+	# shortcut to kill X (and log out abruptly)
+	options[${#options[*]}]='terminate:ctrl_alt_bksp'
+
+	# numeric keypad keys always enter digits
+#	options[${#options[*]}]='numpad:mac'
+
+	# cancel CapsLock when a Shift key is pressed
+	options[${#options[*]}]='shift:breaks_caps'
+
+	# disable capslock key ; press both shift keys to enable capslock mode
+	#{ options[${#options[*]}]='shift:both_capslock' ; options[${#options[*]}]='caps:none' ; }
+
+	# 
+	#options[${#options[*]}]=
+
+# Code
+
+set=false
+[ "${1}" = "set" ] && set=true
+
+get=true
+$set && get=false
+$verbose && get=true
+
+if "${set}"; then
+	l="${#layouts[@]}"		# arrays'sizes
+	o="${#options[@]}"
+
+#	$verbose && { echo ; echo "${l} layouts and ${o} options to set"; }
+
+	str='['
+	prefix="('xkb', '"
+	suffix="')"
+
+	str="${str}${prefix}${layouts[0]}${suffix}"
+	i=1
+	while [ "${i}" -lt "${l}" ];
+	do
+		str="${str}, ${prefix}${layouts[$i]}${suffix}"
+		let 'i++'
+	done
+	str="${str}]"
+
+	gsettings set org.gnome.desktop.input-sources sources "${str}"
+
+	str="['${options[0]}'"
+	i=1
+	while [ "${i}" -lt "${o}" ];
+	do
+		str="${str}, '${options[$i]}'"
+		let 'i++'
+	done
+	str="${str}]"
+
+	gsettings set org.gnome.desktop.input-sources xkb-options "${str}"
+fi
+
+#$verbose && { echo ; echo 'Layouts:'; }
+$get && echo
+$get && gsettings get org.gnome.desktop.input-sources sources
+#$verbose && echo 'Options:'
+$get && gsettings get org.gnome.desktop.input-sources xkb-options
+$get && echo
+
+exit 0

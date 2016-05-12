@@ -1,0 +1,128 @@
+#!/bin/bash
+
+# template - interactive template filler
+
+PROGNAME="template"
+PROGDIR="$(dirname "${0}")"
+
+# load libraries
+. "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
+
+if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+fi
+
+# input file name
+file="${1:-default_path}"
+ask=true
+while "${ask}"
+do
+	if _confirm "File: “ ${file} ”. Change?"; then
+		echo -n "File: "
+		read ans
+		if [ -n "${ans}" ]; then
+			file="${ans}"
+		else
+			_error "Empty name."
+		fi
+	else
+		if [ -d "${file}" ]; then
+			_error "File “ ${file} ” is a directory."
+		elif [ -e "${file}" ]; then
+			if _confirm "File “ ${file} ” exists. Override?"; then
+				ask=false
+			fi
+		else
+			ask=false
+		fi
+	fi
+done
+
+# input script name
+name="${file##*/}"
+if false; then  # script used to ask for confirmation
+    while _confirm "Name in description: “ ${name} ”. Change?"
+    do
+	    echo -n "Name in description: "
+	    read name
+    done
+fi
+
+# create file with execution permissions
+touch "${file}" && chmod a+x "${file}" || { _error "${?} line ${LINENO} while creating “ ${file} ” with execution permissions" >&2 ; exit 1; }
+doc_file="_doc/${name}"
+touch "${doc_file}"
+
+# input script description
+desc="desc"
+while _confirm "Description: “ ${desc} ”\nChange?"
+do
+	echo -n "Description: "
+	read desc
+done
+
+# fill file
+# part 1
+cat > "${file}" <<EoF
+#!/bin/bash
+
+# ${name} - ${desc}
+
+PROGNAME="${name}"
+EoF
+
+# part 2
+cat >> "${file}" <<'EoF'
+PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
+SCRIPTS_ROOT="${HOME}/Documents/Dev/languages/scripting/shell"
+
+# load libraries
+. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+#. "${SCRIPTS_ROOT}/_utils/math/load_types" || _bug "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/load_types ”"
+
+if [ "${#}" -eq 0 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+	_usage
+	exit 0
+fi
+EoF
+
+# fill doc
+# part 1
+cat > "${doc_file}" <<'EoF'
+#!/bin/bash
+
+_usage()
+{
+	str1="\n${SECTION}%s${PLAIN}\n"
+	str2=" ${SECTION}%s${PARAM}%s${SECTION}%s"
+	str3="  ${PARAM}%s${PLAIN}\n"
+	str4="      ${TEXT}%s %s${STRONG}%s${TEXT}%s${PLAIN}\n"
+	str5="      ${TEXT}%s${PLAIN}\n"
+EoF
+
+# part 2
+printf '\t%s'               'printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"'  >> "${doc_file}"
+printf "        '%s'\n"     "${desc}"                                               >> "${doc_file}"
+
+# part 3
+cat >> "${doc_file}" <<'EoF'
+	printf "${str1}"                                                'Usage:'
+	printf "  ${TITLE}%s"                                             "${PROGNAME}"
+	printf "${str2}"                                                     '[' 'options' ']'
+	printf "${str2}"                                                     '[' 'min' ']'
+	printf "${str2}${PLAIN}\n"                                           '<' 'max' '>'
+	printf "${str1}"                                                'Parameters:'
+	printf "${str3}"                                                    'min'
+	printf "${str4}"                                                        'included minimal value' '(default ' '0' ')'
+	printf "${str3}"                                                    'max'
+	printf "${str5}"                                                        'excluded maximal value'
+	printf "${str1}"                                                'Options:'
+	printf "${str3}"                                                    '-h, --help'
+	printf "${str5}"                                                        'display this help message'
+	printf '\n\n'
+}
+EoF
+
+_info "Done."
+gedit "${file}" "${doc_file}" 1>/dev/null 2>&1 &
