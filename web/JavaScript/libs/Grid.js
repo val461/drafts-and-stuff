@@ -26,6 +26,7 @@ function makeGrid(gameArea) {
     var cursorOnATile = false;
 
     var intervalID = null;
+    var timeoutID = null;
     var keysDown = {};
 
     // private methods
@@ -48,13 +49,31 @@ function makeGrid(gameArea) {
 
     function handleKeyDown(event) {
         var key = event.keyCode;
-        console.info("Pressed: " + String(key));
+        //~ console.info("Pressed: " + String(key));
         if (key === Keyboard.ENTER) {
             instance.renew();
         } else if (key === Keyboard.SPACE) {
             instance.toggleAnimation();
+        } else if (key === Keyboard.B) {
+            instance.mode = instance.mode === 1 ? 2 : 1;
+            instance.renew();
+        } else if (key === Keyboard.H) {
+            alert("* [mouse]: paint\n* [enter]: generate a new scenery\n* [space]: play / pause\n* [P]: toggle pretty mode (enabled by default)\n* [B]: toggle black mode\n* [H]: show this help");
+        } else if (key === Keyboard.P) {
+            instance.mode = instance.mode === 2 ? 0 : 2;
+            instance.renew();
         }
+        /** 
+*/
     }
+
+    function reload() {
+        // window.location.reload bugs if directly specified in setTimeout
+        window.location.reload();
+    }
+
+    // public fields
+    instance.mode = 2;
 
     // initialize 2D-array ‘instance.tiles’
     (function () {
@@ -89,10 +108,18 @@ function makeGrid(gameArea) {
     instance.renew = function () {
         var row;
         var column;
+        renewComponents();
+        gameArea.mode = instance.mode;
         gameArea.clear();
         for (row = 0; row < nRows; row++) {
             for (column = 0; column < nCols; column++) {
-                instance.tiles[row][column].color.initialize();
+                if (instance.mode === 0) {
+                    instance.tiles[row][column].color.initialize();
+                } else if (instance.mode === 1) {
+                    instance.tiles[row][column].color.initialize(0, 0, 0);
+                } else if (instance.mode === 2) {
+                    instance.tiles[row][column].color.initializePretty();
+                }
                 instance.tiles[row][column].draw();
             }
         }
@@ -130,7 +157,6 @@ function makeGrid(gameArea) {
                 cursorOnATile = true;
                 if (row !== previousCursorLocation.row || column !== previousCursorLocation.column) {
                     cursorOnANewTile = true;
-                    //~ instance.tiles[row][column].color.initialize(0, Random.between(160, 255), 0);
                     cursorColor.nextStep();
                     cursorColor.apply();
                     instance.tiles[row][column].drawNoColor();
@@ -151,6 +177,14 @@ function makeGrid(gameArea) {
 
     gameArea.getCanvas().addEventListener("mousemove", instance.magicCursor);
     addEventListener("keydown", handleKeyDown);
+
+    // reload after resizing to prevent a distorted game experience
+    window.onresize = function(){
+        if (timeoutID !== null) {
+            clearTimeout(timeoutID);
+        }
+        timeoutID = setTimeout(reload, 100);
+    };
 
     return instance;
 }

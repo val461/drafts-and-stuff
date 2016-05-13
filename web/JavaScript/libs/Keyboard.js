@@ -4,7 +4,10 @@ var Keyboard = (function () {
     "use strict";
     return {
         ENTER: 13,
-        SPACE: 32
+        SPACE: 32,
+        B: 66,
+        H: 72,
+        P: 80
     };
 })();
 
