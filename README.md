@@ -1,7 +1,7 @@
 # drafts-and-stuff
 I use this repository as a backup for some programming drafts and config files.
 
-_You should definitely make sure you understand the code of the files if you intend to run them.
+:warning: _You should definitely make sure you understand the code of the files if you intend to run them.
 You probably will have to tweak them to get them to work on your machine._
 
 ![Public domain](http://i.creativecommons.org/p/zero/1.0/88x31.png)
