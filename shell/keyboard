@@ -37,8 +37,7 @@ set=false
 [ "${1}" = "set" ] && set=true
 
 get=true
-"${set}" && get=false
-"${verbose}" && get=true
+"${verbose}" || { "${set}" && get=false; }
 
 if "${set}"; then
 	l="${#layouts[@]}"		# arrays'sizes
