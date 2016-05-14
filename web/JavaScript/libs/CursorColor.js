@@ -1,5 +1,5 @@
 if (typeof loadedFiles === "undefined") { throw new Error("module required"); }
-if (!loadedFiles.hasOwnProperty("Color.js")) { throw new Error("module required"); }
+if (!loadedFiles.hasOwnProperty("Colors.js")) { throw new Error("module required"); }
 
 function makeCursorColor(context, red, green, blue) {
     "use strict";
@@ -13,7 +13,7 @@ function makeCursorColor(context, red, green, blue) {
     }
 
     // public fields
-    instance.color = new Color(context, red, green, blue);
+    instance.color = makeColor(context, red, green, blue);
     instance.increment = 6;
     instance.stepsBeforeNewVector = 0;
     instance.maxStepsWithoutChange = 4;
@@ -29,14 +29,27 @@ function makeCursorColor(context, red, green, blue) {
     };
 
     instance.nextStep = function () {
+        var boundariesHit;
         if (instance.stepsBeforeNewVector < 1) {
             instance.renewVector();
         }
-        if (instance.color.add(instance.vector)) {  //todo: invert corresponding direction when hitting boundary
+        boundariesHit = instance.color.add(instance.vector);
+        if (boundariesHit === null) {
             instance.stepsBeforeNewVector--;
         }
-        else {  // boundary hit
-            instance.stepsBeforeNewVector = 0;
+        else {
+            if (boundariesHit.r)
+            {
+                instance.vector.r *= -1;
+            }
+            if (boundariesHit.g)
+            {
+                instance.vector.g *= -1;
+            }
+            if (boundariesHit.b)
+            {
+                instance.vector.b *= -1;
+            }
         }
     };
 
@@ -48,7 +61,7 @@ function makeCursorColor(context, red, green, blue) {
         instance.stepsBeforeNewVector = Random.between(1, 10);
 
         // prevent too much time without color changing
-        if (instance.vector.r == 0 && instance.vector.g == 0 && instance.vector.b == 0) {
+        if (instance.vector.r === 0 && instance.vector.g === 0 && instance.vector.b === 0) {
             if (instance.stepsBeforeNewVector > instance.maxStepsWithoutChange) {
                 instance.stepsBeforeNewVector = instance.maxStepsWithoutChange;
             }
@@ -57,6 +70,5 @@ function makeCursorColor(context, red, green, blue) {
     
     return instance;
 }
-
 
 loadedFiles["CursorColor.js"] = true;
