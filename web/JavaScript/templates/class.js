@@ -2,21 +2,21 @@ function makeInstance(args) {
     "use strict";
     var instance = {};
 
-    // private fields
-    var privateVariable = 3;
-
     // private methods
-    function privateFunction(args) {
+    var privateFunction = function (args) {
         
-    }
-
-    // public fields
-    instance.publicMember = 42;
+    };
 
     // privileged methods
     instance.privilegedFunction = function (args) {
         
     };
     
+    // private fields
+    var privateVariable = 3;
+
+    // public fields
+    instance.publicMember = 42;
+
     return instance;
 }
