@@ -51,7 +51,7 @@ if "${manual}" || ! [ -d "${path}" ]; then	# manual mode enabled or failure to p
 	ps ax | grep plugin-container	# display relevant information
 	_line
 	echo 'Please type the PID of flash plugin (aka “plugin-container”).'
-	echo -n ' PID: '
+	echo -n 'PID: '
 	read pid
 	path="/proc/${pid}/fd"	# path to the flash videos folder
 fi

@@ -60,10 +60,10 @@ let 'total_time=tmp_var'
 
 # launch chronometer
 i=0
-echo "${i} / ${total_time}${unit}"
 while [ "${i}" -lt "${total_time}" ]
 do
+    echo "${i} / ${total_time}${unit}"
     sleep "${step}${unit}"
     let 'i++'
-    echo "${i} / ${total_time}${unit}"
 done
+echo "${i} / ${total_time}${unit}"
