@@ -5,16 +5,20 @@
 
 # ‘tmp_playlist_file’ should not be edited manually, especially while ./dl is running.
 
-working_dir='/home/val/mnt/Data/Downloads/sh'
-video_dir='../YouTube'
+working_dir='/home/val/mnt/Data/Downloads/YouTube'
+video_dir='.'
 playlist_file='list'
 tmp_playlist_file="${playlist_file}.tmp"
 
 ask_to_delete_tmp_after_success=false
 #ask_to_delete_tmp_after_success=true
+
 format='bestaudio'
+#format='best[ext=m4a]'
+
 playlist_policy='--no-playlist'
 #playlist_policy=''
+
 
 cd "${working_dir}" || { echo "dl: error: cd failed to access directory “${working_dir}”" >&2 ; exit "${?}" ; }
 pwd
@@ -45,12 +49,13 @@ if ! "${tmp_file_ready}"; then
 fi
 
 youtube-dl -f "${format}" "${playlist_policy}" -o "${video_dir}/%(title)s (%(id)s).%(ext)s" -a "${tmp_playlist_file}"
+#youtube-dl --list-formats -a "${tmp_playlist_file}"
 
 err="${?}"
 if [ "${err}" = 0 ]; then
     echo 'youtube-dl exited successfully.'
     if "${ask_to_delete_tmp_after_success}"; then
-        echo 'If everything is fine, you should delete “${tmp_playlist_file}”.'
+        echo "If everything is fine, you should delete “${tmp_playlist_file}”."
         echo "Delete “${tmp_playlist_file}”? [y]/n"
         read ans
         case "${ans}" in
