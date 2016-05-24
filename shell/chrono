@@ -6,15 +6,17 @@
 #   ‘unit’: either of ‘s’, ‘m’, ‘h’ or ‘d’ (default: ‘m’)
 #       A message shows up every ${step} ${unit}.
 
-unit='m'
 step=1
+unit='m'
+alarm='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
+#alarm=''   # uncomment to disable alarm
 
 _manual()
 {
     # launch chronometer
     i=0
     echo "${i}${unit}"
-    while :
+    while true
     do
         sleep "${step}${unit}"
         let 'i++'
@@ -28,10 +30,9 @@ case "${#}" in
         exit
         ;;
 	1)
-        # parse first argument
         case "${1}" in
             s|m|h|d)    # manual mode
-                unit="${2}"
+                unit="${1}"
                 _manual
                 exit
                 ;;
@@ -39,7 +40,6 @@ case "${#}" in
         esac
 		;;
 	2)
-        # parse second argument
         case "${2}" in
             s|m|h|d)
                 unit="${2}"
@@ -67,3 +67,6 @@ do
     let 'i++'
 done
 echo "${i} / ${total_time}${unit}"
+if [ -f "${alarm}" ]; then
+    vlc "${alarm}"
+fi

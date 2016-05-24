@@ -17,7 +17,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-set -o INTERACTIVE_COMMENTS
+setopt INTERACTIVE_COMMENTS
+setopt GLOB_DOTS
 export EDITOR='geany'
 export PATH='/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/val/.gem/ruby/2.3.0/bin:.'
 export PROMPT='%n %2c %# '
@@ -35,7 +36,7 @@ alias ls='ls -Fa --color=auto'
 alias ll='ls -Flah --color=auto'
 alias l='ls'
 alias lu='sudo /home/val/bin/luminosity'
-alias pm='xterm -e sh ~/bin/update &'
+alias pm='xterm -e sh ~/bin/update & disown ; exit'
 alias reloadkb="bin/keyboard set"
 alias sd='~/bin/setDNS'
 alias sdo='~/bin/setDNS odns'
