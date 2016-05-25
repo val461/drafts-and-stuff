@@ -5,4 +5,4 @@ I use this repository for backups of some programming drafts and config files.
 You probably will have to tweak them to get them to work on your machine._
 
 ![Public domain](http://i.creativecommons.org/p/zero/1.0/88x31.png)
-The license is [CC0](http://creativecommons.org/publicdomain/zero/1.0/), which means you should _not_ ask for my permission if you want to reuse these files, nor cite me as having authored them. Feel free to copy, improve and build better things from them!
+The license is [CC0](http://creativecommons.org/publicdomain/zero/1.0/), which means you should _not_ ask for my permission if you want to copy or modify the code, nor should you cite me as having authored them. Feel free to copy, improve and build better things from them!
