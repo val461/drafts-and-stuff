@@ -1,5 +1,5 @@
 # drafts-and-stuff
-I use this repository as a backup for some programming drafts and config files.
+I use this repository for backups of some programming drafts and config files.
 
 :warning: _You should definitely make sure you understand the code of the files if you intend to run them.
 You probably will have to tweak them to get them to work on your machine._
