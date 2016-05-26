@@ -6,6 +6,7 @@
 [alias]
 	co = checkout
 	br = branch
-	ci = commit
+	ci = commit -a
 	st = status
 	unstage = reset HEAD --
+	pu = "!git push ; git push --tags"
