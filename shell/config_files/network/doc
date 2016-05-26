@@ -15,8 +15,8 @@ recommended packages for the previous steps:
 ################################################
 
 DNS
-    Use ~/bin/setDNS to choose the DNS setup. This edits the target of alias “ /etc/resolv.conf ”. The path of the target must match “ /etc/resolvconf.conf.* ”.
-    The syntax of the target file is pretty straightforward (several nameservers must be separated by spaces), but at most 3 nameservers are allowed by file (the blacklist removes a nameserver from the list).
+    Use ~/bin/setDNS to choose the DNS setup. This edits the target of alias “ /etc/resolvconf.conf ”. The path of the target must match “ /etc/resolvconf.conf.* ”.
+    The syntax of the target file is pretty straightforward (several nameservers must be separated by spaces), but at most 3 nameservers are allowed by file.
 
 ################################################
 

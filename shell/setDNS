@@ -2,11 +2,9 @@
 # setDNS <new_profile>
 # change profile to /etc/resolvconf.new_profile.conf
 
-newProfile="${1}"
 basename='/etc/resolvconf'
-ext='conf'
-link="${basename}.${ext}"
-target="${basename}.${newProfile}.${ext}"
+link="${basename}.conf"
+target="${basename}.${1}.conf"
 
 if [ -f "${target}" ]; then
     if sudo ln -vsf "${target}" "${link}"; then
@@ -16,13 +14,13 @@ if [ -f "${target}" ]; then
         echo "setDNS: error: ln returned code ${?}." >&2
     fi
 else
-    if [ "${#}" -ge 1 ]; then
+    if [ "${#}" -gt 0 ]; then
         echo "setDNS: error: not a file: “${target}”" >&2
     fi
     echo -n 'Current profile: '
     readlink "${link}"
     echo 'Profiles available:'
-    for file in "${basename}".*."${ext}"
+    for file in "${basename}".*.conf
     do
         echo "${file}"
     done
