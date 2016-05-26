@@ -59,14 +59,14 @@ tmp_var="${1}"
 let 'total_time=tmp_var'
 
 # launch chronometer
-i=0
-while [ "${i}" -lt "${total_time}" ]
+i="${total_time}"
+while [ "${i}" -gt 0 ]
 do
-    echo "${i} / ${total_time}${unit}"
+    echo "${i}${unit}"
     sleep "${step}${unit}"
-    let 'i++'
+    let 'i--'
 done
-echo "${i} / ${total_time}${unit}"
+echo "${i}"
 if [ -f "${alarm}" ]; then
     vlc "${alarm}"
 fi
