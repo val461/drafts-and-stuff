@@ -1,5 +1,19 @@
 ################################################
 
+everything automatic:
+    # other network configuration services would conflict, they should be stopped beforehand; for example:
+    sudo systemctl disable --now ifplugd@enp3s0.service
+    sudo systemctl disable --now netctl-auto@wlp2s0.service
+    # enable NetworkManager daemon
+    sudo systemctl enable --now NetworkManager.service
+    # config via gui
+    nm-applet
+
+recommended packages for the previous steps:
+    networkmanager, network-manager-applet, dhclient
+
+################################################
+
 DNS
     Use ~/bin/setDNS to choose the DNS setup. This edits the target of alias “ /etc/resolv.conf ”. The path of the target must match “ /etc/resolvconf.conf.* ”.
     The syntax of the target file is pretty straightforward (several nameservers must be separated by spaces), but at most 3 nameservers are allowed by file (the blacklist removes a nameserver from the list).
