@@ -1,0 +1,22 @@
+# Change Log:
+# All notable changes to this project will be documented in this file.
+# This project adheres to [Semantic Versioning](http://semver.org/).
+
+Unreleased (YYYY-MM-DD)
+    added:
+        - New stuff.
+
+    changed:
+        - Changes.
+
+    fixed:
+        - Bug fixes.
+
+    deprecated:
+        - Once-stable features will be removed in upcoming releases.
+
+    removed:
+        - Deprecated features removed in this release.
+
+    security:
+        - Users are invited to upgrade due to vulnerabilities.
