@@ -11,4 +11,4 @@
 	unstage = reset HEAD --
 	pu = "!git push ; git push --tags"
 [core]
-	editor = geany -i
+	editor = nano
