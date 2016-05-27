@@ -66,7 +66,7 @@ do
     sleep "${step}${unit}"
     let 'i--'
 done
-echo "${i}"
+echo "${i}${unit}"
 if [ -f "${alarm}" ]; then
-    vlc "${alarm}"
+    vlc "${alarm}" 1>- 2>- & disown
 fi
