@@ -4,7 +4,7 @@
 
 ## parameters
 
-source_dir='/home/val/mnt/Data/Downloads/Deluge/v/watched'
+source_dir='/home/val/mnt/Data/Downloads/Deluge/v/categories'
 #source_dir='/home/val/mnt/Data/Downloads/Deluge/v/2'
 move_to_target_dir=false
 #move_to_target_dir=true
