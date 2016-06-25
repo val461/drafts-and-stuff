@@ -7,6 +7,7 @@
 
 working_dir='/home/val/mnt/Data/Downloads/YouTube'
 video_dir='.'
+#video_dir='deb'
 playlist_file='list'
 tmp_playlist_file="${playlist_file}.tmp"
 
@@ -14,7 +15,8 @@ ask_to_delete_tmp_after_success=false
 #ask_to_delete_tmp_after_success=true
 
 format='bestaudio'
-#format='best[ext=m4a]'
+#format='best'
+#format='bestaudio[ext=m4a]'
 
 playlist_policy='--no-playlist'
 #playlist_policy=''
@@ -53,7 +55,7 @@ youtube-dl -f "${format}" "${playlist_policy}" -o "${video_dir}/%(title)s (%(id)
 
 err="${?}"
 if [ "${err}" = 0 ]; then
-    echo 'youtube-dl exited successfully.'
+    echo 'youtube-dl exited successfully'
     if "${ask_to_delete_tmp_after_success}"; then
         echo "If everything is fine, you should delete “${tmp_playlist_file}”."
         echo "Delete “${tmp_playlist_file}”? [y]/n"
