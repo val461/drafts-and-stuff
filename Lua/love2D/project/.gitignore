@@ -1,4 +1,3 @@
-aircrafts/
-bin/
-aircrafts.zip
-project.love
+/aircrafts*
+/bin/
+*.love
