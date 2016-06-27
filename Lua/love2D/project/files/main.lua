@@ -57,9 +57,3 @@ function love.draw(dt)
       love.graphics.draw(bulletImg, bullet.x, bullet.y)
     end
 end
-
-function pt(t)
-    for k, v in pairs(t) do
-        print(k,v)
-    end
-end
