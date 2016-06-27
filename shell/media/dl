@@ -32,7 +32,7 @@ if [ -f "${tmp_playlist_file}" ]; then
     case "${ans}" in
         n*|N*)
             tmp_file_ready=true
-            echo 'Attempting to download from “${tmp_playlist_file}”.'
+            echo "Attempting to download from “${tmp_playlist_file}”."
             ;;
         *)
             rm -v "${tmp_playlist_file}"
