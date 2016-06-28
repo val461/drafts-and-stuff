@@ -16,3 +16,14 @@ function pt(t)  -- print a table shallowly
     end
     return str:sub(1, -3) .. " }"   -- remove last comma
 end
+
+function pa(t, withKeys)  -- print an array shallowly
+    local str = "{ "
+    for i, v in ipairs(t) do
+        if (withKeys) then
+            str = str .. "[" .. i .. "] = "
+        end
+        str = str .. tostring(v) .. ", "
+    end
+    return str:sub(1, -3) .. " }"   -- remove last comma
+end
