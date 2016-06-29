@@ -7,31 +7,34 @@ Square.length = 8
 function Square.new(position, color)
     return setmetatable(
         {
-            position = position or Vector(),
-            color = color or {255, 255, 0}
+            position = position or Vector(),    -- row and column in a grid
+            color = color or { 255, 255, 0 }
         },
         Square)
 end
 
 setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })
 
-function Square:canMove(direction, frozenSquares)
+function Square:isBlocked(direction, frozenSquares)
     local target = self.position + direction
-    return not frozenSquares[target.x][target.y]
+    return frozenSquares[target.x][target.y]
 end
 
-function Square:move(direction, frozenSquares)
-    if frozenSquares and not self:canMove(direction, frozenSquares) then
-        return false
-    end
-    self:
+function Square:translate(vector)
+    position:translate(vector)
 end
 
---[[
+function Square:realPosition(grid)
+    return grid.position + self.position
+end
 
-instance methods
-    canMove(direction)
-    move(direction)
-    draw
+function Square:draw(grid)
+    local location = self:realPosition(grid)
+    love.graphics.rectangle("fill", location.x, location.y, Square.length, Square.length)
+end
 
-]]
+-- [[ DEBUGGING
+function Square:__tostring()
+    return "{ position = " .. self.position .. ", color = " .. pa(self.color) .. " }"
+end
+--]]
