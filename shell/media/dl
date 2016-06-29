@@ -27,15 +27,15 @@ pwd
 
 tmp_file_ready=false
 if [ -f "${tmp_playlist_file}" ]; then
-    echo "File “${tmp_playlist_file}” exists. Delete it? [y]/n"
+    echo "File “${tmp_playlist_file}” exists. Delete it? [n]/y"
     read ans
     case "${ans}" in
-        n*|N*)
-            tmp_file_ready=true
-            echo "Attempting to download from “${tmp_playlist_file}”."
+        y*|Y*)
+            rm -v "${tmp_playlist_file}"
             ;;
         *)
-            rm -v "${tmp_playlist_file}"
+            tmp_file_ready=true
+            echo "Attempting to download from “${tmp_playlist_file}”."
     esac
 fi
 
