@@ -14,7 +14,10 @@ function pt(t)  -- print a table shallowly
         end
         str = str .. " = " .. tostring(v) .. ", "
     end
-    return str:sub(1, -3) .. " }"   -- remove last comma
+    if #str > 2 then
+        str = str:sub(1, -3)   -- remove last comma
+    end
+    return str .. " }"
 end
 
 function pk(t)  -- print a table’s keys shallowly
@@ -27,7 +30,10 @@ function pk(t)  -- print a table’s keys shallowly
         end
         str = str .. ", "
     end
-    return str:sub(1, -3)   -- remove last comma
+    if #str > 2 then
+        str = str:sub(1, -3)   -- remove last comma
+    end
+    return str .. " }"
 end
 
 function pa(t, withKeys)  -- print an array shallowly
@@ -38,5 +44,8 @@ function pa(t, withKeys)  -- print an array shallowly
         end
         str = str .. tostring(v) .. ", "
     end
-    return str:sub(1, -3) .. " }"   -- remove last comma
+    if #str > 2 then
+        str = str:sub(1, -3)   -- remove last comma
+    end
+    return str .. " }"
 end
