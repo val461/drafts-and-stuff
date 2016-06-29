@@ -8,13 +8,11 @@ squares = {}
 canMoveTimerDuration = 0.2
 canMoveTimer = 0
 
-squareLength = 8
-nCols = 20
-
 function love.load(arg)
     gridWidth = nCols * squareLength
     player.x = math.floor((love.graphics.getWidth() - player.img:getWidth()) / 2)
     love.graphics.setBackgroundColor(70, 236, 22)
+    love.graphics.setColor(40, 40, 40)
 end
 
 function love.update(dt)
