@@ -51,29 +51,30 @@ function Tetromino:isBlocked(direction, frozenSquares)
 end
 
 function Tetromino:draw()
-    local function draw(sq)
+    local function drawSquare(sq)
         sq:draw(self.grid)
     end
+    love.graphics.setColor(self.color)
     self:forEachSquare(draw)
 end
 
 function Tetromino:translate(vector)
-    local function translate(sq)
+    local function translateSquare(sq)
         sq:translate(vector)
     end
     self:forEachSquare(translate)
 end
 
-local halfSquareLength = Square.length / 2
-local fromCornerToCenterOfSquare = Vector(halfSquareLength * directions.left, halfSquareLength * directions.down)
-local function rotateSquare(sq)
-    local squareCenter = sq.position + fromCornerToCenterOfSquare
-    local posRelativeToTetrominoCenter = squareCenter - self.center
-    local newPosRelativeToTetrominoCenter = Vector(-posRelativeToTetrominoCenter.y, posRelativeToTetrominoCenter.x)
-    sq.position:assimilate(newPosRelativeToTetrominoCenter + self.center - fromCornerToCenterOfSquare)
-end
+local halfLength = Square.length / 2
+local fromCornerToCenterOfSquare = Vector(halfLength * directions.left, halfLength * directions.down)
 
 function Tetromino:rotate()
+    local function rotateSquare(sq)
+        local squareCenter = sq.position + fromCornerToCenterOfSquare
+        local posRelativeToTetrominoCenter = squareCenter - self.center
+        local newPosRelativeToTetrominoCenter = Vector(-posRelativeToTetrominoCenter.y, posRelativeToTetrominoCenter.x)
+        sq.position:assimilate(newPosRelativeToTetrominoCenter + self.center - fromCornerToCenterOfSquare)
+    end
     self:forEachSquare(rotateSquare)
     if self.shiftOnRotation then
         if math.random() < 1/2 then

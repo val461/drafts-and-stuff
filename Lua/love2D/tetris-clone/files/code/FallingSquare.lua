@@ -2,13 +2,14 @@ require("code.Vector")
 
 Square = {}
 Square.__index = Square
-Square.length = 8
+Square.halfGap = 1
+Square.visibleLength = 6
+Square.length = Square.visibleLength + Square.halfGap
 
-function Square.new(position, color)
+function Square.new(position)
     return setmetatable(
         {
             position = position or Vector(),    -- row and column in a grid
-            color = color or { 255, 255, 0 }
         },
         Square)
 end
@@ -25,12 +26,12 @@ function Square:translate(vector)
 end
 
 function Square:realPosition(grid)
-    return grid.position + self.position
+    return grid.position + (Square.length * self.position)
 end
 
 function Square:draw(grid)
     local location = self:realPosition(grid)
-    love.graphics.rectangle("fill", location.x, location.y, Square.length, Square.length)
+    love.graphics.rectangle("fill", location.x + Square.halfGap, location.y + Square.halfGap, Square.visibleLength, Square.visibleLength)
 end
 
 -- [[ DEBUGGING
