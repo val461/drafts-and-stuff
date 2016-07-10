@@ -1,6 +1,5 @@
 --[[ TODO
 blinkOnRemovalOrSkyTouching
-draw
 ]]
 
 require("code.Vector")
@@ -35,15 +34,6 @@ function FrozenSquares:add(position, color)
     t[position.y][position.x] = color or { 40, 40, 40 }
 end
 
-function FrozenSquares:someRow(p)
-    for i, row in ipairs(self) do
-        if p(row) then
-            return i
-        end
-    end
-    return nil
-end
-
 local function rowIsComplete(row)
     for _, v in row do
         if not v then
@@ -53,8 +43,18 @@ local function rowIsComplete(row)
     return true
 end
 
-function FrozenSquares:someRowIsComplete()
-    return self:someRow(rowIsComplete)
+local function filterIndexes(p)
+    local result = {}
+    for i, row in ipairs(self) do
+        if p(row) then
+            table.insert(result, i)
+        end
+    end
+    return result
+end
+
+function FrozenSquares:getCompletedRows()
+    return filterIndexes(rowIsComplete)
 end
 
 function FrozenSquares:touchesTheSky()
