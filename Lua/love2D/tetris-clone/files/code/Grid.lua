@@ -1,5 +1,5 @@
 require("code.Vector")
-require("code.FallingSquare")
+require("code.Square")
 require("code.FrozenSquares")
 
 Grid = {}

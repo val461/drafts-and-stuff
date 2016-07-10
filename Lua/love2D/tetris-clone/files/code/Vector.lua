@@ -48,7 +48,7 @@ function Vector:translate(t)
 end
 
 function Vector:allCoordinates(p)
-    return p(self.x) and p(self.y))
+    return p(self.x) and p(self.y)
 end
 
 directions =

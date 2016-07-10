@@ -1,16 +1,15 @@
-require("code.FrozenSquare")
-
 --[[ TODO
 blinkOnRemovalOrSkyTouching
-
-methods
-    removeRow
-    forEachSquare
-    draw
+draw
 ]]
+
+require("code.Vector")
+require("code.Square")
 
 FrozenSquares = {}
 FrozenSquares.__index = FrozenSquares
+
+local topRow = 0
 
 function FrozenSquares.new(nRows, nCols, grid)
     local t = 
@@ -36,7 +35,7 @@ function FrozenSquares:add(position, color)
     t[position.y][position.x] = color or { 40, 40, 40 }
 end
 
-function frozenSquares:moveSquare(sq, newPosition)
+function FrozenSquares:moveSquare(initialPosition, newPosition)
     
 end
 
@@ -63,7 +62,7 @@ function FrozenSquares:someRowIsComplete()
 end
 
 function FrozenSquares:touchesTheSky()
-    for _, sq in ipairs(self[0]) do
+    for _, sq in ipairs(self[topRow]) do
         if sq then
             return true
         end
@@ -71,18 +70,38 @@ function FrozenSquares:touchesTheSky()
     return false
 end
 
-function FrozenSquares:removeRow(i)
-    table.remove(self, i)
+local function duplicateRow(t, rowIndex, newRowIndex)
+    for column, sq in ipairs(t[rowIndex]) do
+        t[newRowIndex][column] = sq
+    end
+end
+
+local function eraseRow(t, rowIndex)
+    for column, _ in ipairs(t[rowIndex]) do
+        t[rowIndex][column] = false
+    end
+end
+
+local function moveRow(t, rowIndex, newRowIndex)
+    duplicateRow(t, rowIndex, newRowIndex)
+    eraseRow(t, rowIndex)
+end
+
+function FrozenSquares:removeRow(rowIndex)
+    local down, up = directions.down.y, directions.up.y
+    for i = rowIndex + up, topRow, up do
+        moveRow(self, i, i + down)
+    end
+end
+
+local function drawSquare(location, color)
+    love.graphics.setColor(color)
+    love.graphics.rectangle("fill", location.x + Square.halfGap, location.y + Square.halfGap, Square.visibleLength, Square.visibleLength)
 end
 
 function FrozenSquares:draw()
-    local function drawSquare(location, color)
-        love.graphics.setColor(color)
-        love.graphics.rectangle("fill", location.x + Square.halfGap, location.y + Square.halfGap, Square.visibleLength, Square.visibleLength)
-    end
-
     local function from(...)
-
+        return self.grid.position + (Square.length * Vector(i, j))
     end
 
     for i, row in ipairs(self) do
