@@ -100,13 +100,9 @@ local function drawSquare(location, color)
 end
 
 function FrozenSquares:draw()
-    local function from(...)
-        return self.grid.position + (Square.length * Vector(i, j))
-    end
-
     for i, row in ipairs(self) do
-        for j, sq in ipairs(row) do
-            drawSquare(from(self.grid, FrozenSquares:realCoordinates(i, j)))
+        for j, color in ipairs(row) do
+            drawSquare(self.grid.position + Square.length * Vector(j, i), color)
         end
     end
 end
