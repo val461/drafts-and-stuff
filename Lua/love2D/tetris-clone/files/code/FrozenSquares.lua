@@ -35,10 +35,6 @@ function FrozenSquares:add(position, color)
     t[position.y][position.x] = color or { 40, 40, 40 }
 end
 
-function FrozenSquares:moveSquare(initialPosition, newPosition)
-    
-end
-
 function FrozenSquares:someRow(p)
     for i, row in ipairs(self) do
         if p(row) then
