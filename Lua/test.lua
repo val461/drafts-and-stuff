@@ -36,10 +36,10 @@ function pk(t)  -- print a table’s keys shallowly
     return str .. " }"
 end
 
-function pa(t, withKeys)  -- print an array shallowly
+function pa(t, printKeys)  -- print an array shallowly
     local str = "{ "
     for i, v in ipairs(t) do
-        if (withKeys) then
+        if (printKeys) then
             str = str .. "[" .. i .. "] = "
         end
         str = str .. tostring(v) .. ", "
