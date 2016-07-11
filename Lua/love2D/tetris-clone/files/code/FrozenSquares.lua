@@ -35,6 +35,11 @@ function FrozenSquares:add(position, color)
     self[position.y][position.x] = color or { 40, 40, 40 }
 end
 
+function FrozenSquares:invalidCoords(x, y)
+    return 1 > x or x > nCols
+        or 1 > y or y > nRows
+end
+
 local function rowIsComplete(row)
     for _, sq in row do
         if not sq then

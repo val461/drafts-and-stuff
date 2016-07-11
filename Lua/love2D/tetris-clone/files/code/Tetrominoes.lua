@@ -6,20 +6,32 @@ tetromino factory
 ]]
 
 require("code.Tetromino")
+math.randomseed(os.time())
 
 Tetrominoes = { models = {} }
 
 function Tetrominoes:newInstanceOfModel(index, grid, color)
-    return Tetromino(
+    local new = Tetromino(
         self.models[index].squares,
-        self.models[index].extremities,
-        self.models[index].shiftOnRotation,
+        self.models[index].center,
         grid,
         color
     )
+    --TODO
+    new:translate(grid.startingPosition - new.center.position)
+    new:align()
+    --check not over the top
+    local highest = new:highest()
+    if highest < 0 then
+        new:translate(Vector(0, highest))
+    end
+    return new
 end
 
-squares = {}
-extremities = { squares[], squares[] }
-tetromino = { squares = squares, extremities = extremities, shiftOnRotation =  }
-table.insert(Tetrominoes.models, tetromino)
+function Tetrominoes:newInstanceOfRandomModel(grid, color)
+    return self:newInstanceOfModel(math.random(#Tetrominoes.models), grid, color)
+end
+
+-- I
+local squares = {}
+table.insert(Tetrominoes.models, { squares = squares, center = squares[?])

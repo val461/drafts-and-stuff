@@ -48,6 +48,14 @@ function Vector:translate(t)
     self:assimilate(self + t)
 end
 
+function Vector:rotateCounterclockwise()
+    self:assimilate(Vector(-self.y, self.x))
+end
+
+function Vector:rotateClockwise()
+    self:assimilate(Vector(self.y, -self.x))
+end
+
 function Vector:allCoordinates(p)
     return p(self.x) and p(self.y)
 end
