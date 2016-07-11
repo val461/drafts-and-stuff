@@ -20,6 +20,20 @@ function pt(t)  -- print a table shallowly
     return str .. " }"
 end
 
+function pa(t, printKeys)  -- print an array shallowly
+    local str = "{ "
+    for i, v in ipairs(t) do
+        if (printKeys) then
+            str = str .. "[" .. i .. "] = "
+        end
+        str = str .. tostring(v) .. ", "
+    end
+    if #str > 2 then
+        str = str:sub(1, -3)   -- remove last comma
+    end
+    return str .. " }"
+end
+
 function pk(t)  -- print a table’s keys shallowly
     local str = ""
     for k, _ in pairs(t) do
@@ -29,20 +43,6 @@ function pk(t)  -- print a table’s keys shallowly
             str = str .. "[" .. tostring(k) .. "]"
         end
         str = str .. ", "
-    end
-    if #str > 2 then
-        str = str:sub(1, -3)   -- remove last comma
-    end
-    return str .. " }"
-end
-
-function pa(t, printKeys)  -- print an array shallowly
-    local str = "{ "
-    for i, v in ipairs(t) do
-        if (printKeys) then
-            str = str .. "[" .. i .. "] = "
-        end
-        str = str .. tostring(v) .. ", "
     end
     if #str > 2 then
         str = str:sub(1, -3)   -- remove last comma
