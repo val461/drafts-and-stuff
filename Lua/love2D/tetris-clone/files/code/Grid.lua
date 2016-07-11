@@ -12,7 +12,7 @@ function Grid.new(position, nRows, nCols, bgColor)
     t.frozenSquares = FrozenSquares(nRows, nCols, t)
     t.height = t.frozenSquares.nRows * Square.length
     t.width = t.frozenSquares.nCols * Square.length
-    t.startingPosition = Vector(nCols / 2, 0)
+    t.startingPosition = Vector(math.floor(nCols / 2), 0)
     t.bgColor = bgColor or {0, 0, 0}
     return setmetatable(t, Grid)
 end
@@ -24,14 +24,3 @@ function Grid:draw()
     -- todo: edge
     love.graphics.rectangle("fill", self.position.x, self.position.y, self.width, self.height)
 end
-
---[[ useless?
-function Grid:toRealCoordinates(gridPosition)
-    return gridPosition + self.position
-end
-
-
-function Grid:toGridCoordinates(realPosition)
-    return realPosition - self.position
-end
-]]

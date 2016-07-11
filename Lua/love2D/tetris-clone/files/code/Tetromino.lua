@@ -1,11 +1,10 @@
--- FIXME shifting is poorly handled; should check for collisions
-
 require("code.Vector")
 require("code.Square")
 
+centerIndex = 2
+
 Tetromino = {}
 Tetromino.__index = Tetromino
-Tetromino.length = 8
 
 function Tetromino.new(squares, grid, color)
     return setmetatable(
@@ -77,6 +76,7 @@ function Tetromino:moveDown()
     self:translate(directions.down)
 end
 
+--[[ DEPRECATED
 local function notAnInteger(x)
     return x ~= math.floor(x)
 end
@@ -86,6 +86,7 @@ function Tetromino:align()
         self:translate(directions.left / 2)
     end
 end
+]]
 
 function Tetromino:enforceRoof()
     local highest = new:highest()
@@ -105,7 +106,7 @@ end
 
 -- private
 function Tetromino:center()
-    return self.squares[2]:getCenter()
+    return self.squares[centerIndex]:getCenter()
 end
 
 -- private
@@ -117,16 +118,26 @@ function Tetromino:rotate()
         sq:setCenter(posRelativeToTetrominoCenter + tetrominoCenter)
     end
     self:forEachSquare(rotateSquare)
-    --[[ DEBUGGING
-    local function isInteger(coord)
-        return coord == math.floor(coord)
-    end
-    local function hasIntegerCoords(sq)
-        return sq.position:allCoordinates(isInteger) 
-    end
-    assert(self:allSquares(hasIntegerCoords))
-    --]]
 end
+
+-- [[ DEBUGGING
+local function isInteger(coord)
+    return coord == math.floor(coord)
+end
+
+local function hasIntegerCoords(sq)
+    return sq.position:allCoordinates(isInteger) 
+end
+
+function Tetromino:hasIntegerCoords()
+    assert(self:allSquares(hasIntegerCoords))
+    print("Tetromino.lua:134: has integer coords.")
+end
+
+function Tetromino:__tostring()
+    return pa(self.squares)
+end
+--]]
 
 local function copy(a)
     if type(a) == "table" then

@@ -14,7 +14,7 @@ function love.load(arg)
     player.img = love.graphics.newImage('assets/plane.png')
     player.x = math.floor((love.graphics.getWidth() - player.img:getWidth()) / 2)
     love.graphics.setBackgroundColor(70, 236, 22)
-    love.graphics.setColor(0, 0, 255) -- TO INQUIRE: why does this change the picture’s color?
+    --~ love.graphics.setColor(0, 0, 255) -- TO INQUIRE: why does this change the picture’s color?
 end
 
 function love.update(dt)

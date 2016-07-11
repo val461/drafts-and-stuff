@@ -1,20 +1,20 @@
 debug = true
 
-require("code.Vector")
-require("code.Tetromino")
-require("code.FrozenSquares")
+require("code.Colors")
+--~ require("code.Vector")
+--~ require("code.Square")
+--~ require("code.Tetromino")
+--~ require("code.FrozenSquares")
+--~ require("code.Tetrominoes")
+--~ require("code.Grid")
 
-currentTetromino = {}
-tetrominoes = {}
-squareUnit = {}
-squares = {}
+grid = Grid(Vector(10, 10), 20, 14, colors.black)
+currentTetromino = nil
 
-canMoveTimerDuration = 0.2
-canMoveTimer = 0
+canFallTimerDuration = 0.2
+canFallTimer = 0
 
 function love.load(arg)
-    gridWidth = nCols * Square.length
-    player.x = math.floor((love.graphics.getWidth() - player.img:getWidth()) / 2)
     love.graphics.setBackgroundColor(70, 236, 22)
     love.graphics.setColor(40, 40, 40)
 end

@@ -62,6 +62,6 @@ local function pa(t, printKeys)  -- print an array shallowly
 end
 
 function Square:__tostring()
-    return "{ position = " .. self.position .. ", color = " .. pa(self.color) .. " }"
+    return "{ position = " .. self.position .. " }"
 end
 --]]
