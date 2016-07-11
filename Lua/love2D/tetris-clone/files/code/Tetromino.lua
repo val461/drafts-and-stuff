@@ -7,11 +7,10 @@ Tetromino = {}
 Tetromino.__index = Tetromino
 Tetromino.length = 8
 
-function Tetromino.new(squares, center, grid, color)
+function Tetromino.new(squares, grid, color)
     return setmetatable(
         {
             squares = squares,
-            center = center,    -- one of the squares
             grid = grid,
             color = color or { 40, 40, 40 }
         },
@@ -78,65 +77,35 @@ function Tetromino:moveDown()
     self:translate(directions.down)
 end
 
--- private
-function Tetromino:shift(d1, d2)    --FIXME should check for collisions
-    if math.random() < 1/2 then
-        self:translate(d1 / 2)
-    else
-        self:translate(d2 / 2)
-    end
-end
-
 local function notAnInteger(x)
     return x ~= math.floor(x)
 end
 
 function Tetromino:align()
     if(notAnInteger(self.squares[0].position.x)) then
-        self:shift(directions.left, directions.right)
-    end
-    if(notAnInteger(self.squares[0].position.y)) then
-        self:shift(directions.up, directions.down)
+        self:translate(directions.left / 2)
     end
 end
 
---[[ useless?
+function Tetromino:enforceRoof()
+    local highest = new:highest()
+    if highest < 0 then
+        new:translate(highest * directions.down)
+    end
+end
 
 local function getSquareOrdinate(sq)
     return sq.position.y
 end
 
-local function getSquareAbscissa(sq)
-    return sq.position.x
-end
-
-function Tetromino:height()
-    local ordinates = self:map(getSquareOrdinate)
-    return math.max(ordinates) + 1 - math.min(ordinates)
-end
-
-function Tetromino:width()
-    local abscisses = self:map(getSquareAbscissa)
-    return math.max(abscisses) + 1 - math.min(abscisses)
-end
-
-local function vectorSum(vectors)
-    local result = Vector(0, 0)
-    for _, v in vectors do
-        result = result + v
-    end
-    return result
+-- private
+function Tetromino:highest()
+    return math.min(self:map(getSquareOrdinate))
 end
 
 -- private
 function Tetromino:center()
-    return vectorSum(self:map(Square.getCenter)) / #squares
-end
-]]
-
--- private
-function Tetromino:center()
-    return self.center:getCenter()
+    return self.squares[2]:getCenter()
 end
 
 -- private
