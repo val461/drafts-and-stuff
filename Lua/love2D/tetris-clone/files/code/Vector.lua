@@ -22,8 +22,12 @@ function Vector.__mul(a, t)
     return Vector(a * t.x, a * t.y)
 end
 
+function Vector:__unm()
+    return (-1) * self
+end
+
 function Vector.__sub(t1, t2)
-    return t1 + (-1 * t2)
+    return t1 + (-t2)
 end
 
 function Vector.__div(t, a)

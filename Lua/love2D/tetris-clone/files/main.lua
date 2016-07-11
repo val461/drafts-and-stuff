@@ -11,19 +11,22 @@ local function newTetromino()
 end
 
 local function pointsForCompletedRows(n)
-    assert(n > 0)   --DEBUGGING
-    
+    return math.ceil(n * 100 * (1.2^n))
 end
 
-local function fallOrFreeze()
+local function freezeOrFall()
     if not currentTetromino:move(directions.down, grid.frozenSquares) then
-        currentTetromino:freezeInto(grid.frozenSquares)
-        local completed = grid.frozenSquares:removeCompletedRows()
-        score = score + pointsForCompletedRows(completed)
-        currentTetromino = newTetromino()
-        if currentTetromino:collidesWith(grid.frozenSquares) then
-            gameover = true
-        end
+        freeze()
+    end
+end
+
+local function freeze()
+    currentTetromino:freezeInto(grid.frozenSquares)
+    score = score + pointsForCompletedRows(grid.frozenSquares:removeCompletedRows())
+    currentTetromino = newTetromino()
+    if currentTetromino:collidesWith(grid.frozenSquares) then
+        currentTetromino = nil
+        gameover = true
     end
 end
 
@@ -33,8 +36,8 @@ end
 
 paused = false
 gameover = false
-removing = false
 grid = Grid(Vector(10, 10), 20, 14, colors.black)
+pk(grid) --DEBUG
 currentTetromino = newTetromino()
 
 level = 1
@@ -57,13 +60,17 @@ function love.update(dt)
         love.event.quit()
 	end
 
-    if love.keyboard.isDown('return', 'n') then
-        print("new game.")  --DEBUGGING
-        --TODO
-        level = level + 1
-	end
-
     if gameover then
+        if love.keyboard.isDown('return', 'n') then
+            print("new game.")  --DEBUGGING
+            --TODO
+            level = level + 1
+            score = 0
+            grid.frozenSquares:erase()
+            currentTetromino = newTetromino()
+            canFallTimer = 0
+            gameover = false
+        end
         return
     end
 
@@ -88,7 +95,7 @@ function love.update(dt)
     if canFallTimer < canFallTimerDuration then
         canFallTimer = canFallTimer + dt
     else
-        fallOrFreeze()
+        freezeOrFall()
         if gameover then
             return
         end
@@ -108,7 +115,7 @@ function love.update(dt)
             currentTetromino:move(directions.right, grid.frozenSquares)
         end
         if love.keyboard.isDown('down','s') then
-            fallOrFreeze()
+            freezeOrFall()
             if gameover then
                 return
             end
@@ -120,9 +127,12 @@ function love.update(dt)
         while currentTetromino:canMove(directions.down, grid.frozenSquares) do
             currentTetromino:forceTranslation(directions.down)
         end
+        freeze()
 	end
 end
 
 function love.draw()
-    
+    grid:draw()
+    currentTetromino:draw()
+    love.graphics.print(score, 0, 0)
 end

@@ -1,5 +1,7 @@
+require("code.Tables")
 require("code.Vector")
 require("code.Square")
+require("code.Colors")
 
 centerIndex = 2
 
@@ -11,9 +13,10 @@ function Tetromino.new(squares, grid, color)
         {
             squares = squares,
             grid = grid,
-            color = color or { 40, 40, 40 }
+            color = color or colors.gray
         },
-    Tetromino)
+        Tetromino
+    )
 end
 
 setmetatable(Tetromino, { __call = function (t, ...) return Tetromino.new(...) end })
@@ -70,10 +73,12 @@ function Tetromino:move(direction, frozenSquares)
 end
 
 function Tetromino:draw()
+    love.graphics.setColor(self.color)
+
     local function drawSquare(sq)
         sq:draw(self.grid)
     end
-    love.graphics.setColor(self.color)
+
     self:forEachSquare(drawSquare)
 end
 
@@ -147,18 +152,6 @@ function Tetromino:__tostring()
     return pa(self.squares)
 end
 --]]
-
-local function copy(a)
-    if type(a) == "table" then
-        result = {}
-        for k, v in pairs(a) do
-            result[k] = copy(v)
-        end
-        return result
-    else
-        return a
-    end
-end
 
 function Tetromino:rotate(frozenSquares)
     local new = Tetromino(copy(self.squares))

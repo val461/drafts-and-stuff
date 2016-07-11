@@ -1,10 +1,7 @@
---[[ TODO
-blinkOnRemovalOrSkyTouching
-]]
-
 require("code.Vector")
 require("code.Square")
 require("code.Tetromino")
+require("code.Tables")
 
 FrozenSquares = {}
 FrozenSquares.__index = FrozenSquares
@@ -109,10 +106,10 @@ local function drawSquare(location, color)
 end
 
 function FrozenSquares:draw()
-    local offset = Vector(-1, -1)
+    local offset = self.grid.position + Vector(-1, -1)
     for i, row in ipairs(self.squares) do
         for j, color in ipairs(row) do
-            drawSquare(self.grid.position + Square.length * (Vector(j, i) + offset), color)
+            drawSquare(offset + Square.length * (Vector(j, i)), color)
         end
     end
 end

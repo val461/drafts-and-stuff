@@ -1,16 +1,11 @@
---[[
-tetromino factory
-    create a model for each of the seven one-sided tetrominoes
-    deep copy of a model
-    random selection among models
-]]
-
+--require("code.Tables")
 require("code.Vector")
 require("code.Tetromino")
 require("code.Colors")
 math.randomseed(os.time())
 
 Tetrominoes = { models = {} }
+--~ centerIndex = 2 --DEBUGGING
 
 function Tetrominoes:newInstanceOfModel(index, grid)
     local new = Tetromino(
@@ -19,6 +14,7 @@ function Tetrominoes:newInstanceOfModel(index, grid)
 --        self.models[index].color
         colors[math.random(#colors)]
     )
+    print("Tetrominoes:17: "..new) --DEBUGGING
     new:translate(grid.startingPosition - new.squares[centerIndex].position)
     -- [[ DEBUGGING
     new:hasIntegerCoords()
@@ -45,42 +41,42 @@ add(squares, directions.down)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.purple })
 
 -- O
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.down)
 add(squares, directions.right)
 add(squares, directions.up)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.white })
 
 -- T
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.right)
 add(squares, directions.up)
 add(squares, directions.down + directions.right)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.blue })
 
 -- J
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.left)
 add(squares, directions.down)
 add(squares, directions.down)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.red })
 
 -- L
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.right)
 add(squares, directions.down)
 add(squares, directions.down)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.green })
 
 -- S
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.left)
 add(squares, directions.down)
 add(squares, directions.left)
 table.insert(Tetrominoes.models, { squares = squares, color = colors.yellow })
 
 -- Z
-local squares = { Square() }
+squares = { Square() }
 add(squares, directions.right)
 add(squares, directions.down)
 add(squares, directions.right)
