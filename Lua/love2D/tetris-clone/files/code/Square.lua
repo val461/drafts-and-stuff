@@ -18,7 +18,7 @@ setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })
 
 function Square:isBlocked(direction, frozenSquares)
     local target = self.position + direction
-    return frozenSquares[target.x][target.y]
+    return frozenSquares[target.y][target.x]
 end
 
 function Square:translate(vector)
@@ -35,6 +35,20 @@ function Square:draw(grid)
 end
 
 -- [[ DEBUGGING
+local function pa(t, printKeys)  -- print an array shallowly
+    local str = "{ "
+    for i, v in ipairs(t) do
+        if (printKeys) then
+            str = str .. "[" .. i .. "] = "
+        end
+        str = str .. tostring(v) .. ", "
+    end
+    if #str > 2 then
+        str = str:sub(1, -3)   -- remove last comma
+    end
+    return str .. " }"
+end
+
 function Square:__tostring()
     return "{ position = " .. self.position .. ", color = " .. pa(self.color) .. " }"
 end

@@ -5,11 +5,11 @@ Tetromino = {}
 Tetromino.__index = Tetromino
 Tetromino.length = 8
 
-function Tetromino.new(fallingSquares, center, shiftOnRotation, grid, color)
+function Tetromino.new(squares, extremities, shiftOnRotation, grid, color)
     return setmetatable(
         {
             squares = squares,
-            center = center,
+            extremities = extremities,  -- a couple of constituent squares, to determine the center
             shiftOnRotation = shiftOnRotation,
             grid = grid,
             color = color or { 40, 40, 40 }
@@ -21,15 +21,15 @@ setmetatable(Tetromino, { __call = function (t, ...) return Tetromino.new(...) e
 
 -- private
 function Tetromino:forEachSquare(f)
-    for _, v in pairs(self) do
-        f(v)
+    for _, sq in ipairs(self.squares) do
+        f(sq)
     end
 end
 
 -- private
 function Tetromino:someSquare(p)
-    for _, v in pairs(self) do
-        if p(v) then
+    for _, sq in ipairs(self.squares) do
+        if p(sq) then
             return true
         end
     end
@@ -38,12 +38,7 @@ end
 
 -- private
 function Tetromino:allSquares(p)
-    for _, v in pairs(self) do
-        if not p(v) then
-            return false
-        end
-    end
-    return true
+    return not self:someSquare(not p)
 end
 
 function Tetromino:isBlocked(direction, frozenSquares)
@@ -58,25 +53,30 @@ function Tetromino:draw()
         sq:draw(self.grid)
     end
     love.graphics.setColor(self.color)
-    self:forEachSquare(draw)
+    self:forEachSquare(drawSquare)
 end
 
 function Tetromino:translate(vector)
     local function translateSquare(sq)
         sq:translate(vector)
     end
-    self:forEachSquare(translate)
+    self:forEachSquare(translateSquare)
 end
 
 local halfLength = Square.length / 2
 local fromCornerToCenterOfSquare = Vector(halfLength * directions.left, halfLength * directions.down)
 
+function Tetromino:center()
+    return (self.extremities[1].position + self.extremities[2].position) / 2
+end
+
 function Tetromino:rotate()
+    local tetrominoCenter = self:center()
     local function rotateSquare(sq)
         local squareCenter = sq.position + fromCornerToCenterOfSquare
-        local posRelativeToTetrominoCenter = squareCenter - self.center
+        local posRelativeToTetrominoCenter = squareCenter - tetrominoCenter
         local newPosRelativeToTetrominoCenter = Vector(-posRelativeToTetrominoCenter.y, posRelativeToTetrominoCenter.x)
-        sq.position:assimilate(newPosRelativeToTetrominoCenter + self.center - fromCornerToCenterOfSquare)
+        sq.position:assimilate(newPosRelativeToTetrominoCenter + tetrominoCenter - fromCornerToCenterOfSquare)
     end
     self:forEachSquare(rotateSquare)
     if self.shiftOnRotation then
@@ -97,8 +97,11 @@ function Tetromino:rotate()
     --]]
 end
 
-function Tetromino:freeze(frozenSquares)
-
+function Tetromino:freezeInto(frozenSquares)
+    function freeze(sq)
+        frozenSquares:add(sq.position, self.color)
+    end
+    self:forEachSquare(freeze)
 end
 
 --[[

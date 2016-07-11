@@ -8,11 +8,12 @@ require("code.Square")
 FrozenSquares = {}
 FrozenSquares.__index = FrozenSquares
 
-local topRowIndex = 0
+local topRowIndex = 1
 
 function FrozenSquares.new(nRows, nCols, grid)
     local t = 
         {
+            squares = {}
             nRows = (nRows or 12),
             nCols = (nCols or 20),
             grid = grid
@@ -23,7 +24,7 @@ function FrozenSquares.new(nRows, nCols, grid)
         for j = 1, nCols do
             table.insert(row, false)    -- set default value to false because nil cannot be stored in lua arrays
         end
-        table.insert(t, row)
+        table.insert(t.squares, row)
     end
     return setmetatable(t, FrozenSquares)
 end
@@ -31,12 +32,12 @@ end
 setmetatable(FrozenSquares, { __call = function (t, ...) return FrozenSquares.new(...) end })
 
 function FrozenSquares:add(position, color)
-    t[position.y][position.x] = color or { 40, 40, 40 }
+    self[position.y][position.x] = color or { 40, 40, 40 }
 end
 
 local function rowIsComplete(row)
-    for _, v in row do
-        if not v then
+    for _, sq in row do
+        if not sq then
             return false
         end
     end
@@ -45,7 +46,7 @@ end
 
 local function filterIndexes(p)
     local result = {}
-    for i, row in pairs(self) do
+    for i, row in ipairs(self.squares) do
         if p(row) then
             table.insert(result, i)
         end
@@ -58,7 +59,7 @@ function FrozenSquares:getCompletedRows()
 end
 
 function FrozenSquares:touchesTheSky()
-    for _, sq in pairs(self[topRowIndex]) do
+    for _, sq in ipairs(self.squares[topRowIndex]) do
         if sq then
             return true
         end
@@ -68,15 +69,15 @@ end
 
 -- private
 function FrozenSquares:duplicateRow(rowIndex, newRowIndex)
-    for column, sq in pairs(self[rowIndex]) do
-        self[newRowIndex][column] = sq
+    for column, sq in ipairs(self.squares[rowIndex]) do
+        self.squares[newRowIndex][column] = sq
     end
 end
 
 -- private
 function FrozenSquares:eraseRow(rowIndex)
-    for column, _ in pairs(self[rowIndex]) do
-        self[rowIndex][column] = false
+    for column, _ in ipairs(self.squares[rowIndex]) do
+        self.squares[rowIndex][column] = false
     end
 end
 
@@ -99,9 +100,10 @@ local function drawSquare(location, color)
 end
 
 function FrozenSquares:draw()
-    for i, row in pairs(self) do
-        for j, color in pairs(row) do
-            drawSquare(self.grid.position + Square.length * Vector(j, i), color)
+    local offset = Vector(-1, -1)
+    for i, row in ipairs(self.squares) do
+        for j, color in ipairs(row) do
+            drawSquare(self.grid.position + Square.length * (Vector(j, i) + offset), color)
         end
     end
 end
