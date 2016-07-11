@@ -13,10 +13,10 @@ local topRowIndex = 1
 function FrozenSquares.new(nRows, nCols, grid)
     local t = 
         {
-            squares = {}
             nRows = (nRows or 12),
             nCols = (nCols or 20),
-            grid = grid
+            grid = grid,
+            squares = {}
         }
     local i, j
     for i = 1, nRows do
@@ -44,7 +44,8 @@ local function rowIsComplete(row)
     return true
 end
 
-local function filterIndexes(p)
+-- private
+function FrozenSquares:filterIndexes(p)
     local result = {}
     for i, row in ipairs(self.squares) do
         if p(row) then
@@ -54,8 +55,9 @@ local function filterIndexes(p)
     return result
 end
 
+-- private
 function FrozenSquares:getCompletedRows()
-    return filterIndexes(rowIsComplete)
+    return self:filterIndexes(rowIsComplete)
 end
 
 function FrozenSquares:touchesTheSky()
@@ -87,11 +89,25 @@ function FrozenSquares:moveRow(rowIndex, newRowIndex)
     self:eraseRow(rowIndex)
 end
 
+-- private
 function FrozenSquares:removeRow(rowIndex)
     local down, up = directions.down.y, directions.up.y
     for i = rowIndex + up, topRowIndex, up do
         self:moveRow(i, i + down)
     end
+end
+
+-- private
+function FrozenSquares:removeRows(rowIndexes)
+    for _, rowIndex in ipairs(rowIndexes) do
+        self:removeRow(rowIndex)
+    end
+end
+
+function FrozenSquares:removeCompletedRows()
+    local indexes = self:getCompletedRows()
+    self:removeRows(indexes)
+    return #indexes
 end
 
 local function drawSquare(location, color)

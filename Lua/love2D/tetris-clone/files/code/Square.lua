@@ -11,7 +11,8 @@ function Square.new(position)
         {
             position = position or Vector(),    -- row and column in a grid
         },
-        Square)
+        Square
+    )
 end
 
 setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })

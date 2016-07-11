@@ -7,7 +7,8 @@ function Vector.new(x, y)
             x = x or 0,
             y = y or 0
         },
-        Vector)
+        Vector
+    )
 end
 
 setmetatable(Vector, { __call = function (t, ...) return Vector.new(...) end })

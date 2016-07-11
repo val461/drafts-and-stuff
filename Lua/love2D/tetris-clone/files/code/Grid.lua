@@ -9,7 +9,7 @@ Grid.length = 8
 function Grid.new(position, nRows, nCols, bgColor)
     local t = {}
     t.position = position or Vector()
-    t.frozenSquares = FrozenSquares(nRows, nCols)
+    t.frozenSquares = FrozenSquares(nRows, nCols, t)
     t.height = t.frozenSquares.nRows * Square.length
     t.width = t.frozenSquares.nCols * Square.length
     t.bgColor = bgColor or {0, 0, 0}

@@ -14,7 +14,8 @@ function Tetromino.new(squares, extremities, shiftOnRotation, grid, color)
             grid = grid,
             color = color or { 40, 40, 40 }
         },
-        Tetromino)
+        Tetromino
+    )
 end
 
 setmetatable(Tetromino, { __call = function (t, ...) return Tetromino.new(...) end })
@@ -103,10 +104,3 @@ function Tetromino:freezeInto(frozenSquares)
     end
     self:forEachSquare(freeze)
 end
-
---[[
-tetromino factory
-    create a model for each of the seven one-sided tetrominoes
-    deep copy of a model
-    random selection among models
-]]
