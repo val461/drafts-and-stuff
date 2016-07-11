@@ -34,12 +34,12 @@ function love.update(dt)
         player.x = love.graphics.getWidth() - player.img:getWidth()
     end
 
-    if canShootTimer > 0 then
-        canShootTimer = canShootTimer - dt
+    if canShootTimer < canShootTimerDuration then
+        canShootTimer = canShootTimer + dt
     elseif love.keyboard.isDown('space', 'rctrl', 'lctrl') then
         newBullet = { x = player.x + (player.img:getWidth() - bulletImg:getWidth()) / 2, y = player.y }
         table.insert(bullets, newBullet)
-        canShootTimer = canShootTimerDuration
+        canShootTimer = 0
     end
 
     for i, bullet in ipairs(bullets) do
@@ -51,7 +51,7 @@ function love.update(dt)
     end
 end
 
-function love.draw(dt)
+function love.draw()
     love.graphics.draw(player.img, player.x, player.y)
 
     for _, bullet in ipairs(bullets) do

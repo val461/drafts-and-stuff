@@ -56,6 +56,19 @@ function Tetromino:isBlocked(direction, frozenSquares)
     return self:someSquare(isBlocked)
 end
 
+function Tetromino:canMove(direction, frozenSquares)
+    return not self:isBlocked(direction, frozenSquares)
+end
+
+function Tetromino:move(direction, frozenSquares)
+    if currentTetromino:isBlocked(direction, frozenSquares) then
+        return false
+    else
+        currentTetromino:forceTranslation(direction)
+        return true
+    end
+end
+
 function Tetromino:draw()
     local function drawSquare(sq)
         sq:draw(self.grid)
@@ -65,15 +78,11 @@ function Tetromino:draw()
 end
 
 -- private
-function Tetromino:translate(vector)
+function Tetromino:forceTranslation(vector)
     local function translateSquare(sq)
         sq:translate(vector)
     end
     self:forEachSquare(translateSquare)
-end
-
-function Tetromino:moveDown()
-    self:translate(directions.down)
 end
 
 --[[ DEPRECATED
@@ -88,13 +97,6 @@ function Tetromino:align()
 end
 ]]
 
-function Tetromino:enforceRoof()
-    local highest = new:highest()
-    if highest < 0 then
-        new:translate(highest * directions.down)
-    end
-end
-
 local function getSquareOrdinate(sq)
     return sq.position.y
 end
@@ -104,13 +106,20 @@ function Tetromino:highest()
     return math.min(self:map(getSquareOrdinate))
 end
 
+function Tetromino:enforceRoof()
+    local highest = new:highest()
+    if highest < 0 then
+        new:forceTranslation(math.abs(highest) * directions.down)
+    end
+end
+
 -- private
 function Tetromino:center()
     return self.squares[centerIndex]:getCenter()
 end
 
 -- private
-function Tetromino:rotate()
+function Tetromino:forceRotation()
     local tetrominoCenter = self:center()
     local function rotateSquare(sq)
         local posRelativeToTetrominoCenter = sq:getCenter() - tetrominoCenter
@@ -151,9 +160,9 @@ local function copy(a)
     end
 end
 
-function Tetromino:rotateIfPossible(frozenSquares)
+function Tetromino:rotate(frozenSquares)
     local new = Tetromino(copy(self.squares))
-    new:rotate()
+    new:forceRotation()
     if new:collidesWith(frozenSquares) then
         return false
     else

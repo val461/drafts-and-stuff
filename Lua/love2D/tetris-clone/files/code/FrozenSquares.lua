@@ -4,6 +4,7 @@ blinkOnRemovalOrSkyTouching
 
 require("code.Vector")
 require("code.Square")
+require("code.Tetromino")
 
 FrozenSquares = {}
 FrozenSquares.__index = FrozenSquares
@@ -11,21 +12,24 @@ FrozenSquares.__index = FrozenSquares
 local topRowIndex = 1
 
 function FrozenSquares.new(nRows, nCols, grid)
+    local row = {}
+
+    for j = 1, nCols do
+        table.insert(row, false)    -- set default value to false because nil cannot be stored in lua arrays
+    end
+
     local t = 
         {
             nRows = (nRows or 12),
             nCols = (nCols or 20),
             grid = grid,
-            squares = {}
+            squares = { row }
         }
-    local i, j
-    for i = 1, nRows do
-        local row = {}
-        for j = 1, nCols do
-            table.insert(row, false)    -- set default value to false because nil cannot be stored in lua arrays
-        end
-        table.insert(t.squares, row)
+
+    for i = 2, nRows do
+        table.insert(t.squares, copy(row))
     end
+
     return setmetatable(t, FrozenSquares)
 end
 
@@ -50,69 +54,53 @@ local function rowIsComplete(row)
 end
 
 -- private
-function FrozenSquares:filterIndexes(p)
-    local result = {}
-    for i, row in ipairs(self.squares) do
-        if p(row) then
-            table.insert(result, i)
+function FrozenSquares:indexOfSomeCompletedRow()
+    for rowIndex, row in ipairs(self.squares) do
+        if rowIsComplete(row) then
+            return rowIndex
         end
     end
-    return result
-end
-
--- private
-function FrozenSquares:getCompletedRows()
-    return self:filterIndexes(rowIsComplete)
-end
-
-function FrozenSquares:touchesTheSky()
-    for _, sq in ipairs(self.squares[topRowIndex]) do
-        if sq then
-            return true
-        end
-    end
-    return false
+    return nil
 end
 
 -- private
 function FrozenSquares:duplicateRow(rowIndex, newRowIndex)
-    for column, sq in ipairs(self.squares[rowIndex]) do
-        self.squares[newRowIndex][column] = sq
+    for columnIndex, sq in ipairs(self.squares[rowIndex]) do
+        self.squares[newRowIndex][columnIndex] = sq
     end
 end
 
 -- private
 function FrozenSquares:eraseRow(rowIndex)
-    for column, _ in ipairs(self.squares[rowIndex]) do
-        self.squares[rowIndex][column] = false
+    for columnIndex, _ in ipairs(self.squares[rowIndex]) do
+        self.squares[rowIndex][columnIndex] = false
     end
 end
 
--- private
-function FrozenSquares:moveRow(rowIndex, newRowIndex)
-    self:duplicateRow(rowIndex, newRowIndex)
-    self:eraseRow(rowIndex)
+function FrozenSquares:erase()
+    for rowIndex, _ in ipairs(self.squares) do
+        self:eraseRow(rowIndex)
+    end
 end
 
 -- private
 function FrozenSquares:removeRow(rowIndex)
     local down, up = directions.down.y, directions.up.y
     for i = rowIndex + up, topRowIndex, up do
-        self:moveRow(i, i + down)
+        self:duplicateRow(i, i + down)
     end
-end
-
--- private
-function FrozenSquares:removeRows(rowIndexes)
-    for _, rowIndex in ipairs(rowIndexes) do
-        self:removeRow(rowIndex)
-    end
+    self:eraseRow(topRowIndex)
 end
 
 function FrozenSquares:removeCompletedRows()
-    local indexes = self:getCompletedRows()
-    self:removeRows(indexes)
-    return #indexes
+    local rowIndex = self:indexOfSomeCompletedRow()
+    local n = 0
+    while rowIndex do
+        self:removeRow(rowIndex)
+        n = n + 1
+        rowIndex = self:indexOfSomeCompletedRow()
+    end
+    return n
 end
 
 local function drawSquare(location, color)
