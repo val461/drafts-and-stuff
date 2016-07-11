@@ -8,7 +8,7 @@ require("code.Square")
 FrozenSquares = {}
 FrozenSquares.__index = FrozenSquares
 
-local topRow = 0
+local topRowIndex = 0
 
 function FrozenSquares.new(nRows, nCols, grid)
     local t = 
@@ -45,7 +45,7 @@ end
 
 local function filterIndexes(p)
     local result = {}
-    for i, row in ipairs(self) do
+    for i, row in pairs(self) do
         if p(row) then
             table.insert(result, i)
         end
@@ -58,7 +58,7 @@ function FrozenSquares:getCompletedRows()
 end
 
 function FrozenSquares:touchesTheSky()
-    for _, sq in ipairs(self[topRow]) do
+    for _, sq in pairs(self[topRowIndex]) do
         if sq then
             return true
         end
@@ -66,27 +66,30 @@ function FrozenSquares:touchesTheSky()
     return false
 end
 
-local function duplicateRow(t, rowIndex, newRowIndex)
-    for column, sq in ipairs(t[rowIndex]) do
-        t[newRowIndex][column] = sq
+-- private
+function FrozenSquares:duplicateRow(rowIndex, newRowIndex)
+    for column, sq in pairs(self[rowIndex]) do
+        self[newRowIndex][column] = sq
     end
 end
 
-local function eraseRow(t, rowIndex)
-    for column, _ in ipairs(t[rowIndex]) do
-        t[rowIndex][column] = false
+-- private
+function FrozenSquares:eraseRow(rowIndex)
+    for column, _ in pairs(self[rowIndex]) do
+        self[rowIndex][column] = false
     end
 end
 
-local function moveRow(t, rowIndex, newRowIndex)
-    duplicateRow(t, rowIndex, newRowIndex)
-    eraseRow(t, rowIndex)
+-- private
+function FrozenSquares:moveRow(rowIndex, newRowIndex)
+    self:duplicateRow(rowIndex, newRowIndex)
+    self:eraseRow(rowIndex)
 end
 
 function FrozenSquares:removeRow(rowIndex)
     local down, up = directions.down.y, directions.up.y
-    for i = rowIndex + up, topRow, up do
-        moveRow(self, i, i + down)
+    for i = rowIndex + up, topRowIndex, up do
+        self:moveRow(i, i + down)
     end
 end
 
@@ -96,8 +99,8 @@ local function drawSquare(location, color)
 end
 
 function FrozenSquares:draw()
-    for i, row in ipairs(self) do
-        for j, color in ipairs(row) do
+    for i, row in pairs(self) do
+        for j, color in pairs(row) do
             drawSquare(self.grid.position + Square.length * Vector(j, i), color)
         end
     end

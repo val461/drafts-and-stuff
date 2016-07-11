@@ -8,7 +8,7 @@ Tetromino.length = 8
 function Tetromino.new(fallingSquares, center, shiftOnRotation, grid, color)
     return setmetatable(
         {
-            fallingSquares = fallingSquares,    -- row and column in a grid
+            squares = squares,
             center = center,
             shiftOnRotation = shiftOnRotation,
             grid = grid,
@@ -19,12 +19,14 @@ end
 
 setmetatable(Tetromino, { __call = function (t, ...) return Tetromino.new(...) end })
 
+-- private
 function Tetromino:forEachSquare(f)
     for _, v in pairs(self) do
         f(v)
     end
 end
 
+-- private
 function Tetromino:someSquare(p)
     for _, v in pairs(self) do
         if p(v) then
@@ -34,6 +36,7 @@ function Tetromino:someSquare(p)
     return false
 end
 
+-- private
 function Tetromino:allSquares(p)
     for _, v in pairs(self) do
         if not p(v) then
@@ -94,11 +97,11 @@ function Tetromino:rotate()
     --]]
 end
 
+function Tetromino:freeze(frozenSquares)
+
+end
+
 --[[
-
-instance method
-    freeze(frozenSquares)
-
 tetromino factory
     create a model for each of the seven one-sided tetrominoes
     deep copy of a model

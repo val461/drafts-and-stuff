@@ -1,5 +1,9 @@
 debug = true
 
+require("code.Vector")
+require("code.Tetromino")
+require("code.FrozenSquares")
+
 currentTetromino = {}
 tetrominoes = {}
 squareUnit = {}
@@ -9,7 +13,7 @@ canMoveTimerDuration = 0.2
 canMoveTimer = 0
 
 function love.load(arg)
-    gridWidth = nCols * squareLength
+    gridWidth = nCols * Square.length
     player.x = math.floor((love.graphics.getWidth() - player.img:getWidth()) / 2)
     love.graphics.setBackgroundColor(70, 236, 22)
     love.graphics.setColor(40, 40, 40)
