@@ -1,5 +1,3 @@
-#!/usr/bin/env lua
-
 function pt(t)  -- print a table shallowly
     local str = "{ "
     for k, v in pairs(t) do
