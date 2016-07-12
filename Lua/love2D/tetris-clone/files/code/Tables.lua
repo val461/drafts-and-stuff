@@ -70,11 +70,27 @@ end
 function Tables.min(t)
     local result = nil
     for _, v in pairs(t) do
-        if not result then
-            result = v
-        elseif v < result then
+        if not result or v < result then
             result = v
         end
+    end
+    return result
+end
+
+function Tables.max(t)
+    local result = nil
+    for _, v in pairs(t) do
+        if not result or v > result then
+            result = v
+        end
+    end
+    return result
+end
+
+local function map(f, t)
+    local result = {}
+    for k, v in ipairs(t) do
+        result[k] = f(v)
     end
     return result
 end

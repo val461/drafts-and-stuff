@@ -4,6 +4,7 @@ require("code.Grid")
 require("code.Vector")
 require("code.Colors")
 require("code.Tetrominoes")
+require("code.Strings")
 --~ require("code.Square")
 --~ require("code.Tetromino")
 --~ require("code.FrozenSquares")
@@ -22,23 +23,6 @@ local function getNextStep()
         return factor * math.ceil(score / factor)
     else
         return 1000
-    end
-end
-
-
-local function repeatString(str, n)
-    local result = ""
-    local i = 0
-    while i < n do
-        result = result..str
-        i = i + 1
-    end
-    return result
-end
-
-local function pad(messages)
-    for k, v in pairs(messages) do
-        
     end
 end
 
@@ -165,7 +149,7 @@ function love.draw()
         currentTetromino:draw()
     end
     love.graphics.setColor(fontColor)
-    local paddedMessages = pad{ level = level, score = score, objective = nextStep }
+    local paddedMessages = pad({ "level", "score", "objective" }, toStrings{ level, score, nextStep })
     love.graphics.print("level " .. level, messageLocation.x, messageLocation.y)
     love.graphics.print("score " .. score, messageLocation.x, messageLocation.y + messageHeight)
     if gameover then
