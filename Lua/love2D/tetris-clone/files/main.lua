@@ -17,30 +17,35 @@ local function pointsForCompletedRows(n)
     return math.ceil(n * 100 * (1.2^n))
 end
 
-local function updateObjective()
-    if score > 0 then
-        local factor = 10 ^ (#tostring(score) - 1)
-        objective = factor * math.ceil(score / factor)
-    else
-        objective = 100
-    end
-end
+--~ local function updateObjective()
+    --~ if score > 0 then
+        --~ local factor = 10 ^ (#tostring(score) - 1)
+        --~ objective = factor * math.ceil(score / factor)
+    --~ else
+        --~ objective = 100
+    --~ end
+--~ end
 
 local function updateCanFallTimerDuration()
-    canFallTimerDuration = 0.96^level
+    --~ canFallTimerDuration = 0.9^level
+    canFallTimerDuration = 0.9^(score / 400)
 end
 
 local function freeze()
     currentTetromino:freezeInto(grid.frozenSquares)
-    score = score + pointsForCompletedRows(grid.frozenSquares:removeCompletedRows())
+    local newPoints = pointsForCompletedRows(grid.frozenSquares:removeCompletedRows())
+    if newPoints > 0 then
+        score = score + newPoints
+        updateCanFallTimerDuration()
+    end
     currentTetromino = newTetromino()
     if currentTetromino:collidesWith(grid.frozenSquares) then
         currentTetromino = nil
         gameover = true
-    elseif score > objective then
-        level = level + 1
-        updateObjective()
-        updateCanFallTimerDuration()
+    --~ elseif score > objective then
+        --~ level = level + 1
+        --~ updateObjective()
+        --~ updateCanFallTimerDuration()
     end
 end
 
@@ -55,13 +60,14 @@ gameover = false
 grid = Grid(Vector(10, 10), 20, 14)
 currentTetromino = newTetromino()
 
-level = 1
+--~ level = 1
 score = 0
-updateObjective()
+--~ updateObjective()
 
 messageHeight = 40
 messageLocation = Vector(grid.outerPosition.x + grid.outerWidth + 60, messageHeight * 3)
-prefixes = { "level", "score", "objective" }
+--~ prefixes = { "level", "score", "objective" }
+prefixes = { "score" }
 fontColor = colors.purple
 
 updateCanFallTimerDuration()
@@ -81,12 +87,12 @@ function love.keyreleased(key)
         love.event.quit()
         return
     elseif key == 'n' then
-        if level > 1 then
-            level = level - 1
-            updateCanFallTimerDuration()
-        end
+        --~ if level > 1 then
+            --~ level = level - 1
+            --~ updateCanFallTimerDuration()
+        --~ end
         score = 0
-        updateObjective()
+        --~ updateObjective()
         grid.frozenSquares:erase()
         currentTetromino = newTetromino()
         gameover = false
@@ -155,6 +161,11 @@ function love.update(dt)
     end
 end
 
+local function printMessage(message)
+    love.graphics.print(message, messageLocation.x, messageLocation.y + messageNumber * messageHeight)
+    messageNumber = messageNumber + 1
+end
+
 function love.draw()
     grid:draw()
     if currentTetromino then
@@ -162,17 +173,18 @@ function love.draw()
     end
     love.graphics.setColor(fontColor)
 
-    local paddedMessages = pad(prefixes, toStrings{level, score, objective})
-    local i = 0
-    love.graphics.print(paddedMessages.level, messageLocation.x, messageLocation.y + i * messageHeight) i = i + 1
-    love.graphics.print(paddedMessages.objective, messageLocation.x, messageLocation.y + i * messageHeight) i = i + 1
-    love.graphics.print(paddedMessages.score, messageLocation.x, messageLocation.y + i * messageHeight) i = i + 1
+    --~ local paddedMessages = pad(prefixes, toStrings{level, score, objective})
+    local paddedMessages = pad(prefixes, {tostring(score)})
+    messageNumber = 0
+    --~ printMessage(paddedMessages.level)
+    --~ printMessage(paddedMessages.objective)
+    printMessage(paddedMessages.score)
 
     if gameover then
-        love.graphics.print("GAME OVER", messageLocation.x, messageLocation.y + i * messageHeight) i = i + 1
+        printMessage("GAME OVER")
     end
 
     if paused then
-        love.graphics.print("PAUSED", messageLocation.x, messageLocation.y + i * messageHeight)
+        printMessage("PAUSED")
     end
 end
