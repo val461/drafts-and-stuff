@@ -1,10 +1,15 @@
-function copy(a)
+--[[
+self = Tetrominoes; index = 1
+pt(copy(self.models[index].squares))
+]]
+
+function copy(a)    -- deep copy for values but shallow copy for keys and metatables
     if type(a) == "table" then
-        result = {}
+        local result = {}
         for k, v in pairs(a) do
             result[k] = copy(v)
         end
-        return result
+        return setmetatable(result, getmetatable(a))
     else
         return a
     end
@@ -42,4 +47,12 @@ function pt(t)  -- print a table shallowly
         str = str:sub(1, -3)   -- remove last comma
     end
     return str .. " }"
+end
+
+function keys(t)
+    local result = {}
+    for k, _ in pairs(t) do
+        table.insert(result, k)
+    end
+    return result
 end

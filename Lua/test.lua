@@ -47,3 +47,13 @@ function pk(t)  -- print a table’s keys shallowly
     end
     return str .. " }"
 end
+
+function rep(str, n)
+    local result = ""
+    local i = 0
+    while i < n do
+        result = result..str
+        i = i + 1
+    end
+    return result
+end

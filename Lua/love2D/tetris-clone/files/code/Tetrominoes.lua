@@ -1,4 +1,4 @@
---require("code.Tables")
+require("code.Tables")
 require("code.Vector")
 require("code.Tetromino")
 require("code.Colors")
@@ -12,7 +12,7 @@ function Tetrominoes:newInstanceOfModel(index, grid)
         copy(self.models[index].squares),
         grid,
 --        self.models[index].color
-        colors[math.random(#colors)]
+        randomColor()
     )
     print("Tetrominoes:17: "..new) --DEBUGGING
     new:translate(grid.startingPosition - new.squares[centerIndex].position)

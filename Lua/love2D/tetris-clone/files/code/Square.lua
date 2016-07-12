@@ -20,6 +20,12 @@ setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })
 local fromCornerToCenter = Vector(directions.right, directions.down) / 2
 local fromCenterToCorner = -fromCornerToCenter
 
+--[[
+function Square:clone()
+    return Square(self.position)
+end
+]]
+
 function Square:getCenter()
     return self.position + fromCornerToCenter
 end
@@ -48,6 +54,6 @@ end
 
 -- [[ DEBUGGING
 function Square:__tostring()
-    return "{ position = " .. self.position .. " }"
+    return "{ position = " .. tostring(self.position) .. " }"
 end
 --]]
