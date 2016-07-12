@@ -29,4 +29,5 @@ function pad(left, right)
     for i, prefix in ipairs(left) do
         result[v] = prefix .. repeatString(" ", leftColumnSize - #v) .. repeatString(" ", rightColumnSize - #right[i]) .. right[i]
     end
+    return result
 end

@@ -60,6 +60,7 @@ nextStep = getNextStep()
 
 messageHeight = 20
 messageLocation = Vector(grid.outerPosition.x + grid.outerWidth + 10, messageHeight)
+prefixes = { "level", "score", "objective" }
 fontColor = colors.purple
 
 updateCanFallTimerDuration()
@@ -149,12 +150,12 @@ function love.draw()
         currentTetromino:draw()
     end
     love.graphics.setColor(fontColor)
-    local paddedMessages = pad({ "level", "score", "objective" }, toStrings{ level, score, nextStep })
-    love.graphics.print("level " .. level, messageLocation.x, messageLocation.y)
-    love.graphics.print("score " .. score, messageLocation.x, messageLocation.y + messageHeight)
     if gameover then
         love.graphics.print("GAME OVER", messageLocation.x, messageLocation.y + 2 * messageHeight)
     else
-        love.graphics.print("next step " .. nextStep, messageLocation.x, messageLocation.y + 2 * messageHeight)
+        local paddedMessages = pad(prefixes, toStrings{level, score, nextStep})
+        love.graphics.print(paddedMessages.level, messageLocation.x, messageLocation.y)
+        love.graphics.print(paddedMessages.score, messageLocation.x, messageLocation.y + messageHeight)
+        love.graphics.print(paddedMessages.objective, messageLocation.x, messageLocation.y + 2 * messageHeight)
     end
 end
