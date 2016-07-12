@@ -14,12 +14,6 @@ local function pointsForCompletedRows(n)
     return math.ceil(n * 100 * (1.2^n))
 end
 
-local function freezeOrFall()
-    if not currentTetromino:move(directions.down, grid.frozenSquares) then
-        freeze()
-    end
-end
-
 local function freeze()
     currentTetromino:freezeInto(grid.frozenSquares)
     score = score + pointsForCompletedRows(grid.frozenSquares:removeCompletedRows())
@@ -30,13 +24,19 @@ local function freeze()
     end
 end
 
+local function freezeOrFall()
+    if not currentTetromino:move(directions.down, grid.frozenSquares) then
+        freeze()
+    end
+end
+
 function updateCanFallTimerDuration()
     canFallTimerDuration = 0.96^level
 end
 
 paused = false
 gameover = false
-grid = Grid(Vector(10, 10), 20, 14, colors.black)
+grid = Grid(Vector(10, 10), 20, 14)
 currentTetromino = newTetromino()
 
 level = 1
@@ -45,7 +45,7 @@ score = 0
 updateCanFallTimerDuration()
 canFallTimer = 0
 
-canMoveTimerDuration = 0.2
+canMoveTimerDuration = 0.1
 canMoveTimer = 0
 
 function love.load(arg)
@@ -53,12 +53,22 @@ function love.load(arg)
     love.graphics.setColor(40, 40, 40)
 end
 
-function love.update(dt)
-    if love.keyboard.isDown('escape') then
-        print("exiting.")  --DEBUGGING
-        love.event.quit()
+function love.keypressed(key)
+    if key == 'tab' and not paused then
+        paused = true
 	end
+end
 
+function love.keyreleased(key)
+    if key == 'escape' then
+        love.event.quit()
+    elseif key == 'tab' and paused then
+        canMoveTimer = canMoveTimerDuration
+        paused = false
+	end
+end
+
+function love.update(dt)
     if gameover then
         if love.keyboard.isDown('return', 'n') then
             print("new game.")  --DEBUGGING
@@ -72,20 +82,6 @@ function love.update(dt)
         end
         return
     end
-
-    if love.keyboard.isDown('tab') then
-        if paused then
-            if canMoveTimer > canMoveTimerDuration then
-                paused = false
-            else
-                canMoveTimer = canMoveTimer + dt
-            end
-        else
-            paused = true
-            canMoveTimer = 0
-        end
-        print("paused: " .. paused)  --DEBUGGING
-	end
 
     if paused then
         return

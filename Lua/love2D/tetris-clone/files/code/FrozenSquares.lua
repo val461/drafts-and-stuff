@@ -37,7 +37,7 @@ function FrozenSquares:squareAt(position)
 end
 
 function FrozenSquares:setSquareAt(position, color)
-    self:setSquareAt(position, color)
+    self.squares[position.y][position.x] = color
 end
 
 function FrozenSquares:add(position, color)
@@ -114,11 +114,10 @@ local function drawSquare(location, color)
 end
 
 function FrozenSquares:draw()
-    local offset = self.grid.position + Vector(-1, -1)
     for i, row in ipairs(self.squares) do
         for j, color in ipairs(row) do
             if color then
-                drawSquare(offset + Square.length * (Vector(j, i)), color)
+                drawSquare(self.grid.position + Square.length * Vector(j - 1, i - 1), color)
             end
         end
     end

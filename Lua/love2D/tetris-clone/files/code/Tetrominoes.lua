@@ -11,8 +11,8 @@ function Tetrominoes:newInstanceOfModel(index, grid)
     local new = Tetromino(
         copy(self.models[index].squares),
         grid,
---        self.models[index].color
-        randomColor()
+        self.models[index].color
+        --~ randomColor()
     )
     --~ print("Tetrominoes:17: "..new) --DEBUGGING
     new:forceTranslation(grid.startingPosition - new.squares[centerIndex].position)

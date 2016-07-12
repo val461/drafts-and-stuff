@@ -3,7 +3,7 @@ require("code.Vector")
 Square = {}
 Square.__index = Square
 Square.halfGap = 1
-Square.visibleLength = 6
+Square.visibleLength = 16
 Square.length = Square.visibleLength + Square.halfGap
 
 function Square.new(position)
@@ -20,13 +20,8 @@ setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })
 local fromCornerToCenter = Vector(directions.right, directions.down) / 2
 local fromCenterToCorner = -fromCornerToCenter
 
---[[
-function Square:clone()
-    return Square(self.position)
-end
-]]
-
 function Square:getCenter()
+    print("Square:24:getCenter(): ", self.position) --DEBUGGING
     return self.position + fromCornerToCenter
 end
 
@@ -44,7 +39,7 @@ function Square:forceTranslation(vector)
 end
 
 function Square:realPosition(grid)
-    return grid.position + (Square.length * self.position)
+    return grid.position + (Square.length * (self.position + Vector(-1, -1)))
 end
 
 function Square:draw(grid)
