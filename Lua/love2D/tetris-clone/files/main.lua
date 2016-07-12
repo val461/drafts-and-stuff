@@ -53,26 +53,12 @@ function love.load(arg)
     love.graphics.setColor(40, 40, 40)
 end
 
-function love.keypressed(key)
-    if key == 'tab' and not paused then
-        paused = true
-	end
-end
-
 function love.keyreleased(key)
     if key == 'escape' then
         love.event.quit()
-    elseif key == 'tab' and paused then
-        canMoveTimer = canMoveTimerDuration
-        paused = false
-	end
-end
-
-function love.update(dt)
-    if gameover then
-        if love.keyboard.isDown('return', 'n') then
+    elseif gameover then
+        if key == 'n' then
             print("new game.")  --DEBUGGING
-            --TODO
             level = level + 1
             score = 0
             grid.frozenSquares:erase()
@@ -80,10 +66,13 @@ function love.update(dt)
             canFallTimer = 0
             gameover = false
         end
-        return
-    end
+    elseif key == 'tab' then
+        paused = not paused
+	end
+end
 
-    if paused then
+function love.update(dt)
+    if paused or gameover then
         return
     end
 

@@ -5,7 +5,7 @@ require("code.Colors")
 
 Grid = {}
 Grid.__index = Grid
-Grid.innerMargin = 20
+Grid.innerMargin = 40
 
 function Grid.new(position, nRows, nCols, bgColor, edgeColor)
     local t = {}
