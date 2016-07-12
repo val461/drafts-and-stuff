@@ -87,7 +87,7 @@ function Tables.max(t)
     return result
 end
 
-local function map(f, t)
+function map(f, t)
     local result = {}
     for k, v in ipairs(t) do
         result[k] = f(v)

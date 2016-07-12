@@ -24,10 +24,10 @@ end
 
 function pad(left, right)
     local result = {}
-    local leftColumnSize = sizeOfLongest(left) + 1
+    local leftColumnSize = sizeOfLongest(left) + 4
     local rightColumnSize = sizeOfLongest(right)
     for i, prefix in ipairs(left) do
-        result[v] = prefix .. repeatString(" ", leftColumnSize - #v) .. repeatString(" ", rightColumnSize - #right[i]) .. right[i]
+        result[prefix] = prefix .. repeatString(" ", leftColumnSize - #prefix) .. repeatString(" ", rightColumnSize - #right[i]) .. right[i]
     end
     return result
 end
