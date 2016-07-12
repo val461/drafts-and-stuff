@@ -118,8 +118,9 @@ end
 
 function Tetromino:enforceRoof()
     local highestOrdinate = self:highest()
-    if highestOrdinate < 0 then
-        self:forceTranslation(math.abs(highestOrdinate) * directions.down)
+    print("Tetromino:121: "..highestOrdinate) --DEBUGGING
+    if highestOrdinate < 1 then
+        self:forceTranslation((1 - highestOrdinate) * directions.down)
     end
 end
 
@@ -129,14 +130,22 @@ function Tetromino:center()
 end
 
 -- private
-function Tetromino:forceRotation()
+function Tetromino:forceRotation(n)
     local tetrominoCenter = self:center()
     local function rotateSquare(sq)
         local posRelativeToTetrominoCenter = sq:getCenter() - tetrominoCenter
-        posRelativeToTetrominoCenter:rotateCounterclockwise()
+        posRelativeToTetrominoCenter:rotateCounterclockwise(n)
+        end
         sq:setCenter(posRelativeToTetrominoCenter + tetrominoCenter)
     end
     self:forEachSquare(rotateSquare)
+end
+
+function Tetromino:rotateRandomly()
+    local n = math.random(0, 3)
+    for i = 1, n do
+        self:forceRotation()
+    end
 end
 
 -- [[ DEBUGGING

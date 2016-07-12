@@ -14,7 +14,7 @@ function Grid.new(position, nRows, nCols, bgColor, edgeColor)
     t.frozenSquares = FrozenSquares(nRows, nCols, t)
     t.height = nRows * Square.length + Square.halfGap
     t.width = nCols * Square.length + Square.halfGap
-    t.startingPosition = Vector(math.floor(nCols / 2), 0)
+    t.startingPosition = Vector(math.floor(nCols / 2), 1)
     t.bgColor = bgColor or colors.black
     t.edgeColor = edgeColor or colors.gray
     return setmetatable(t, Grid)

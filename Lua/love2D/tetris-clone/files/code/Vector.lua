@@ -52,11 +52,30 @@ function Vector:translate(t)
     self:assimilate(self + t)
 end
 
-function Vector:rotateCounterclockwise()
+function Vector:rotateCounterclockwise(numberOfRotations)
+    local n = (numberOfRotations or 1) % 4
+    if(n == 0) then
+        return
+    elseif(n == 1) then
+        self:rotateOnceCounterclockwise()
+    elseif(n == 2) then
+        self:rotateTwice()
+    elseif(n == 3) then
+        self:rotateOnceClockwise()
+    else
+        error("Vector:rotateCounterclockwise: bad argument: " .. tostring(n), 2)
+    end
+end
+
+function Vector:rotateTwice()
+    self:assimilate(Vector(-self.x, -self.y))
+end
+
+function Vector:rotateOnceCounterclockwise()
     self:assimilate(Vector(-self.y, self.x))
 end
 
-function Vector:rotateClockwise()
+function Vector:rotateOnceClockwise()
     self:assimilate(Vector(self.y, -self.x))
 end
 
