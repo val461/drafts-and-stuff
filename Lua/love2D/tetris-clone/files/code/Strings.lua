@@ -24,10 +24,12 @@ end
 
 function pad(left, right)
     local result = {}
-    local leftColumnSize = sizeOfLongest(left) + 4
-    local rightColumnSize = sizeOfLongest(right)
+    --~ (waiting for monospace font before aligning to the right)
+    --~ local leftColumnSize = sizeOfLongest(left)
+    --~ local rightColumnSize = sizeOfLongest(right)
     for i, prefix in ipairs(left) do
-        result[prefix] = prefix .. repeatString(" ", leftColumnSize - #prefix) .. repeatString(" ", rightColumnSize - #right[i]) .. right[i]
+        --~ result[prefix] = prefix .. repeatString(" ", leftColumnSize - #prefix) .. repeatString(" ", rightColumnSize - #right[i]) .. right[i]
+        result[prefix] = prefix .. "  " .. right[i]
     end
     return result
 end

@@ -1,6 +1,13 @@
 --[[
 self = Tetrominoes; index = 1
 pt(copy(self.models[index].squares))
+new = Tetromino(
+    copy(self.models[index].squares),
+    self.models[index].canRotate,
+    grid,
+    self.models[index].color
+    --~ randomColor()
+)
 ]]
 
 Tables = {}
@@ -67,24 +74,22 @@ function Tables.values(t)
     return result
 end
 
-function Tables.min(t)
+function Tables.extremum(t, compare)
     local result = nil
     for _, v in pairs(t) do
-        if not result or v < result then
+        if not result or compare(v, result) then
             result = v
         end
     end
     return result
 end
 
+function Tables.min(t)
+    return Tables.extremum(t, function (new, acc) return new < acc end)
+end
+
 function Tables.max(t)
-    local result = nil
-    for _, v in pairs(t) do
-        if not result or v > result then
-            result = v
-        end
-    end
-    return result
+    return Tables.extremum(t, function (new, acc) return new > acc end)
 end
 
 function map(f, t)

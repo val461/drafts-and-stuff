@@ -15,8 +15,8 @@ function Tetrominoes:newInstanceOfModel(index, grid)
         --~ randomColor()
     )
     new:randomRotation()
-    new:forceTranslation(grid.startingPosition - new.squares[centerIndex].position)
-    new:enforceRoof()
+    --~ new:forceTranslation(grid.startingPosition - new.squares[centerIndex].position)
+    new:forceTranslation(grid.startingPosition - new:highestPosition())
     return new
 end
 

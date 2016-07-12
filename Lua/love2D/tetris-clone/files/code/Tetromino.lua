@@ -116,6 +116,14 @@ local function getSquareOrdinate(sq)
 end
 
 -- private
+function Tetromino:highestPosition()
+    local function compare(new, acc)
+        return new.position.y < acc.position.y
+    end
+    return Tables.extremum(self.squares, compare).position
+end
+
+-- private
 function Tetromino:highest()
     return Tables.min((self:map(getSquareOrdinate)))
 end
