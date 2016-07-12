@@ -9,6 +9,7 @@ Tetrominoes = { models = {} }
 function Tetrominoes:newInstanceOfModel(index, grid)
     local new = Tetromino(
         copy(self.models[index].squares),
+        self.models[index].canRotate,
         grid,
         self.models[index].color
         --~ randomColor()
@@ -39,7 +40,7 @@ squares = { Square() }
 add(squares, directions.down)
 add(squares, directions.right)
 add(squares, directions.up)
-table.insert(Tetrominoes.models, { squares = squares, color = colors.white })
+table.insert(Tetrominoes.models, { squares = squares, color = colors.white, canRotate = false })
 
 -- T
 squares = { Square() }

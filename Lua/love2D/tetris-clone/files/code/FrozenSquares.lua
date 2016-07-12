@@ -50,7 +50,7 @@ function FrozenSquares:invalidCoords(pos)
 end
 
 local function rowIsComplete(row)
-    for _, sq in row do
+    for _, sq in ipairs(row) do
         if not sq then
             return false
         end

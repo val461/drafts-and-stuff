@@ -14,6 +14,11 @@ end
 setmetatable(Vector, { __call = function (t, ...) return Vector.new(...) end })
 
 function Vector.__add(t1, t2)
+    --[[ DEBUGGING
+    if type(t1) ~= "table" then
+        print("Vector:__add: bad arg t1: type: " .. type(t1) .. "; value: " .. tostring(t1))
+    end
+    --]]
     return Vector(t1.x + t2.x, t1.y + t2.y)
 end
 
@@ -40,7 +45,8 @@ function Vector.__eq(t1, t2)
 end
 
 function Vector.__tostring(t)
-    return "{ x = " .. t.x .. ", y = " .. t.y .. " }"
+    return "Vector(" .. t.x .. ", " .. t.y .. ")"
+    --~ return "{ x = " .. t.x .. ", y = " .. t.y .. " }"
 end
 
 function Vector:assimilate(t)

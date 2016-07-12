@@ -17,11 +17,11 @@ end
 
 setmetatable(Square, { __call = function (t, ...) return Square.new(...) end })
 
-local fromCornerToCenter = Vector(directions.right, directions.down) / 2
+local fromCornerToCenter = (directions.right + directions.down) / 2
 local fromCenterToCorner = -fromCornerToCenter
 
 function Square:getCenter()
-    print("Square:24:getCenter(): ", self.position) --DEBUGGING
+    --~ print("Square:24:getCenter(): ", self.position, fromCornerToCenter) --DEBUGGING
     return self.position + fromCornerToCenter
 end
 

@@ -8,10 +8,14 @@ centerIndex = 2
 Tetromino = {}
 Tetromino.__index = Tetromino
 
-function Tetromino.new(squares, grid, color)
+function Tetromino.new(squares, canRotate, grid, color)
+    if canRotate == nil then
+        canRotate = true
+    end
     return setmetatable(
         {
             squares = squares,
+            canRotate = canRotate,
             grid = grid,
             color = color or colors.gray
         },
@@ -118,7 +122,7 @@ end
 
 function Tetromino:enforceRoof()
     local highestOrdinate = self:highest()
-    print("Tetromino:121: "..highestOrdinate) --DEBUGGING
+    --~ print("Tetromino:121: "..highestOrdinate) --DEBUGGING
     if highestOrdinate < 1 then
         self:forceTranslation((1 - highestOrdinate) * directions.down)
     end
@@ -135,17 +139,13 @@ function Tetromino:forceRotation(n)
     local function rotateSquare(sq)
         local posRelativeToTetrominoCenter = sq:getCenter() - tetrominoCenter
         posRelativeToTetrominoCenter:rotateCounterclockwise(n)
-        end
         sq:setCenter(posRelativeToTetrominoCenter + tetrominoCenter)
     end
     self:forEachSquare(rotateSquare)
 end
 
-function Tetromino:rotateRandomly()
-    local n = math.random(0, 3)
-    for i = 1, n do
-        self:forceRotation()
-    end
+function Tetromino:randomRotation()
+    self:forceRotation(math.random(0, 3))
 end
 
 -- [[ DEBUGGING
@@ -167,19 +167,23 @@ end
 --]]
 
 function Tetromino:rotate(frozenSquares)
-    local new = Tetromino(copy(self.squares))
-    new:forceRotation()
-    if new:collidesWith(frozenSquares) then
-        return false
+    if self.canRotate then
+        local new = Tetromino(copy(self.squares))
+        new:forceRotation()
+        if new:collidesWith(frozenSquares) then
+            return false
+        else
+            self.squares = new.squares
+            return true
+        end
     else
-        self.squares = new.squares
-        return true
+        return false
     end
 end
 
 function Tetromino:collidesWith(frozenSquares)
     function collides(sq)
-        return frozenSquares[sq.y][sq.x]
+        return frozenSquares:invalidCoords(sq.position) or frozenSquares:squareAt(sq.position)
     end
     return self:someSquare(collides)
 end
