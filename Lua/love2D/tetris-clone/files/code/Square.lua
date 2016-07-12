@@ -36,11 +36,11 @@ end
 
 function Square:isBlocked(direction, frozenSquares)
     local target = self.position + direction
-    return frozenSquares.invalidCoords(target.x, target.y) or frozenSquares[target.y][target.x]
+    return frozenSquares:invalidCoords(target) or frozenSquares:squareAt(target)
 end
 
-function Square:translate(vector)
-    position:translate(vector)
+function Square:forceTranslation(vector)
+    self.position:translate(vector)
 end
 
 function Square:realPosition(grid)

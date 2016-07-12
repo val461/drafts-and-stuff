@@ -37,7 +37,6 @@ end
 paused = false
 gameover = false
 grid = Grid(Vector(10, 10), 20, 14, colors.black)
-pk(grid) --DEBUG
 currentTetromino = newTetromino()
 
 level = 1

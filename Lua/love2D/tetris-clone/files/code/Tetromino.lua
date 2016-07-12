@@ -49,7 +49,12 @@ end
 
 -- private
 function Tetromino:allSquares(p)
-    return not self:someSquare(not p)
+    for _, sq in ipairs(self.squares) do
+        if not p(sq) then
+            return false
+        end
+    end
+    return true
 end
 
 function Tetromino:isBlocked(direction, frozenSquares)
@@ -85,7 +90,7 @@ end
 -- private
 function Tetromino:forceTranslation(vector)
     local function translateSquare(sq)
-        sq:translate(vector)
+        sq:forceTranslation(vector)
     end
     self:forEachSquare(translateSquare)
 end
@@ -108,13 +113,13 @@ end
 
 -- private
 function Tetromino:highest()
-    return math.min(self:map(getSquareOrdinate))
+    return Tables.min((self:map(getSquareOrdinate)))
 end
 
 function Tetromino:enforceRoof()
-    local highest = new:highest()
-    if highest < 0 then
-        new:forceTranslation(math.abs(highest) * directions.down)
+    local highestOrdinate = self:highest()
+    if highestOrdinate < 0 then
+        self:forceTranslation(math.abs(highestOrdinate) * directions.down)
     end
 end
 
@@ -145,7 +150,6 @@ end
 
 function Tetromino:hasIntegerCoords()
     assert(self:allSquares(hasIntegerCoords))
-    print("Tetromino.lua:134: has integer coords.")
 end
 
 function Tetromino:__tostring()

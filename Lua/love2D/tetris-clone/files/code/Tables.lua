@@ -3,6 +3,8 @@ self = Tetrominoes; index = 1
 pt(copy(self.models[index].squares))
 ]]
 
+Tables = {}
+
 function copy(a)    -- deep copy for values but shallow copy for keys and metatables
     if type(a) == "table" then
         local result = {}
@@ -49,10 +51,30 @@ function pt(t)  -- print a table shallowly
     return str .. " }"
 end
 
-function keys(t)
+function Tables.keys(t)
     local result = {}
-    for k, _ in pairs(t) do
+    for k, _ in pairs(self) do
         table.insert(result, k)
+    end
+    return result
+end
+
+function Tables.values(t)
+    local result = {}
+    for _, v in pairs(t) do
+        table.insert(result, v)
+    end
+    return result
+end
+
+function Tables.min(t)
+    local result = nil
+    for _, v in pairs(t) do
+        if not result then
+            result = v
+        elseif v < result then
+            result = v
+        end
     end
     return result
 end

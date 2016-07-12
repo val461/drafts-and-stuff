@@ -13,8 +13,8 @@ colors =
         white  = {255, 255, 255}
     }
 
-colorNames = keys(colors)
+unnamedColors = Tables.values(colors)
 
 function randomColor()
-    return colors[colorNames[math.random(#colorNames)]]
+    return unnamedColors[math.random(#unnamedColors)]
 end

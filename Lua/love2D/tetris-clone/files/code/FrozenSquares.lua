@@ -32,13 +32,21 @@ end
 
 setmetatable(FrozenSquares, { __call = function (t, ...) return FrozenSquares.new(...) end })
 
-function FrozenSquares:add(position, color)
-    self[position.y][position.x] = color or { 40, 40, 40 }
+function FrozenSquares:squareAt(position)
+    return self.squares[position.y][position.x]
 end
 
-function FrozenSquares:invalidCoords(x, y)
-    return 1 > x or x > nCols
-        or 1 > y or y > nRows
+function FrozenSquares:setSquareAt(position, color)
+    self:setSquareAt(position, color)
+end
+
+function FrozenSquares:add(position, color)
+    self:setSquareAt(position, color or { 40, 40, 40 })
+end
+
+function FrozenSquares:invalidCoords(pos)
+    return 1 > pos.x or pos.x > self.nCols
+        or 1 > pos.y or pos.y > self.nRows
 end
 
 local function rowIsComplete(row)
@@ -109,7 +117,9 @@ function FrozenSquares:draw()
     local offset = self.grid.position + Vector(-1, -1)
     for i, row in ipairs(self.squares) do
         for j, color in ipairs(row) do
-            drawSquare(offset + Square.length * (Vector(j, i)), color)
+            if color then
+                drawSquare(offset + Square.length * (Vector(j, i)), color)
+            end
         end
     end
 end

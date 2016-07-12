@@ -14,14 +14,14 @@ function Tetrominoes:newInstanceOfModel(index, grid)
 --        self.models[index].color
         randomColor()
     )
-    print("Tetrominoes:17: "..new) --DEBUGGING
-    new:translate(grid.startingPosition - new.squares[centerIndex].position)
-    -- [[ DEBUGGING
+    --~ print("Tetrominoes:17: "..new) --DEBUGGING
+    new:forceTranslation(grid.startingPosition - new.squares[centerIndex].position)
+    --[[ DEBUGGING
     new:hasIntegerCoords()
     --]]
-    print("Tetrominoes.lua:25: " .. new.squares[centerIndex].position)
+    --~ print("Tetrominoes.lua:25: " .. new.squares[centerIndex].position)
     new:enforceRoof()
-    print("Tetrominoes.lua:27: " .. new.squares[centerIndex].position)
+    --~ print("Tetrominoes.lua:27: " .. new.squares[centerIndex].position)
     return new
 end
 
