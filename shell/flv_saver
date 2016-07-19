@@ -10,6 +10,8 @@ names_file='/home/val/mnt/Data/Downloads/Deluge/v/names'
 #use_names_file=true
 use_names_file=false
 manual=false
+#open_file_viewer=true
+open_file_viewer=false
 
 FILE_VIEWER="${FILE_VIEWER:-spacefm}"
 PROGNAME="flv_saver"
@@ -59,7 +61,7 @@ fi
 # cd to flash videos folder
 cd "${path}" || { echo "$? failed to cd to “ ${path} ”" >&2 ; exit 1; }
 echo "Current directory: ${PWD}"
-"${FILE_VIEWER}" . 1>/dev/null 2>&1 &
+"${open_file_viewer}" && "${FILE_VIEWER}" . 1>/dev/null 2>&1 &
 
 [ -n "${1}" ] && exit 0
 
@@ -105,7 +107,7 @@ do
 	esac
 done
 
-${FILE_VIEWER} "${target_dir}"
+"${open_file_viewer}" && "${FILE_VIEWER}" "${target_dir}"
 
 cat <<'EOF'
 
