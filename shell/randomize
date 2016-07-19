@@ -46,6 +46,6 @@ do
 		rand="$(newRand)"
 		newname="${target_dir}/${rand}"
 	done
-	_info 'GOOD'
 	mv -v "${file}" "${target_dir}/${rand}" || { _error "code $? returned by mv (line ${LINENO}), params “ ${file} ” and “ ${target_dir}/${rand} ”" ; _ultim_confirm ; }
+	_info 'GOOD'
 done

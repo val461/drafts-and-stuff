@@ -3,7 +3,7 @@
 # . load
 # load constants and functions
 
-[ -n "${SCRIPTS_ROOT}" ]  || SCRIPTS_ROOT="${HOME}/mnt/Data/Documents/Dev/languages/scripting/shell"
+[ -n "${SCRIPTS_ROOT}" ]  || SCRIPTS_ROOT="${HOME}/bin"
 [ -n "${PROGDIR}" ]       || PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
 [ -n "${PROGNAME}" ]      || PROGNAME="process $$"
 
