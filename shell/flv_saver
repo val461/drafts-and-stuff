@@ -61,7 +61,7 @@ fi
 # cd to flash videos folder
 cd "${path}" || { echo "$? failed to cd to “ ${path} ”" >&2 ; exit 1; }
 echo "Current directory: ${PWD}"
-"${open_file_viewer}" && "${FILE_VIEWER}" . 1>/dev/null 2>&1 &
+"${open_file_viewer}" || [ -n "${1}" ] && "${FILE_VIEWER}" . 1>/dev/null 2>&1 &
 
 [ -n "${1}" ] && exit 0
 
@@ -77,13 +77,13 @@ _getSavePath()
 		name="$(head -n 1 "${names_file}" | tr ' ' '_')"    # take name from first line in names_file
 		name="$("${PROGDIR}/_utils/strings/stripchar" '_' "${name}")"   # strip trailing underscores
 		if [ -n "${name}" ]; then
-			save_path="${target_dir}/${name}.flv"
+			save_path="${target_dir}/${name}"
 		else
-			save_path="${target_dir}/${file}.flv"
+			save_path="${target_dir}/${file}"
 		fi
 		printf '%s\n' "$(tail -n +2 "${names_file}")" > "${names_file}"	# remove processed line
 	else
-		save_path="${target_dir}/${file}.flv"
+		save_path="${target_dir}/${file}"
 	fi
 }
 
