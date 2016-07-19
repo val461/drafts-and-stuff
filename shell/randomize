@@ -9,7 +9,7 @@
 source_dir='/home/val/mnt/Data/Downloads/Deluge/v/sas'
 target_dir='/home/val/mnt/Data/Downloads/Deluge/v/watched/'
 length=2
-specificNamesOnly=true  # if true, apply only to names formed of digits
+numericNamesOnly=true  # if true, apply only to names formed of digits
 
 ## code
 
@@ -30,7 +30,7 @@ _info "Current directory: “ ${PWD} ”"
 for file in *
 do
 	[ -e "${file}" ] || break
-	"${specificNamesOnly}" && case "${file}" in *[!0-9]*) break ;; esac
+	"${numericNamesOnly}" && case "${file}" in *[!0-9]*) break ;; esac
 	_info "file ${file}"
 	rand="$(newRand)"
 	newname="${target_dir}/${rand}"
