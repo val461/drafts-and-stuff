@@ -15,6 +15,9 @@ if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
 fi
 
 case "${#}" in
+	0)
+		_random_digits 1
+		;;
 	1)
 		_random_digits "${1}"
 		;;

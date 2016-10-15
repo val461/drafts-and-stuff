@@ -3,7 +3,7 @@
 # interactive saver for flv videos in flash cache
 # this saves these videos into ${target_dir}
 # ${target_dir} should be empty before the script is launched
-# use with a nonempty argument to merely open the flash directory and quit thereafter
+# use with a nonempty argument to just open the flash directory without saving the videos
 
 target_dir='/home/val/mnt/Data/Downloads/Deluge/v/sas'
 names_file='/home/val/mnt/Data/Downloads/Deluge/v/names'

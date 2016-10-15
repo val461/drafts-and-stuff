@@ -40,7 +40,7 @@ get=true
 "${verbose}" || { "${set}" && get=false; }
 
 if "${set}"; then
-	l="${#layouts[@]}"		# arrays'sizes
+	l="${#layouts[@]}"		# arrays' sizes
 	v="${#variants[@]}"
 	o="${#options[@]}"
 

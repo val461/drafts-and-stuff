@@ -6,21 +6,29 @@
 # ‘tmp_playlist_file’ should not be edited manually, especially while ./dl is running.
 
 working_dir='/home/val/mnt/Data/Downloads/YouTube'
-video_dir='.'
-#video_dir='deb'
 playlist_file='list'
 tmp_playlist_file="${playlist_file}.tmp"
 
 ask_to_delete_tmp_after_success=false
 #ask_to_delete_tmp_after_success=true
 
-format='bestaudio'
-#format='best'
-#format='bestaudio[ext=m4a]'
-
 playlist_policy='--no-playlist'
 #playlist_policy=''
 
+mode=''
+#mode='deb'
+
+if [ -z "${mode}" ]; then
+    video_dir='.'
+    format='bestaudio'
+    #format='best'
+elif [ "${mode}" = 'deb' ]; then
+    video_dir='deb'
+    format='bestaudio[ext=m4a]'
+else
+    echo 'wrong mode' >&2
+    exit 2
+fi
 
 cd "${working_dir}" || { echo "dl: error: cd failed to access directory “${working_dir}”" >&2 ; exit "${?}" ; }
 pwd

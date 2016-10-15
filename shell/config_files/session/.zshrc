@@ -30,6 +30,7 @@ alias cdb="cd '/home/val/mnt/Data/Documents/Dev/languages/scripting/shell'"
 alias cdh="cd '/home/val/mnt/Data/Documents/Dev/languages/programming/functional/Haskell'"
 alias cdj="cd '/home/val/mnt/Data/Documents/Dev/languages/programming/imperative/Java/workspaces/shell'"
 alias cdr="cd '/home/val/Documents/Dev/languages/scripting/Ruby/workspace'"
+alias chr='~/bin/chrono'
 alias k="kill -s KILL"
 alias ka="killall -s KILL"
 alias ls='ls -Fa --color=auto'
@@ -41,4 +42,5 @@ alias reloadkb="bin/keyboard set"
 alias sd='~/bin/setDNS'
 alias sdo='~/bin/setDNS odns'
 alias sdr='~/bin/setDNS resgp'
+alias sdd='~/bin/setDNS default'
 alias vi='vim'
