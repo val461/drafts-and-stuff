@@ -4,7 +4,7 @@
 
 PROGNAME="pick_file"
 PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
-SCRIPTS_ROOT="${HOME}/mnt/Data/Documents/Dev/languages/scripting/shell"
+SCRIPTS_ROOT="${HOME}/bin"
 
 # load libraries
 . "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
