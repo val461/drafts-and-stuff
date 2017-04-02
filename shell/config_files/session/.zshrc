@@ -38,6 +38,7 @@ alias ll='ls -Flah --color=auto'
 alias l='ls'
 alias lu='sudo /home/val/bin/luminosity'
 alias pm='xterm -e sh ~/bin/update & disown ; exit'
+alias py='python'
 alias reloadkb="bin/keyboard set"
 alias sd='~/bin/setDNS'
 alias sdo='~/bin/setDNS odns'

@@ -70,7 +70,7 @@ function newArray(getNewElement, width, height)
         end
     else
         for i = 1, width do
-            table.insert(result, getNewElement(i))    -- set default value to false because nil cannot be stored in lua arrays
+            table.insert(result, getNewElement(i))
         end
     end
     return result
