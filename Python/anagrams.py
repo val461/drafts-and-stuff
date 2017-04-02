@@ -3,24 +3,26 @@
 import random as r
 
 def fmtcols(mylist, cols):  # based upon a work by gimel
+    """Arrange a list of strings into columns."""
     lines = ("\t".join(mylist[i:i+cols]) for i in range(0,len(mylist),cols))
     return '\n'.join(lines)
 
 def p(myList):
+    """Print a list of strings into columns."""
     nbCols = 16
     print(fmtcols(myList,nbCols))
 
 def anagrams(inputList):
-    """Return a list of the permutations of inputList. Inefficient unless inputList is short."""
-    inputList = list(inputList)
-    l = len(inputList)
-    res = []
+    """Return a list of the permutations of myList. Inefficient unless myList is short."""
+    myList = list(inputList)
+    l = len(myList)
 
-    if l == 1:
-        res = inputList
-    elif l >= 2:
-        for item in set(inputList):
-            subword = inputList.copy()
+    if l <= 1:
+        res = myList
+    else:
+        res = []
+        for item in set(myList):
+            subword = myList.copy()
             subword.remove(item)
             subanagrams = anagrams(subword)
             for i, word in enumerate(subanagrams):
@@ -30,7 +32,7 @@ def anagrams(inputList):
     return res
 
 def shuffle(string, n = 1):
-    """Print n (possibly identical) random permutations of a string."""
+    """Return a list of n random permutations of a string. May include duplicates."""
     myList = []
     for i in range(0, n):
         myList.append("".join(r.sample(string, len(string))))
@@ -39,4 +41,8 @@ def shuffle(string, n = 1):
 #p(anagrams(input('word: ')))
 
 #f = lambda x: x[-4:] == 'liev'
-#p(list(filter(f, anagrams('valentin'))))
+#p(filter(f, anagrams('lava')))
+#~ f = lambda x: 'lev' in x
+#~ p(list(filter(f, shuffle('blopper', 100000))))
+#~ p(shuffle('neckofthewoods', 3))
+#~ p(anagrams('link'))
