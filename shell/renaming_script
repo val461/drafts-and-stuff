@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 #
 # adapt this script to rename subtitle files according to episode filenames
 # (concrete terminology is used for lexical purposes, but the script is not restricted to episodes and subtitles)
@@ -11,23 +11,27 @@
 
 episodes_dir='..'
 episode_prefix='E'
-first_episode=17
-last_episode=24
+first_episode=1
+last_episode=16
 extension_to_remove='.mp4'
 new_extension='.en.srt'
 subtitles_dir='.'
 
+setopt NULL_GLOB
+
 i="${first_episode}"
+zero='0'
 while [ "${i}" -le "${last_episode}" ]
 do
-    episode_file="${episode_dir}"/*"${episode_prefix}${i}"*"${extension_to_remove}"
+    [ "${i}" -ge 10 ] && zero=''
+    episode_file="$(echo "${episodes_dir}"/*"${episode_prefix}${zero}${i}"*"${extension_to_remove}")"
     if [ -e "${episode_file}" ]; then
         filename="$(basename "${episode_file}" "${extension_to_remove}")"
-        file_to_rename="$(echo "${subtitles_dir}"/*"${episode_prefix}${i}"*)"
+        file_to_rename="$(echo "${subtitles_dir}"/*"${episode_prefix}${zero}${i}"*)"
         if [ -e "${file_to_rename}" ]; then
             mv -vi "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
         elif [ -z "${file_to_rename}" ]; then
-            echo "${0}: warning: No file to rename was found at step ${i}" >&2
+            echo "${0}: warning: No file to rename was found (i: ${i})" >&2
         else
             echo "${0}: "'error 3: ${file_to_rename} contains an incorrect value: '"${file_to_rename}" >&2
             echo 'Possible cause of error: ${file_to_rename} matched more than one file' >&2
@@ -35,7 +39,7 @@ do
             exit 3
         fi
     elif [ -z "${episode_file}" ]; then
-            echo "${0}: warning: No file to take a name from was found at step ${i}" >&2
+            echo "${0}: warning: No file to take a name from was found (i: ${i})" >&2
     else
         echo "${0}: "'error 2: ${episode_file} contains an incorrect value: '"${episode_file}" >&2
         echo 'Possible cause of error: ${episode_file} matched more than one file' >&2
