@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# adapt this script to rename subtitle files according to episode filenames
+# (concrete terminology is used for lexical purposes, but the script is not restricted to episodes and subtitles)
+#
+#   ^
+#  / \   be careful that the patterns for ${episode_file} and ${file_to_rename} each match at most one file at each iteration
+# / ! \   ${episodes_dir} and ${subtitles_dir} should be different folders
+#<_____>
+#
+
+episodes_dir='..'
+episode_prefix='E'
+first_episode=17
+last_episode=24
+extension_to_remove='.mp4'
+new_extension='.en.srt'
+subtitles_dir='.'
+
+i="${first_episode}"
+while [ "${i}" -le "${last_episode}" ]
+do
+    episode_file="${episode_dir}"/*"${episode_prefix}${i}"*"${extension_to_remove}"
+    if [ -e "${episode_file}" ]; then
+        filename="$(basename "${episode_file}" "${extension_to_remove}")"
+        file_to_rename="$(echo "${subtitles_dir}"/*"${episode_prefix}${i}"*)"
+        if [ -e "${file_to_rename}" ]; then
+            mv -vi "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
+        elif [ -z "${file_to_rename}" ]; then
+            echo "${0}: warning: No file to rename was found at step ${i}" >&2
+        else
+            echo "${0}: "'error 3: ${file_to_rename} contains an incorrect value: '"${file_to_rename}" >&2
+            echo 'Possible cause of error: ${file_to_rename} matched more than one file' >&2
+            echo 'Possible fix: adapt ${episode_prefix}' >&2
+            exit 3
+        fi
+    elif [ -z "${episode_file}" ]; then
+            echo "${0}: warning: No file to take a name from was found at step ${i}" >&2
+    else
+        echo "${0}: "'error 2: ${episode_file} contains an incorrect value: '"${episode_file}" >&2
+        echo 'Possible cause of error: ${episode_file} matched more than one file' >&2
+        echo 'Possible fix: adapt ${episode_prefix}' >&2
+        exit 2
+    fi
+    let 'i++'
+done
