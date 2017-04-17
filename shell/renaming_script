@@ -18,7 +18,7 @@ extension_to_remove='.mp4'
 new_extension='.en.srt'
 subtitles_dir='.'
 
-if [ "${1}" != 'understood' ]; then
+if [ "${1}" != '-f' ]; then
     echo 'Source should be appropriately adapted to local context before running.' >&2
     exit 4
 fi
