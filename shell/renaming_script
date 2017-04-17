@@ -10,7 +10,8 @@
 #
 
 episodes_dir='..'
-episode_prefix='E'
+episode_prefix='x'
+subtitle_prefix='E'
 first_episode=1
 last_episode=16
 extension_to_remove='.mp4'
@@ -32,7 +33,7 @@ do
     episode_file="$(echo "${episodes_dir}"/*"${episode_prefix}${zero}${i}"*"${extension_to_remove}")"
     if [ -e "${episode_file}" ]; then
         filename="$(basename "${episode_file}" "${extension_to_remove}")"
-        file_to_rename="$(echo "${subtitles_dir}"/*"${episode_prefix}${zero}${i}"*)"
+        file_to_rename="$(echo "${subtitles_dir}"/*"${subtitle_prefix}${zero}${i}"*)"
         if [ -e "${file_to_rename}" ]; then
             mv -vi "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
         elif [ -z "${file_to_rename}" ]; then
@@ -40,7 +41,7 @@ do
         else
             echo "${0}: "'error 3: ${file_to_rename} contains an incorrect value: '"${file_to_rename}" >&2
             echo 'Possible cause of error: ${file_to_rename} matched more than one file' >&2
-            echo 'Possible fix: adapt ${episode_prefix}' >&2
+            echo 'Possible fix: adapt ${subtitle_prefix}' >&2
             exit 3
         fi
     elif [ -z "${episode_file}" ]; then
