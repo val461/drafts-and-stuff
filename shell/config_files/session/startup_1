@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# supposed to be launched from ~/.i3/config
+# i.e., when i3 is starting
+
 firefox &
 spacefm &
-exec '/home/val/Dev/drafts-and-stuff/Python/startup.py'
+exec '/home/val/bin/config_files/session/startup_2.py'

@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
 
-import pyautogui
+# launch luminosity and alsamixer
 
-#~ exit(1)
+import pyautogui
 
 pyautogui.PAUSE = 0.2
 
-#~ pyautogui.hotkey('winleft', 'o')
-#~ pyautogui.typewrite('fox')
-#~ pyautogui.press('enter')
-
-#~ pyautogui.hotkey('winleft', 'o')
-#~ pyautogui.typewrite('sp')
-#~ pyautogui.press('enter')
-
 pyautogui.hotkey('winleft', '2')
+
+# launch bin/luminosity
 
 pyautogui.hotkey('winleft', 'd')
 pyautogui.typewrite('lu')
@@ -23,9 +17,13 @@ pyautogui.press('enter')
 pyautogui.press('enter')
 pyautogui.press('enter')
 
+# launch alsamixer
+
 pyautogui.hotkey('winleft', 'd')
 pyautogui.typewrite('al')
 pyautogui.press('enter')
+
+# set up layout
 
 pyautogui.hotkey('winleft', 'e')
 pyautogui.hotkey('winleft', 'e')
@@ -35,5 +33,3 @@ pyautogui.hotkey('up')
 pyautogui.hotkey('up')
 pyautogui.hotkey('up')
 pyautogui.press('enter')
-
-pyautogui.hotkey('winleft', '1')
