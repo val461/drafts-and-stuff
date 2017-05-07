@@ -6,13 +6,13 @@ import pyautogui
 
 pyautogui.PAUSE = 0.2
 
-pyautogui.hotkey('winleft', 'o')
-pyautogui.typewrite('fox')
-pyautogui.press('enter')
+#~ pyautogui.hotkey('winleft', 'o')
+#~ pyautogui.typewrite('fox')
+#~ pyautogui.press('enter')
 
-pyautogui.hotkey('winleft', 'o')
-pyautogui.typewrite('sp')
-pyautogui.press('enter')
+#~ pyautogui.hotkey('winleft', 'o')
+#~ pyautogui.typewrite('sp')
+#~ pyautogui.press('enter')
 
 pyautogui.hotkey('winleft', '2')
 

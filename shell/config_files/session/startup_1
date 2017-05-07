@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+firefox &
+spacefm &
+exec '/home/val/Dev/drafts-and-stuff/Python/startup.py'
