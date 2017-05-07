@@ -12,8 +12,8 @@ tmp_playlist_file="${playlist_file}.tmp"
 ask_to_delete_tmp_after_success=false
 #ask_to_delete_tmp_after_success=true
 
-mode='default'
-#mode='deb'
+#mode='default'
+mode='deb'
 #mode='deb_video'
 #mode='audio_playlist'
 #mode='video_playlist'
