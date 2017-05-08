@@ -12,7 +12,7 @@ file_max="${folder}/max_brightness"
 
 echo
 printf '%7s+[enter]: %s\n'                  \
-        'q'         'quit'                  \
+        'x'         'quit'                  \
         'number'    'new slowness'          \
         '[+]'       'go upwards'            \
         '[-]'       'go downwards'          \
