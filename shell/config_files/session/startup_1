@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # supposed to be launched from ~/.i3/config
-# i.e., when i3 is starting
+# (when i3 starts)
 
 firefox &
 spacefm &
