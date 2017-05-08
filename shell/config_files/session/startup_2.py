@@ -3,6 +3,7 @@
 # launch luminosity and alsamixer
 
 import pyautogui
+import time
 
 pyautogui.PAUSE = 0.2
 
@@ -11,6 +12,7 @@ pyautogui.hotkey('winleft', '2')
 # launch bin/luminosity
 
 pyautogui.hotkey('winleft', 'd')
+time.sleep(5)
 pyautogui.typewrite('lu')
 pyautogui.press('enter')
 pyautogui.press('enter')
