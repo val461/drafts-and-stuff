@@ -37,10 +37,11 @@ fi
 
 echo
 printf '%7s+[enter]: %s\n'                  \
-        'x'         'quit'                  \
+        'x'         'exit'                  \
         'number'    'new slowness'          \
         '[+]'       'go upwards'            \
         '[-]'       'go downwards'          \
+        'r'         'refresh the rate'      \
         'nothing'   'change luminosity'
 echo
 
@@ -80,6 +81,7 @@ do
            x|X|q|Q) break ;;
             +*) op='+' ; _printDirection ; continue ;;
             -*) op='-' ; _printDirection ; continue ;;
+            r|R) _actualizeBrightness ; continue ;;
       *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
              *)
                 [ "${ans}" -ge 1 ] && let "slowness=${ans}"
