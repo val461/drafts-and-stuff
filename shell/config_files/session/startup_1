@@ -5,4 +5,5 @@
 
 firefox &
 spacefm &
-exec '/home/val/bin/config_files/session/startup_2.py'
+sudo ~/bin/luminosity 98
+exec ~/bin/config_files/session/startup_2.py
