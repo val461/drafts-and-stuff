@@ -1,14 +1,39 @@
 #!/bin/sh
 
-# sudo ./luminosity
-# interactive script to set screen brightness
+# sudo ./luminosity [n]
+# show or change the screen’s brightness
 
-#modifier=200
-slowness=3
+# with no arguments: interactive mode
+# with an argument:
+#   if the argument is a positive integer,
+#   the script attempts to use the argument to set the screen’s brightness
+
 
 folder="/sys/class/backlight/intel_backlight"
 file_brightness="${folder}/brightness"
 file_max="${folder}/max_brightness"
+
+_setBrightness()
+{
+    echo "${1}" > "${file_brightness}"
+}
+
+_actualizeBrightness()
+{
+    brightness="$(cat "${file_brightness}")"
+    echo "current brightness: ${brightness}"
+}
+
+if [ "${#}" -ge 1 ]; then
+    case "${1}" in
+        ''|*[!0-9]*) ;;
+        *)
+            _setBrightness "${1}"
+            _actualizeBrightness
+            exit
+            ;;
+    esac
+fi
 
 echo
 printf '%7s+[enter]: %s\n'                  \
@@ -17,8 +42,6 @@ printf '%7s+[enter]: %s\n'                  \
         '[+]'       'go upwards'            \
         '[-]'       'go downwards'          \
         'nothing'   'change luminosity'
-#printf  '\ncurrent modifier: %s ' "${modifier}"
-#printf  '\ncurrent slowness: %s\n\n' "${slowness}"
 echo
 
 _switchSign()
@@ -33,54 +56,38 @@ _switchSign()
 _printDirection()
 {
     case "${op}" in
-        '-') str='descending' ;;
-        '+') str='ascending'  ;;
+        '-') echo '(descending)' ;;
+        '+') echo '(ascending)' ;;
     esac
-
-#    if [ -z "${1}" ]; then
-#        echo "${str}"
-#    else
-        echo "(${str})"
-#    fi
 }
 
+slowness=3
 op='-'
-#_printDirection 1
-#echo
 
 max="$(cat "${file_max}")"
-brightness="$(cat "${file_brightness}")"
-
-printf  '%s: %s\n'                          \
-        'max brightness'        "${max}"    \
-        'current brightness'    "${brightness}"
+echo "max brightness: ${max}"
 
 while true
 do
+    _actualizeBrightness
     let "modifier = ${brightness} / ${slowness}"
     [ "${modifier}" -ge 1 ] || modifier=1
     printf  'current slowness: %s ' "${slowness}"
-	_printDirection
-	read ans
-	case "${ans}" in
+        _printDirection
+        read ans
+        case "${ans}" in
             '') ;;
            x|X|q|Q) break ;;
             +*) op='+' ; _printDirection ; continue ;;
             -*) op='-' ; _printDirection ; continue ;;
       *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
-             *) [ "${ans}" -ge 1 ] && let "slowness=${ans}"
-	            printf 'slowness: %s ' "${slowness}"
-	            _printDirection 1
-	            continue
-	            ;;
-#           +*) op='+'; _printDirection ; continue ;;
-#           -*) _switchSign ; continue ;;
-             #~ *) let "modifier=${ans}"
-	            #~ printf 'modifier: %s ' "${modifier}"
-	            #~ _printDirection 1
-	            #~ continue
-	            #~ ;;
-	esac
+             *)
+                [ "${ans}" -ge 1 ] && let "slowness=${ans}"
+                printf 'slowness: %s ' "${slowness}"
+                _printDirection
+                continue
+                ;;
+        esac
     let "new=brightness ${op} ${modifier}"
     if [ "${new}" -lt 1 ]; then
         echo "error: brightness (${new}) must be positive." >&2
@@ -89,7 +96,5 @@ do
         echo "error: brightness (${new}) must be inferior to ${max}" >&2
         new="${max}"
     fi
-    echo "${new}" > ${file_brightness}
-	brightness="$(cat "${file_brightness}")"
-	echo "current brightness: ${brightness}"
+    _setBrightness "${new}"
 done
