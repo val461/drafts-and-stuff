@@ -171,5 +171,7 @@ assign [class="Firefox"] 1
 assign [class="transmission"] 2
 assign [class="Spacefm"] 3
 
-# use exec_always instead of exec if you also need this to run when restarting i3
-exec --no-startup-id '/home/val/bin/config_files/session/startup_1'
+#exec --no-startup-id i3-msg "workspace 2; exec st -f 'Source Code Pro' sudo ~/bin/luminosity; exec st -f 'Source Code Pro' alsamixer"
+
+# use exec_always instead of exec if you also need the command to run when restarting i3
+exec --no-startup-id ~/bin/config_files/session/startup_1
