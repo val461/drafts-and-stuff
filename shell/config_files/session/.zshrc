@@ -17,6 +17,7 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+setopt BSD_ECHO
 setopt INTERACTIVE_COMMENTS
 setopt GLOB_DOTS
 #setopt NULL_GLOB
