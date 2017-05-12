@@ -3,29 +3,33 @@
 # ./sdn [-f]
 # Shut down. With no argument, wait for Firefox to quit.
 
-_badUsage()
-{
-    echo 'bad usage' >&2
-    exit 2
-}
+wait=true
+debug=true
 
-case "${#}" in
-    0)  # wait for Firefox to quit
-        keepWaiting=true
-        while keepWaiting
-        do
-            if ps ax | grep -i firefox | grep -v grep; then
-                sleep 3
-            else
-                keepWaiting=false
-                echo 'Firefox does not seem to be running anymore. Shut down? [enter|ctrl-c]: '
-                read ans
-            fi
-        done
-        ;;
-    1)  [ "${1}" = '-f' ] || _badUsage ;;
-    *)
-        _badUsage
-fi
+while [ "${#}" -ge 1 ]
+do
+    case "${1}" in
+        -f) wait=false
+            shift
+            ;;
+        *)  echo 'bad usage' >&2
+            exit 2
+            ;;
+done
+
+# wait for Firefox to quit
+while "${wait}"
+do
+    if ps ax | grep -i firefox | grep -v grep; then
+        sleep 3
+    else
+        wait=false
+        echo -n 'Firefox does not seem to be running anymore.'
+        if "${debug}"; then
+            echo -n ' Shut down? [enter|ctrl-c] '
+            read ans
+        fi
+    fi
+done
 
 shutdown now
