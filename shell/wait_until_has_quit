@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# wait_until_has_quit [-p <period>] [-m <max>] <process_keyword>
+# Wait for the processes matching the keyword to quit. May behave weirdly due to self-referentiality issues.
+
+# <process_keyword>: in the output returned by ‘ps ax’, ‘process_keyword’ must identify only the lines corresponding to the desired processes.
+# -p <period>: positive integer (default: 3) indicating how many seconds should occur between checks.
+# -m <max>: maximal amount of checks to perform.
+
+
+
