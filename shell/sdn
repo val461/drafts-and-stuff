@@ -16,6 +16,7 @@ do
         *)  echo 'bad usage' >&2
             exit 2
             ;;
+    esac
 done
 
 # wait for Firefox to quit
