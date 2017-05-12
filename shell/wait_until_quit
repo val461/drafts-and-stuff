@@ -33,8 +33,15 @@ _usage()
 
 PROG_NAME='wait_until_quit'
 
+SUCCESS=0
 MAX_EXCEEDED=1
 USER_ERROR=2
+
+_helpAndExit()
+{
+    _usage
+    exit "${1:-"${SUCCESS}"}"
+}
 
 _wrongUsage()
 {
@@ -45,8 +52,7 @@ _wrongUsage()
         # print each argument on a new line
         printf '%s\n' "${@}" >&2
     fi
-    _usage
-    exit "${USER_ERROR}"
+    _helpAndExit "${USER_ERROR}"
 }
 
 _countProcesses()
@@ -60,8 +66,7 @@ _display()
 }
 
 if [ "${#}" -eq 0 ]; then
-    _usage
-    exit
+    _helpAndExit
 fi
 
 limit=0
@@ -78,8 +83,7 @@ do
         '')
             ;;
         -h|--help)
-            _usage
-            exit
+            _helpAndExit
             ;;
         -l)
             case "${1}" in
