@@ -33,5 +33,4 @@ do
     fi
 done
 
-# shut down
 shutdown now
