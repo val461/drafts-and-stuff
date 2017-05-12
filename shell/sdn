@@ -22,8 +22,9 @@ done
 # wait for Firefox to quit
 while "${wait}"
 do
+    #~ if [ "$(ps ax | grep -ic firefox)" -ge 2]; then
     if ps ax | grep -i firefox | grep -v grep; then
-        sleep 3
+        sleep 23
     else
         wait=false
         echo -n 'Firefox does not seem to be running anymore.'
