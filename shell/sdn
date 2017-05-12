@@ -3,9 +3,10 @@
 # ./sdn [-f]
 # Shut down. With no argument, wait for Firefox to quit.
 
-wait=true
 debug=true
 
+# handle arguments
+wait=true
 while [ "${#}" -ge 1 ]
 do
     case "${1}" in
@@ -32,4 +33,5 @@ do
     fi
 done
 
+# shut down
 shutdown now
