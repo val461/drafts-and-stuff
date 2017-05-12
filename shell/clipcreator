@@ -27,16 +27,16 @@ do
 		if [ -e "${1}" ]; then
 			if [ -d "${1}" ]; then
 				echo "error: file “${1}” is a directory" >&2
-				echo -n "Continue? [y]/ctrl-c "
-				read
+				echo -n "Continue? [enter]/ctrl-c "
+				read ans
 			else
 				command="${command} -add '${1}'"
 				let 'i++'
 			fi
 		else
 			echo "error: file “${1}” doesn’t exist" >&2
-			echo -n "Continue? [y]/ctrl-c "
-			read
+			echo -n "Continue? [enter]/ctrl-c "
+			read ans
 		fi
 		shift
 done
@@ -49,16 +49,16 @@ if [ -e "${1}" ]; then
 		exit 1
 	else
 		echo "warning: file “${1}” already exists" >&2
-		echo 'overwrite? [y]/ctrl-c '
-		read
+		echo 'overwrite? [enter]/ctrl-c '
+		read ans
 	fi
 fi
 command="${command} '${1}'"
 echo 'Command:'
 echo "${command}"
 [ "${i}" -lt 2 ] && echo 'warning: less than 2 elements specified' >&2
-echo "Run? [y]/ctrl-c "
-read
+echo "Run? [enter]/ctrl-c "
+read ans
 echo 'running'
 eval "${command}" && exit 0
 echo "error: code ${?} returned by MP4Box" >&2
