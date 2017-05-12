@@ -8,5 +8,5 @@ spacefm &
 i3-msg "workspace 2; append_layout ~/.i3/workspace-2.json"
 
 # i3’s exec command makes sure that the windows open in the workspaces where they were started from
-i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
-        exec st -f "Source Code Pro" alsamixer'
+i3-msg 'exec st -f "Source Code Pro" alsamixer;
+        exec st -f "Source Code Pro" sudo ~/bin/luminosity'
