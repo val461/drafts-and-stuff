@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ "${1}" != '-f' ]; then
+    keepWaiting=true
+    while keepWaiting
+    do
+        if ps ax | grep -i firefox | grep -v grep; then
+            sleep 3
+        else
+            keepWaiting=false
+            echo 'Firefox apparently quit! Shut down? [enter|ctrl-c]: '
+            read ans
+        fi
+    done
+fi
+
+shutdown now
