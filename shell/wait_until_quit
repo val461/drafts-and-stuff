@@ -3,10 +3,13 @@
 # wait_until_quit [OPTION]... <process_keyword>
 # Wait for the processes matching the keyword to quit. May behave weirdly due to self-referentiality issues.
 
-# <process_keyword>: in the output returned by ‘ps ax’, ‘process_keyword’ must identify only the lines corresponding to the desired processes.
-# -p <period>: positive integer (default: 3) indicating how many seconds should occur between checks.
-# -m <max>: maximal amount of checks to perform.
-# -l <limit>: maximal amount of checks to perform.
+# <process_keyword>: in the output returned by ‘ps ax’, ‘process_keyword’ must identify the lines corresponding to the desired processes.
+# -p <period>: number of seconds between instances of checking if the processes have quit (default: 3).
+# -m <max>: maximal amount of checks to perform. If ‘max’ is not specified or is 0, do not limit the number of checks.
+# -l <limit>: (default: 0) number of processes which should still match the keyword when the desired processes have quit.
 
+_usage()
+{
 
+}
 
