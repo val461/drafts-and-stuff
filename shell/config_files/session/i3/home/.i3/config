@@ -166,6 +166,9 @@ bar {
         status_command i3status
 }
 
+# prevent focus theft
+focus_on_window_activation urgent
+
 # use xprop if you need to determine the class (WM_CLASS)
 assign [class="Firefox"] 1
 assign [class="transmission"] 2
