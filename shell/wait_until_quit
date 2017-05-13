@@ -69,12 +69,12 @@ _wrongUsage()
 
 _countProcesses()
 {
-    ps ax | grep -ic "${process_keyword}"
+    ps ax | grep -c "${process_keyword}"
 }
 
 _display()
 {
-    ps ax | grep -i "${process_keyword}"
+    ps ax | grep "${process_keyword}"
 }
 
 limit=0
