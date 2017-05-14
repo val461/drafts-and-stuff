@@ -66,14 +66,11 @@ _wrongUsage()
     _helpAndExit "${USER_ERROR}"
 }
 
-_countProcesses()
+_actualize()
 {
-    ps ax | grep -c "${process_keyword}"
-}
-
-_display()
-{
-    ps ax | grep "${process_keyword}"
+    count="$(ps ax | grep -c "${process_keyword}")"
+    # launch in a subshell ("$()") to show an extra line (because an extra line was counted for the subshell of the previous line)
+    "${verbose}" && echo "$(ps ax | grep "${process_keyword}")"
 }
 
 limit=0
@@ -166,8 +163,7 @@ limit="$((limit+3))"
 
 # wait for processes to quit
 wait=true
-count="$(_countProcesses)"
-"${verbose}" && echo "$(_display)"	# launching _display() in a subshell allows to show an extra line to account for the subshell created on the previous line
+_actualize
 i=1
 while [ "${count}" -gt "${limit}" ]
 do
@@ -176,8 +172,7 @@ do
         exit "${MAX_EXCEEDED}"
     fi
     sleep "${period}"
-    count="$(_countProcesses)"
-    "${verbose}" && echo "$(_display)"
+    _actualize
     i="$((i+1))"
 done
 
