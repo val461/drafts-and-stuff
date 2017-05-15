@@ -10,6 +10,7 @@ def newTry():
     return i
 
 def newList(n):
+    # repeat n times the experience newTry()
     a=[]
     i=0
     while i < n:
@@ -26,10 +27,11 @@ def main1(n=1000):
     print(len(u),"items")
 
 def p(n):
+    # probability that n trials are necessary for a 6 to appear
     return (1/6) * (5/6)**(n-1)
 
 def main2():
-    # show that it is more likely that the first 6 appears in one the first four trials than later
+    # show that it is more likely than not that at least one 6 appears in one the first four trials
     s=0
     i=0
     while s < 1/2:
