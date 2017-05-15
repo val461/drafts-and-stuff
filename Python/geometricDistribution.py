@@ -3,19 +3,17 @@
 import random
 
 def newTry():
-    # how many trials are necessary for a 6 to appear?
+    """Return the number of trials necessary for 6 to have appeared."""
     i=1
     while random.randint(1, 6) != 6:
         i+=1
     return i
 
 def newList(n):
-    # repeat n times the experience newTry()
+    """Repeat n times the experience newTry()."""
     a=[]
-    i=0
-    while i < n:
+    for i in range(n):
         a.append(newTry())
-        i=i+1
     return a
 
 def main1(n=1000):
@@ -36,6 +34,6 @@ def main2():
     i=0
     while s < 1/2:
         i=i+1
-        a=p(i)
-        s+=a
-        print(i,s,"\t",a)
+        p_i=p(i)
+        s+=p_i
+        print(i,s,"\t",p_i)
