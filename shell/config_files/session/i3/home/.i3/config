@@ -175,4 +175,4 @@ assign [class="transmission"] 2
 assign [class="Spacefm"] 3
 
 # use exec_always instead of exec if you also need the command to run when restarting i3
-exec --no-startup-id ~/bin/config_files/session/startup
+exec --no-startup-id ~/bin/config_files/session/startup_1
