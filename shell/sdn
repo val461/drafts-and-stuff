@@ -20,7 +20,7 @@ do
     esac
 done
 
-if ~/bin/wait_until_quit -p 12 'firefox'; then
+if ~/bin/wait_until_quit -p 1 'firefox'; then
     echo -n "${PROG_NAME}: Firefox does not seem to be running anymore."
 
     if "${debug}"; then
