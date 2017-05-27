@@ -1,0 +1,11 @@
+#!/bin/sh
+
+while true
+do
+    feh --bg-max --randomize --recursive --magick-timeout 10 --no-fehbg '/home/val/Pictures/art/'
+    if [ "${1}" = '-i' ]; then
+        read
+    else
+        sleep 10m
+    fi
+done

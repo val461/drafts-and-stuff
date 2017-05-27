@@ -6,5 +6,4 @@
 sudo ~/bin/luminosity 98
 numlockx
 xset r rate 250 12      # <delay:ms> <rate:Hz>
-sh /home/val/.fehbg
 exec i3
