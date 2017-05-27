@@ -50,6 +50,9 @@ _usage()
 	    ${WRONG_USAGE}    wrong usage
 	    ${INTERRUPTION}    external interruption
 
+	Known bugs:
+	    A false positive may occur.
+
 	EOF
 }
 
@@ -176,4 +179,4 @@ do
     i="$((i+1))"
 done
 
-"${verbose}" && echo "${PROG_NAME}: success!"
+"${verbose}" && echo "${PROG_NAME}: success! (debug information: ${count} <= ${limit})"
