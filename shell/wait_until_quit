@@ -78,7 +78,7 @@ _actualize()
 {
     count="$(ps ax | grep -c "${process_keyword}")"
     # launch in a subshell ("$()") to show an extra line (because an extra line was counted for the subshell of the previous line)
-    "${verbose}" && echo "$(ps ax | grep "${process_keyword}")"
+    "${verbose}" && printf '%s\n\n' "$(ps ax | grep "${process_keyword}")"
 }
 
 # handle arguments
