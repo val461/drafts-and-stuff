@@ -68,5 +68,5 @@ do
 done
 echo "${i}${unit}"
 if [ -f "${alarm}" ]; then
-    vlc "${alarm}" 1>- 2>- & disown
+    vlc "${alarm}" >/dev/null 2>&1 & disown
 fi
