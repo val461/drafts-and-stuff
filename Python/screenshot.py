@@ -18,7 +18,7 @@ pos = []
 if len(pos) != 2:
     pos = [None, None]
     for i in range(2):
-        input('Put the mouse at location {} and type enter to validate: '.format(i+1))
+        input('Place the mouse in location {} and type enter to validate: '.format(i+1))
         pos[i] = pyautogui.position()
 
 print(repr(pos))
