@@ -6,6 +6,6 @@ do
     if [ "${1}" = '-i' ]; then
         read
     else
-        sleep 10m
+        sleep 5m
     fi
 done
