@@ -6,7 +6,8 @@
 # Put whatever you want to capture on the next wm screen.
 # The result will be saved in the current working directory, so you probably should
 # run this script with the absolute path, e.g. ~/Dev/drafts-and-stuff/Python/screenshot.py
-# You will be asked for the mouse starting and ending positions (to delimit the capture zone).
+# You will be asked for the mouse starting and ending positions (to delimit the capture zone),
+# unless you manually edit ‘pos’ prior to running the script.
 
 import pyautogui, subprocess, time
 
