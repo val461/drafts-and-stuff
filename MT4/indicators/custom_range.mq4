@@ -8,37 +8,37 @@
 #property version   "0.0.1"
 #property strict
 #property indicator_chart_window
-#property indicator_buffers 4
-#property indicator_plots   4
+#property indicator_buffers 5
+#property indicator_plots   5
 //--- plot rangeTop
 #property indicator_label1  "rangeTop"
 #property indicator_type1   DRAW_LINE
-#property indicator_style1  STYLE_DOT
+#property indicator_style1  STYLE_SOLID
 #property indicator_color1  clrRed
 #property indicator_width1  1
 //--- plot rangeBottom
 #property indicator_label2  "rangeBottom"
 #property indicator_type2   DRAW_LINE
-#property indicator_style2  STYLE_DOT
+#property indicator_style2  STYLE_SOLID
 #property indicator_color2  clrLime
 #property indicator_width2  1
 //--- plot top
 #property indicator_label3  "top"
 #property indicator_type3   DRAW_LINE
 #property indicator_style3  STYLE_SOLID
-#property indicator_color3  clrLime
+#property indicator_color3  clrRed
 #property indicator_width3  1
 //--- plot bottom
 #property indicator_label4  "bottom"
 #property indicator_type4   DRAW_LINE
 #property indicator_style4  STYLE_SOLID
-#property indicator_color4  clrRed
+#property indicator_color4  clrLime
 #property indicator_width4  1
 //--- plot middle
 #property indicator_label5  "middle"
 #property indicator_type5   DRAW_LINE
 #property indicator_style5  STYLE_SOLID
-#property indicator_color5  clrRed
+#property indicator_color5  clrYellow
 #property indicator_width5  1
 //--- input parameters
 input double   fraction_numerator=1;
@@ -62,6 +62,7 @@ int OnInit()
    SetIndexBuffer(1,rangeBottomBuffer);
    SetIndexBuffer(2,topBuffer);
    SetIndexBuffer(3,bottomBuffer);
+   SetIndexBuffer(4,middleBuffer);
 //--- handle user input
    percentage = fraction_numerator / fraction_denominator;
    Print(percentage);
@@ -83,7 +84,7 @@ int OnCalculate(const int rates_total,
                 const int &spread[])
   {
    int      i, ind;
-   double avg, half_amp;
+   double half_amp;
 //---
    // starting value is at least zero, so that the loop runs at least once (to handle the current bar)
    for(i = MathMax(rates_total - prev_calculated - 1, 0); i >= 0; i--)
@@ -104,9 +105,9 @@ int OnCalculate(const int rates_total,
 
       // calculate middle values
       half_amp = percentage * (topBuffer[i] - bottomBuffer[i]) / 2;
-      avg = (topBuffer[i] + bottomBuffer[i]) / 2;
-      rangeTopBuffer[i] = avg + half_amp;
-      rangeBottomBuffer[i] = avg - half_amp;
+      middleBuffer[i] = (topBuffer[i] + bottomBuffer[i]) / 2;
+      rangeTopBuffer[i] = middleBuffer[i] + half_amp;
+      rangeBottomBuffer[i] = middleBuffer[i] - half_amp;
    }
 //--- return value of prev_calculated for next call
    return(rates_total);
