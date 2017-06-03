@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                 custom_range.mq4 |
-//|                                                          author! |
+//|                                        inspired by Burton H. Pugh|
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "free"
@@ -9,37 +9,32 @@
 #property strict
 #property indicator_chart_window
 #property indicator_buffers 5
-#property indicator_plots   5
 //--- plot rangeTop
 #property indicator_label1  "rangeTop"
-#property indicator_type1   DRAW_LINE
-#property indicator_style1  STYLE_SOLID
-#property indicator_color1  clrRed
-#property indicator_width1  1
+#property indicator_type1   DRAW_HISTOGRAM
+#property indicator_color1  clrNavajoWhite
+#property indicator_width1  5
 //--- plot rangeBottom
 #property indicator_label2  "rangeBottom"
-#property indicator_type2   DRAW_LINE
-#property indicator_style2  STYLE_SOLID
-#property indicator_color2  clrLime
-#property indicator_width2  1
+#property indicator_type2   DRAW_HISTOGRAM
 //--- plot top
 #property indicator_label3  "top"
 #property indicator_type3   DRAW_LINE
 #property indicator_style3  STYLE_SOLID
 #property indicator_color3  clrRed
-#property indicator_width3  1
+#property indicator_width3  2
 //--- plot bottom
 #property indicator_label4  "bottom"
 #property indicator_type4   DRAW_LINE
 #property indicator_style4  STYLE_SOLID
 #property indicator_color4  clrLime
-#property indicator_width4  1
+#property indicator_width4  2
 //--- plot middle
 #property indicator_label5  "middle"
 #property indicator_type5   DRAW_LINE
 #property indicator_style5  STYLE_SOLID
-#property indicator_color5  clrYellow
-#property indicator_width5  1
+#property indicator_color5  clrDarkOrchid
+#property indicator_width5  2
 //--- input parameters
 input double   fraction_numerator=1;
 input double   fraction_denominator=3;
