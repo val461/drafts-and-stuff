@@ -3,7 +3,8 @@
 from node import Node
 import datetime as d
 
-class Task(Node):
+class Task:
+# todo class Task(Node):
     def __init__(self, description="", duration=d.timedelta(), start=d.datetime.now(), subtasks=[]):
         self.description = description
         self.duration = duration
