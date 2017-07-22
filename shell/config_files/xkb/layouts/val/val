@@ -114,7 +114,7 @@ xkb_symbols "t3" {
     key <AE08> {[   bar,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // |
     key <AE09> {[   exclam,                     NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // !
     key <AE10> {[   question,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // ?
-    key <AE12> {[   dead_cedilla,               dead_abovering,             NoSymbol,                   NoSymbol                    ]}; // ¸°
+    key <AE12> {[   NoSymbol,                   dead_abovering,             dead_cedilla,               NoSymbol                    ]}; // =°¸
 // second row
     key <AD11> {[   parenleft,                  braceleft,                  NoSymbol,                   NoSymbol                    ]}; // ({
     key <AD12> {[   parenright,                 braceright,                 NoSymbol,                   NoSymbol                    ]}; // )}
