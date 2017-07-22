@@ -2,7 +2,7 @@
 
 # ./keyboard [set]
 # Set keyboard config.
-# Without ‘set’ parameter, information will only be retrieved.
+# Without ‘set’ parameter, information will just be displayed, not edited.
 
 
 ## Parameters
