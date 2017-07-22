@@ -1,86 +1,86 @@
 default partial alphanumeric_keys modifier_keys
 xkb_symbols "basic" {
-	include "level3(ralt_switch)"
+    include "level3(ralt_switch)"
 
-	name[Group1]= "val English (enhanced qwerty)";
+    name[Group1]= "val English (enhanced qwerty)";
 
-//					unmodified,					shift,						altgr,						altgr+shift
+//                  unmodified,                 shift,                      altgr,                      shift+altgr
 // high row
-	key <TLDE> {[	grave,						asciitilde,					NoSymbol,					NoSymbol					]};	// `~
-	key <AE01> {[	1,							exclam,						NoSymbol,					NoSymbol					]};	// 1!
-	key <AE02> {[	2,							at,							NoSymbol,					NoSymbol					]};	// 2@
-	key <AE03> {[	3,							numbersign,					NoSymbol,					NoSymbol					]};	// 3#
-	key <AE04> {[	4,							dollar,						EuroSign,					NoSymbol					]};	// 4$€
-	key <AE05> {[	5,							percent,					NoSymbol,					NoSymbol					]};	// 5%
-	key <AE06> {[	6,							asciicircum,				NoSymbol,					NoSymbol					]};	// 6^
-	key <AE07> {[	7,							ampersand,					NoSymbol,					NoSymbol					]};	// 7&
-	key <AE08> {[	8,							asterisk,					NoSymbol,					NoSymbol					]};	// 8*
-	key <AE09> {[	9,							parenleft,					NoSymbol,					NoSymbol					]};	// 9(
-	key <AE10> {[	0,							parenright,					NoSymbol,					NoSymbol					]};	// 0)
-	key <AE11> {[	minus,						underscore,					NoSymbol,					NoSymbol					]};	// -_
-	key <AE12> {[	equal,						plus,						NoSymbol,					NoSymbol					]};	// =+
+    key <TLDE> {[   grave,                      asciitilde,                 NoSymbol,                   NoSymbol                    ]}; // `~
+    key <AE01> {[   1,                          exclam,                     NoSymbol,                   NoSymbol                    ]}; // 1!
+    key <AE02> {[   2,                          at,                         NoSymbol,                   NoSymbol                    ]}; // 2@
+    key <AE03> {[   3,                          numbersign,                 NoSymbol,                   NoSymbol                    ]}; // 3#
+    key <AE04> {[   4,                          dollar,                     EuroSign,                   NoSymbol                    ]}; // 4$€
+    key <AE05> {[   5,                          percent,                    NoSymbol,                   NoSymbol                    ]}; // 5%
+    key <AE06> {[   6,                          asciicircum,                NoSymbol,                   NoSymbol                    ]}; // 6^
+    key <AE07> {[   7,                          ampersand,                  NoSymbol,                   NoSymbol                    ]}; // 7&
+    key <AE08> {[   8,                          asterisk,                   NoSymbol,                   NoSymbol                    ]}; // 8*
+    key <AE09> {[   9,                          parenleft,                  NoSymbol,                   NoSymbol                    ]}; // 9(
+    key <AE10> {[   0,                          parenright,                 NoSymbol,                   NoSymbol                    ]}; // 0)
+    key <AE11> {[   minus,                      underscore,                 endash,                     emdash                      ]}; // -_–—
+    key <AE12> {[   equal,                      plus,                       NoSymbol,                   NoSymbol                    ]}; // =+
 // second row
-	key <AD01> {[	q,							Q,							NoSymbol,					NoSymbol					]};	// qQ
-	key <AD02> {[	w,							W,							NoSymbol,					NoSymbol					]};	// wW
-	key <AD03> {[	e,							E,							NoSymbol,					NoSymbol					]};	// eE
-	key <AD04> {[	r,							R,							NoSymbol,					NoSymbol					]};	// rR
-	key <AD05> {[	t,							T,							NoSymbol,					NoSymbol					]};	// tT
-	key <AD06> {[	y,							Y,							NoSymbol,					NoSymbol					]};	// yY
-	key <AD07> {[	u,							U,							NoSymbol,					NoSymbol					]};	// uU
-	key <AD08> {[	i,							I,							NoSymbol,					NoSymbol					]};	// iI
-	key <AD09> {[	o,							O,							NoSymbol,					NoSymbol					]};	// oO
-	key <AD10> {[	p,							P,							NoSymbol,					NoSymbol					]};	// pP
-	key <AD11> {[	bracketleft,				braceleft,					leftdoublequotemark,		NoSymbol					]};	// [{“
-	key <AD12> {[	bracketright,				braceright,					rightdoublequotemark,		NoSymbol					]};	// ]}”
+    key <AD01> {[   q,                          Q,                          NoSymbol,                   NoSymbol                    ]}; // qQ
+    key <AD02> {[   w,                          W,                          NoSymbol,                   NoSymbol                    ]}; // wW
+    key <AD03> {[   e,                          E,                          NoSymbol,                   NoSymbol                    ]}; // eE
+    key <AD04> {[   r,                          R,                          NoSymbol,                   NoSymbol                    ]}; // rR
+    key <AD05> {[   t,                          T,                          NoSymbol,                   NoSymbol                    ]}; // tT
+    key <AD06> {[   y,                          Y,                          NoSymbol,                   NoSymbol                    ]}; // yY
+    key <AD07> {[   u,                          U,                          NoSymbol,                   NoSymbol                    ]}; // uU
+    key <AD08> {[   i,                          I,                          NoSymbol,                   NoSymbol                    ]}; // iI
+    key <AD09> {[   o,                          O,                          NoSymbol,                   NoSymbol                    ]}; // oO
+    key <AD10> {[   p,                          P,                          NoSymbol,                   NoSymbol                    ]}; // pP
+    key <AD11> {[   bracketleft,                braceleft,                  leftdoublequotemark,        NoSymbol                    ]}; // [{“
+    key <AD12> {[   bracketright,               braceright,                 rightdoublequotemark,       NoSymbol                    ]}; // ]}”
 // third row
-	key <CAPS> {[	Shift_L,					Caps_Lock,					Caps_Lock,					Caps_Lock					]};
-	key <AC01> {[	a,							A,							NoSymbol,					NoSymbol					]};	// aA
-	key <AC02> {[	s,							S,							NoSymbol,					NoSymbol					]};	// sS
-	key <AC03> {[	d,							D,							NoSymbol,					NoSymbol					]};	// dD
-	key <AC04> {[	f,							F,							NoSymbol,					NoSymbol					]};	// fF
-	key <AC05> {[	g,							G,							NoSymbol,					NoSymbol					]};	// gG
-	key <AC06> {[	h,							H,							NoSymbol,					NoSymbol					]};	// hH
-	key <AC07> {[	j,							J,							NoSymbol,					NoSymbol					]};	// jJ
-	key <AC08> {[	k,							K,							NoSymbol,					NoSymbol					]};	// kK
-	key <AC09> {[	l,							L,							NoSymbol,					NoSymbol					]};	// lL
-	key <AC10> {[	semicolon,					colon,						leftsinglequotemark,		NoSymbol					]};	// ;:‘
-	key <AC11> {[	apostrophe,					quotedbl,					rightsinglequotemark,		NoSymbol					]};	// '"’
-	key <BKSL> {[	backslash,					bar,						NoSymbol,					NoSymbol					]};	// \|
+//  key <CAPS> {[   Shift_L,                    Caps_Lock,                  Caps_Lock,                  Caps_Lock                   ]};
+    key <AC01> {[   a,                          A,                          NoSymbol,                   NoSymbol                    ]}; // aA
+    key <AC02> {[   s,                          S,                          NoSymbol,                   NoSymbol                    ]}; // sS
+    key <AC03> {[   d,                          D,                          NoSymbol,                   NoSymbol                    ]}; // dD
+    key <AC04> {[   f,                          F,                          NoSymbol,                   NoSymbol                    ]}; // fF
+    key <AC05> {[   g,                          G,                          NoSymbol,                   NoSymbol                    ]}; // gG
+    key <AC06> {[   h,                          H,                          NoSymbol,                   NoSymbol                    ]}; // hH
+    key <AC07> {[   j,                          J,                          NoSymbol,                   NoSymbol                    ]}; // jJ
+    key <AC08> {[   k,                          K,                          NoSymbol,                   NoSymbol                    ]}; // kK
+    key <AC09> {[   l,                          L,                          NoSymbol,                   NoSymbol                    ]}; // lL
+    key <AC10> {[   semicolon,                  colon,                      leftsinglequotemark,        NoSymbol                    ]}; // ;:‘
+    key <AC11> {[   apostrophe,                 quotedbl,                   rightsinglequotemark,       NoSymbol                    ]}; // '"’
+    key <BKSL> {[   backslash,                  bar,                        NoSymbol,                   NoSymbol                    ]}; // \|
 // fourth row
-	key <LSGT> {[	question,					exclam,						VoidSymbol,					VoidSymbol					]};	// zZ
-	key <AB01> {[	z,							Z,							NoSymbol,					NoSymbol					]};	// zZ
-	key <AB02> {[	x,							X,							NoSymbol,					NoSymbol					]};	// xX
-	key <AB03> {[	c,							C,							NoSymbol,					NoSymbol					]};	// cC
-	key <AB04> {[	v,							V,							NoSymbol,					NoSymbol					]};	// vV
-	key <AB05> {[	b,							B,							NoSymbol,					NoSymbol					]};	// bB
-	key <AB06> {[	n,							N,							NoSymbol,					NoSymbol					]};	// nN
-	key <AB07> {[	m,							M,							NoSymbol,					NoSymbol					]};	// mM
-	key <AB08> {[	comma,						less,						NoSymbol,					NoSymbol					]};	// ,<
-	key <AB09> {[	period,						greater,					NoSymbol,					NoSymbol					]};	// .>
-	key <AB10> {[	slash,						question,					NoSymbol,					NoSymbol					]};	// /?
+    key <LSGT> {[   NoSymbol,                   NoSymbol,                   VoidSymbol,                 VoidSymbol                  ]}; // 
+    key <AB01> {[   z,                          Z,                          NoSymbol,                   NoSymbol                    ]}; // zZ
+    key <AB02> {[   x,                          X,                          NoSymbol,                   NoSymbol                    ]}; // xX
+    key <AB03> {[   c,                          C,                          NoSymbol,                   NoSymbol                    ]}; // cC
+    key <AB04> {[   v,                          V,                          NoSymbol,                   NoSymbol                    ]}; // vV
+    key <AB05> {[   b,                          B,                          NoSymbol,                   NoSymbol                    ]}; // bB
+    key <AB06> {[   n,                          N,                          NoSymbol,                   NoSymbol                    ]}; // nN
+    key <AB07> {[   m,                          M,                          NoSymbol,                   NoSymbol                    ]}; // mM
+    key <AB08> {[   comma,                      less,                       NoSymbol,                   NoSymbol                    ]}; // ,<
+    key <AB09> {[   period,                     greater,                    NoSymbol,                   NoSymbol                    ]}; // .>
+    key <AB10> {[   slash,                      question,                   NoSymbol,                   NoSymbol                    ]}; // /?
 // lowest row
-	key <SPCE> {[	space,						underscore,					underscore,					nobreakspace				]}; // ␣__␣
-	key <MENU> {[	ISO_Level3_Shift,			NoSymbol,					NoSymbol,					NoSymbol					]};
+    key <SPCE> {[   space,                      underscore,                 equal,                      nobreakspace                ]}; // ␣_=␣
+    key <MENU> {[   ISO_Prev_Group,             ISO_Next_Group  ]};        
+//    key <MENU> {[   ISO_Level3_Shift,           NoSymbol,                   NoSymbol,                   NoSymbol                    ]};
 // keypad
-	key <KPDL> {[	KP_Decimal,					KP_Delete ]};
-	key <KP0> {[	KP_0,						KP_Insert ]};
-	key <KP1> {[	KP_1,						KP_End ]};
-	key <KP2> {[	KP_2,						KP_Down ]};
-	key <KP3> {[	KP_3,						KP_Next ]};
-	key <KP4> {[	KP_4,						KP_Left ]};
-	key <KP5> {[	KP_5,						KP_Begin ]};
-	key <KP6> {[	KP_6,						KP_Right ]};
-	key <KP7> {[	KP_7,						KP_Home ]};
-	key <KP8> {[	KP_8,						KP_Up ]};
-	key <KP9> {[	KP_9,						KP_Prior ]};
-	key <NMLK> {[	equal,						VoidSymbol,					NoSymbol,					NoSymbol					]};
-	//key <NMLK> {[	equal,						Num_Lock,					NoSymbol,					NoSymbol					]};
-	//key <SCLK> {[	Scroll_Lock ]};
-	key <KPDV> {[	KP_Divide	]};
-	key <KPMU> {[	KP_Multiply	]};
-	key <KPSU> {[	KP_Subtract	]};
-	key <KPAD> {[	KP_Add		]};
-    key <KPEN> {[	KP_Enter	]};
+    key <KPDL> {[   KP_Decimal,                 KP_Delete ]};
+    key <KP0> {[    KP_0,                       KP_Insert ]};
+    key <KP1> {[    KP_1,                       KP_End ]};
+    key <KP2> {[    KP_2,                       KP_Down ]};
+    key <KP3> {[    KP_3,                       KP_Next ]};
+    key <KP4> {[    KP_4,                       KP_Left ]};
+    key <KP5> {[    KP_5,                       KP_Begin ]};
+    key <KP6> {[    KP_6,                       KP_Right ]};
+    key <KP7> {[    KP_7,                       KP_Home ]};
+    key <KP8> {[    KP_8,                       KP_Up ]};
+    key <KP9> {[    KP_9,                       KP_Prior ]};
+    key <NMLK> {[ equal,                        Num_Lock,                   NoSymbol,                   NoSymbol                    ]};
+    //key <SCLK> {[ Scroll_Lock ]};
+    key <KPDV> {[   KP_Divide   ]};
+    key <KPMU> {[   KP_Multiply ]};
+    key <KPSU> {[   KP_Subtract ]};
+    key <KPAD> {[   KP_Add      ]};
+    key <KPEN> {[   KP_Enter    ]};
 // f-keys row
-	key <PRSC> {type= "PC_ALT_LEVEL2", symbols[Group1]= [ Print, Sys_Req ]};
+//  key <PRSC> {type= "PC_ALT_LEVEL2", symbols[Group1]= [ Print, Sys_Req ]};
 };
