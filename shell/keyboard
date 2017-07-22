@@ -10,7 +10,7 @@
 	verbose=true
 #	layouts=('us')
 	layouts=('val' 'fr')
-    variants=('t2' 'bepo')
+    variants=('t3' 'bepo')
 
 	#options=('terminate:ctrl_alt_bksp' 'shift:both_capslock' 'caps:none')
 	# comment unwanted options:
