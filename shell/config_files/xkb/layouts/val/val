@@ -6,7 +6,7 @@ xkb_symbols "basic" {
 
 //                  unmodified,                 shift,                      altgr,                      shift+altgr
 // high row
-    key <TLDE> {[   grave,                      asciitilde,                 NoSymbol,                   NoSymbol                    ]}; // `~
+    key <TLDE> {[   grave,                      asciitilde,                 dead_grave,                 dead_tilde                  ]}; // `~
     key <AE01> {[   1,                          exclam,                     NoSymbol,                   NoSymbol                    ]}; // 1!
     key <AE02> {[   2,                          at,                         NoSymbol,                   NoSymbol                    ]}; // 2@
     key <AE03> {[   3,                          numbersign,                 NoSymbol,                   NoSymbol                    ]}; // 3#
@@ -27,14 +27,14 @@ xkb_symbols "basic" {
     key <AD05> {[   t,                          T,                          NoSymbol,                   NoSymbol                    ]}; // tT
     key <AD06> {[   y,                          Y,                          NoSymbol,                   NoSymbol                    ]}; // yY
     key <AD07> {[   u,                          U,                          NoSymbol,                   NoSymbol                    ]}; // uU
-    key <AD08> {[   i,                          I,                          icircumflex,                idiaeresis                  ]}; // iI
+    key <AD08> {[   i,                          I,                          icircumflex,                idiaeresis                  ]}; // iIîï
     key <AD09> {[   o,                          O,                          ocircumflex,                oe                          ]}; // oOôœ
     key <AD10> {[   p,                          P,                          NoSymbol,                   NoSymbol                    ]}; // pP
     key <AD11> {[   bracketleft,                braceleft,                  leftdoublequotemark,        NoSymbol                    ]}; // [{“
     key <AD12> {[   bracketright,               braceright,                 rightdoublequotemark,       NoSymbol                    ]}; // ]}”
 // third row
 //  key <CAPS> {[   Shift_L,                    Caps_Lock,                  Caps_Lock,                  Caps_Lock                   ]};
-    key <AC01> {[   a,                          A,                          acircumflex,                ae                          ]}; // aAâæ
+    key <AC01> {[   a,                          A,                          agrave,                     ae                          ]}; // aAàæ
     key <AC02> {[   s,                          S,                          NoSymbol,                   NoSymbol                    ]}; // sS
     key <AC03> {[   d,                          D,                          NoSymbol,                   NoSymbol                    ]}; // dD
     key <AC04> {[   f,                          F,                          NoSymbol,                   NoSymbol                    ]}; // fF
@@ -87,7 +87,7 @@ xkb_symbols "basic" {
 
 partial alphanumeric_keys
 xkb_symbols "reversed_symbols" {
-    key <TLDE> {[   asciitilde,                 grave,                      NoSymbol,                   NoSymbol                    ]}; // ~`
+    key <TLDE> {[   asciitilde,                 grave,                      dead_tilde,                 dead_grave                  ]}; // ~`
     key <AE01> {[   exclam,                     1,                          NoSymbol,                   NoSymbol                    ]}; // !1
     key <AE02> {[   at,                         2,                          NoSymbol,                   NoSymbol                    ]}; // @2
     key <AE03> {[   numbersign,                 3,                          NoSymbol,                   NoSymbol                    ]}; // #3
@@ -111,7 +111,8 @@ xkb_symbols "t3" {
 
 // high row
     key <AE01> {[   quotedbl,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // "
-    key <AE08> {[   bar,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // |
+    key <AE07> {[   bar,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // |
+    key <AE08> {[   ampersand,                  NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // &
     key <AE09> {[   exclam,                     NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // !
     key <AE10> {[   question,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // ?
     key <AE12> {[   NoSymbol,                   dead_abovering,             dead_cedilla,               NoSymbol                    ]}; // =°¸
