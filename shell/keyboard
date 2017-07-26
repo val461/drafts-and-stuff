@@ -7,28 +7,28 @@
 
 ## Parameters
 
-	verbose=true
-#	layouts=('us')
-	layouts=('val' 'fr')
+    verbose=true
+#   layouts=('us')
+    layouts=('val' 'fr')
     variants=('t3' 'bepo')
 
-	#options=('terminate:ctrl_alt_bksp' 'shift:both_capslock' 'caps:none')
-	# comment unwanted options:
+    #options=('terminate:ctrl_alt_bksp' 'shift:both_capslock' 'caps:none')
+    # comment unwanted options:
 
-	# shortcut to kill X (and log out abruptly)
-	options[${#options[*]}]='terminate:ctrl_alt_bksp'
+    # shortcut to kill X (and log out abruptly)
+    options[${#options[*]}]='terminate:ctrl_alt_bksp'
 
-	# numeric keypad keys always enter digits
-#	options[${#options[*]}]='numpad:mac'
+    # numeric keypad keys always enter digits
+#   options[${#options[*]}]='numpad:mac'
 
-	# cancel CapsLock when a Shift key is pressed
-	#options[${#options[*]}]='shift:breaks_caps'
+    # cancel CapsLock when a Shift key is pressed
+    #options[${#options[*]}]='shift:breaks_caps'
 
-	# disable capslock key ; press both shift keys to enable capslock mode
-	#{ options[${#options[*]}]='shift:both_capslock' ; options[${#options[*]}]='caps:none' ; }
+    # disable capslock key ; press both shift keys to enable capslock mode
+    #{ options[${#options[*]}]='shift:both_capslock' ; options[${#options[*]}]='caps:none' ; }
 
-	# 
-	#options[${#options[*]}]=
+    # 
+    #options[${#options[*]}]=
 
 
 ## Code
@@ -40,35 +40,35 @@ get=true
 "${verbose}" || { "${set}" && get=false; }
 
 if "${set}"; then
-	l="${#layouts[@]}"		# arrays' sizes
-	v="${#variants[@]}"
-	o="${#options[@]}"
+    l="${#layouts[@]}"      # arrays' sizes
+    v="${#variants[@]}"
+    o="${#options[@]}"
 
-	strLayouts="${layouts[0]}"
-	i=1
-	while [ "${i}" -lt "${l}" ];
-	do
-		strLayouts="${strLayouts}, ${layouts[$i]}"
-		let 'i++'
-	done
+    strLayouts="${layouts[0]}"
+    i=1
+    while [ "${i}" -lt "${l}" ];
+    do
+        strLayouts="${strLayouts}, ${layouts[$i]}"
+        let 'i++'
+    done
     
-	strVariants="${variants[0]}"
-	i=1
-	while [ "${i}" -lt "${v}" ];
-	do
-		strVariants="${strVariants}, ${variants[$i]}"
-		let 'i++'
-	done
+    strVariants="${variants[0]}"
+    i=1
+    while [ "${i}" -lt "${v}" ];
+    do
+        strVariants="${strVariants}, ${variants[$i]}"
+        let 'i++'
+    done
     
     setxkbmap -layout "${strLayouts}" -variant "${strVariants}"
 
     setxkbmap -option ''    # unset current options if any
-	i=0
-	while [ "${i}" -lt "${o}" ];
-	do
+    i=0
+    while [ "${i}" -lt "${o}" ];
+    do
         setxkbmap -option "${options[$i]}"
-		let 'i++'
-	done
+        let 'i++'
+    done
 fi
 
 "${get}" && setxkbmap -query
