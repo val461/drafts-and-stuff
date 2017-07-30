@@ -26,7 +26,7 @@ xkb_symbols "basic" {
     key <AD04> {[   r,                          R,                          NoSymbol,                   NoSymbol                    ]}; // rR
     key <AD05> {[   t,                          T,                          NoSymbol,                   NoSymbol                    ]}; // tT
     key <AD06> {[   y,                          Y,                          NoSymbol,                   NoSymbol                    ]}; // yY
-    key <AD07> {[   u,                          U,                          NoSymbol,                   NoSymbol                    ]}; // uU
+    key <AD07> {[   u,                          U,                          ugrave,                     ucircumflex                 ]}; // uUùû
     key <AD08> {[   i,                          I,                          icircumflex,                idiaeresis                  ]}; // iIîï
     key <AD09> {[   o,                          O,                          ocircumflex,                oe                          ]}; // oOôœ
     key <AD10> {[   p,                          P,                          NoSymbol,                   NoSymbol                    ]}; // pP

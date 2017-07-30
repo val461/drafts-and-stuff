@@ -75,6 +75,7 @@ _actualize()
 {
     local matches
     matches="$(ps ax | grep "${process_keyword}")"
+    # (to compensate for a missing new line, add one at the end of the block of text contained in ${matches})
     count="$(printf '%s\n' "${matches}" | wc -l)"
     "${verbose}" && printf '%s\n' "${count}" "${matches}"
 }

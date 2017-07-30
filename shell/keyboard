@@ -40,7 +40,7 @@ get=true
 "${verbose}" || { "${set}" && get=false; }
 
 if "${set}"; then
-	echo 'To make settings permanent, make adequate changes in folder “ /etc/X11/xorg.conf.d ”.'
+	echo '(To make settings permanent, make suitable changes in folder “ /etc/X11/xorg.conf.d ”.)'
 
     l="${#layouts[@]}"      # arrays' sizes
     v="${#variants[@]}"
