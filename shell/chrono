@@ -1,72 +1,155 @@
 #!/bin/sh
 
-# usage: chrono [n] [unit]
-#   ‘n’: number of units of time to wait (must be an integer).
-#        If unspecified, wait indefinitely.
-#   ‘unit’: either of ‘s’, ‘m’, ‘h’ or ‘d’ (default: ‘m’)
-#       A message shows up every ${step} ${unit}.
+PROG_NAME="$(basename "${0}")"
+SUCCESS=0
+WRONG_USAGE=1
+INTERRUPTION=2
 
+trap 'exit "${INTERRUPTION}"' HUP INT QUIT TERM
+
+# default values
 step=1
 unit='m'
 alarm='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
-#alarm=''   # uncomment to disable alarm
+total_time=''
 
-_manual()
+_usage()
 {
-    # launch chronometer
-    i=0
-    echo "${i}${unit}"
-    while true
-    do
-        sleep "${step}${unit}"
-        let 'i++'
-        echo "${i}${unit}"
-    done
+    cat <<-EOF
+
+	${PROG_NAME} [OPTION]... [total_time] [unit]
+	Wait ‘total_time’ ‘unit’s of time, regularly displaying the program's state.
+
+	<total_time>
+	    Number of units of time to wait (must be an integer).
+	    If unspecified, wait indefinitely.
+	<unit> (default: '${unit}')
+	    May be 's', 'm', 'h' or 'd'. A message shows up every ‘step’ ‘unit’s.
+	-s <step> (default: ${step})
+	    A message shows up every ‘step’ ‘unit’.
+	-a <alarm> (default: '${alarm}')
+	    Set the path of the file to launch with VLC after the waiting time.
+	    Enable alarm.
+	-m
+	    Disable alarm.
+	-h, --help
+	    Display this help and exit.
+
+	Exit status:
+	    ${SUCCESS}    success
+	    ${WRONG_USAGE}    wrong usage
+	    ${INTERRUPTION}    external interruption
+
+	EOF
 }
 
-case "${#}" in
-    0)
-        _manual
-        exit
-        ;;
-	1)
-        case "${1}" in
-            s|m|h|d)    # manual mode
-                unit="${1}"
-                _manual
-                exit
-                ;;
-            *)          # automatic mode
-        esac
-		;;
-	2)
-        case "${2}" in
-            s|m|h|d)
-                unit="${2}"
-                ;;
-            *)
-                echo "chrono: error: second argument is invalid" >&2
-                exit 1
-        esac
-		;;
-	*)
-		echo "error: bad usage" >&2
-		exit 1
-esac
+# process arguments
+while [ "${#}" -gt 0 ]
+do
+    arg="${1}"
+    shift
+    case "${arg}" in
+        (s|m|h|d)
+            unit="${arg}"
+            ;;
+        (-a)
+            if [ -f "${1}" ]; then
+                alarm="${1}"
+                shift
+            else
+                echo "Bad usage: option -a necessitates an argument which should be the path of a regular file. (Received: “${1}”.)" >&2
+                exit "${WRONG_USAGE}"
+            fi
+            ;;
+        (-m)
+            alarm=''
+            ;;
+        (-s)
+            case "${1}" in
+                (''|*[!0-9]*)
+                    echo "Bad usage: option -s necessitates an argument which should be an integer. (Received: “${1}”.)" >&2
+                    exit "${WRONG_USAGE}"
+                    ;;
+                (*)
+                    step="${1}"
+                    ;;
+            esac
+            shift
+            ;;
+        (-h|--help)
+            _usage
+            exit "${SUCCESS}"
+            ;;
+        (--)    # end of options
+            break
+            ;;
+        (-?|--*)    # unknown option
+            echo "Invalid option: “${arg}”." >&2
+            exit "${WRONG_USAGE}"
+            ;;
+        (-??*)  # several short options
+            while [ "${arg}" != '-' ]   # parse
+            do
+                new_arg="${arg%?}"  # remove last option
+                option="${arg##${new_arg}}" # read it
+                # forget dashes and add option to the list of single options to process
+                [ "${option}" = '-' ] || set -- "-${option}" "${@}"
+                arg="${new_arg}"
+            done
+            ;;
+        ('')    # ignore empty arguments
+            ;;
+        (*[!0-9]*) # not an option
+            echo "Invalid argument: “${arg}”." >&2
+            exit "${WRONG_USAGE}"
+            ;;
+        (*) # integer
+            total_time="$((arg))"
+            ;;
+    esac
+done
 
-# parse first argument
-tmp_var="${1}"
-let 'total_time=tmp_var'
+# process any remaining arguments
+while [ "${#}" -gt 0 ]
+do
+    arg="${1}"
+    shift
+    case "${arg}" in
+        (s|m|h|d)
+            unit="${arg}"
+            ;;
+        ('')    # ignore empty arguments
+            ;;
+        (*[!0-9]*) # not an option
+            echo "Invalid argument: “${arg}”." >&2
+            _usage
+            exit "${WRONG_USAGE}"
+            ;;
+        (*) # integer
+            total_time="$((arg))"
+            ;;
+    esac
+done
 
+if [ -z "${total_time}" ]; then
+    i=0
+    fac=1
+else
+    i="${total_time}"
+    fac=-1
+fi
+
+echo "${i}${unit}"
+i="$((i+fac*step))"
 # launch chronometer
-i="${total_time}"
 while [ "${i}" -gt 0 ]
 do
-    echo "${i}${unit}"
     sleep "${step}${unit}"
-    let 'i--'
+    echo "${i}${unit}"
+    i="$((i+fac*step))"
 done
-echo "${i}${unit}"
-if [ -f "${alarm}" ]; then
+
+if [ -n "${alarm}" ]; then
+    # launch alarm
     vlc "${alarm}" >/dev/null 2>&1 & disown
 fi

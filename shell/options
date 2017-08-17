@@ -1,10 +1,36 @@
-#!/bin/bash
+#!/bin/sh
 # POSIX
+
+PROG_NAME="$(basename "${0}")"
+SUCCESS=0
+WRONG_USAGE=2
+INTERRUPTION=3
+
+trap 'exit "${INTERRUPTION}"' HUP INT QUIT TERM
+
+# default values
+max=0
 
 _usage()
 {
-#	printf '%s\t%s\n' 'usage:' 'options [args]'
-	true
+    cat <<-EOF
+
+	${PROG_NAME} [OPTION]... <keyword>
+	A script.
+
+	<keyword>
+	    A keyword.
+	-m <max> (default: ${max})
+	    Maximal amount.
+	-h, --help
+	    Display this help and exit.
+
+	Exit status:
+	    ${SUCCESS}    success
+	    ${WRONG_USAGE}    wrong usage
+	    ${INTERRUPTION}    external interruption
+
+	EOF
 }
 
 _processParameters()
@@ -16,37 +42,37 @@ _processParameters()
         arg="${1}"
         shift
         case "${arg}" in
-            --file)
-                if case "${1}" in ''|-*) false ;; 
-                                      *) true ;;
-                   esac
-                then
-                    echo "file: ${1}"
-                    shift
-                else
-                    echo "bad usage: option --file necessitates an argument" >&2
-                fi
+            (--file)
+                case "${1}" in
+                    (''|-*)
+                        echo "Bad usage: option --file necessitates an argument." >&2
+                        ;;
+                    (*)
+                        echo "File: “ ${1} ”."
+                        shift
+                        ;;
+                esac
                 ;;
-            --file=*)
+           (--file=*)
                 file="${arg#*=}"
-                echo "file: ${file}"
+                echo "File: “ ${file} ”."
                 ;;
-            -h|--help)
+            (-h|--help)
                 _usage
-                exit 0
+                exit "${SUCCESS}"
                 ;;
-            -a)
+            (-a)
                 echo '-a is set!'
                 ;;
-            --)     # end of options
+            (--)    # end of options
                 break
                 ;;
-            -?|--*) # unknown option
-                echo "invalid option: ${arg}" >&2
+            (-?|--*)    # unknown option
+                echo "Invalid option: “${arg}”." >&2
                 _usage
-                exit 1
+                exit "${WRONG_USAGE}"
                 ;;
-            -??*)   # several short options
+            (-??*)  # several short options
                 while [ "${arg}" != '-' ]   # parse
                 do
                     new_arg="${arg%?}"  # remove last option
@@ -56,9 +82,9 @@ _processParameters()
                     arg="${new_arg}"
                 done
                 ;;
-            '') ;;  # null parameter
-            *)      # not an option
-                echo "solitary argument:  ${arg}"
+            ('') ;; # null parameter
+            (*) # not an option
+                echo "Solitary argument: “${arg}”."
                 ;;
         esac
     done
@@ -66,7 +92,7 @@ _processParameters()
     while [ "${#}" -gt 0 ]
     do
         shift
-        # may have to repeat here the code from case *) of previous loop
-        echo "solitary argument:  ${arg}"
+        # may have to repeat here the code from case (*) of previous loop
+        echo "Solitary argument:  ${arg}."
     done
 }

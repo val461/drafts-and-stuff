@@ -26,7 +26,7 @@ xkb_symbols "basic" {
     key <AD04> {[   r,                          R,                          NoSymbol,                   NoSymbol                    ]}; // rR
     key <AD05> {[   t,                          T,                          NoSymbol,                   NoSymbol                    ]}; // tT
     key <AD06> {[   y,                          Y,                          NoSymbol,                   NoSymbol                    ]}; // yY
-    key <AD07> {[   u,                          U,                          ugrave,                     ucircumflex                 ]}; // uUùû
+    key <AD07> {[   u,                          U,                          ucircumflex,                ugrave                      ]}; // uUûù
     key <AD08> {[   i,                          I,                          icircumflex,                idiaeresis                  ]}; // iIîï
     key <AD09> {[   o,                          O,                          ocircumflex,                oe                          ]}; // oOôœ
     key <AD10> {[   p,                          P,                          NoSymbol,                   NoSymbol                    ]}; // pP
@@ -47,7 +47,7 @@ xkb_symbols "basic" {
     key <AC11> {[   apostrophe,                 quotedbl,                   leftsinglequotemark,        NoSymbol                    ]}; // '"‘
     key <BKSL> {[   backslash,                  bar,                        rightsinglequotemark,       NoSymbol                    ]}; // \|’
 // fourth row
-    key <LSGT> {[   dead_acute,                 dead_grave,                 dead_circumflex,            dead_diaeresis              ]}; // '`^" (accents)
+    key <LSGT> {[   dead_circumflex,            dead_diaeresis,             dead_acute,                 dead_grave                  ]}; // ^"'` (accents)
     key <AB01> {[   z,                          Z,                          NoSymbol,                   NoSymbol                    ]}; // zZ
     key <AB02> {[   x,                          X,                          NoSymbol,                   NoSymbol                    ]}; // xX
     key <AB03> {[   c,                          C,                          ccedilla,                   Ccedilla                    ]}; // cC
@@ -111,10 +111,10 @@ xkb_symbols "t3" {
 
 // high row
     key <AE01> {[   quotedbl,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // "
-    key <AE07> {[   bar,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // |
-    key <AE08> {[   ampersand,                  NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // &
-    key <AE09> {[   exclam,                     NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // !
-    key <AE10> {[   question,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // ?
+    key <AE07> {[   question,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // ?
+    key <AE08> {[   exclam,                     NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // !
+    key <AE09> {[   ampersand,                  NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // &
+    key <AE10> {[   bar,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // |
     key <AE12> {[   NoSymbol,                   dead_abovering,             dead_cedilla,               NoSymbol                    ]}; // =°¸
 // second row
     key <AD11> {[   parenleft,                  braceleft,                  NoSymbol,                   NoSymbol                    ]}; // ({
