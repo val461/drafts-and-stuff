@@ -24,7 +24,8 @@ _usage()
 	    Number of units of time to wait (must be an integer).
 	    If unspecified, wait indefinitely.
 	<unit> (default: '${unit}')
-	    May be 's', 'm', 'h' or 'd'. A message shows up every ‘step’ ‘unit’s.
+	    May be 's', 'm', 'h' or 'd'. Wait ‘total_time’ ‘unit’s of time.
+	    A message shows up every ‘step’ ‘unit’s.
 	-s <step> (default: ${step})
 	    A message shows up every ‘step’ ‘unit’.
 	-a <alarm> (default: '${alarm}')
