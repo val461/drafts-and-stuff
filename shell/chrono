@@ -58,6 +58,7 @@ do
                 shift
             else
                 echo "Bad usage: option -a necessitates an argument which should be the path of a regular file. (Received: “${1}”.)" >&2
+		_usage
                 exit "${WRONG_USAGE}"
             fi
             ;;
@@ -68,6 +69,7 @@ do
             case "${1}" in
                 (''|*[!0-9]*)
                     echo "Bad usage: option -s necessitates an argument which should be an integer. (Received: “${1}”.)" >&2
+		    _usage
                     exit "${WRONG_USAGE}"
                     ;;
                 (*)
@@ -85,6 +87,7 @@ do
             ;;
         (-?|--*)    # unknown option
             echo "Invalid option: “${arg}”." >&2
+	    _usage
             exit "${WRONG_USAGE}"
             ;;
         (-??*)  # several short options
@@ -101,6 +104,7 @@ do
             ;;
         (*[!0-9]*) # not an option
             echo "Invalid argument: “${arg}”." >&2
+	    _usage
             exit "${WRONG_USAGE}"
             ;;
         (*) # integer
