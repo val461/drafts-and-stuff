@@ -18,7 +18,8 @@ _usage()
     cat <<-EOF
 
 	${PROG_NAME} [OPTION]... [total_time] [unit]
-	Wait ‘total_time’ ‘unit’s of time, regularly displaying the program's state.
+	Wait approximately ‘total_time’ ‘unit’s of time, regularly displaying
+	the program's state.
 
 	<total_time>
 	    Number of units of time to wait (must be an integer).
@@ -144,6 +145,7 @@ else
     fac=-1
 fi
 
+date
 echo "${i}${unit}"
 i="$((i+fac*step))"
 # launch chronometer
