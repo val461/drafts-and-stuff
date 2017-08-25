@@ -62,17 +62,17 @@ xkb_symbols "basic" {
     key <SPCE> {[   space,                      underscore,                 equal,                      nobreakspace                ]}; // ␣_=␣
     key <MENU> {[   ISO_Prev_Group,             ISO_Next_Group,             NoSymbol,                   NoSymbol                    ]};
 // keypad
-    key <KPDL> {[   KP_Decimal,                 KP_Delete ]};
-    key <KP0> {[    KP_0,                       KP_Insert ]};
-    key <KP1> {[    KP_1,                       KP_End ]};
-    key <KP2> {[    KP_2,                       KP_Down ]};
-    key <KP3> {[    KP_3,                       KP_Next ]};
-    key <KP4> {[    KP_4,                       KP_Left ]};
-    key <KP5> {[    KP_5,                       KP_Begin ]};
-    key <KP6> {[    KP_6,                       KP_Right ]};
-    key <KP7> {[    KP_7,                       KP_Home ]};
-    key <KP8> {[    KP_8,                       KP_Up ]};
-    key <KP9> {[    KP_9,                       KP_Prior ]};
+    key <KPDL> {[   KP_Decimal,                 KP_Decimal ]};
+    key <KP0> {[    KP_0,                       KP_0 ]};
+    key <KP1> {[    KP_1,                       KP_1 ]};
+    key <KP2> {[    KP_2,                       KP_2 ]};
+    key <KP3> {[    KP_3,                       KP_3 ]};
+    key <KP4> {[    KP_4,                       KP_4 ]};
+    key <KP5> {[    KP_5,                       KP_5 ]};
+    key <KP6> {[    KP_6,                       KP_6 ]};
+    key <KP7> {[    KP_7,                       KP_7 ]};
+    key <KP8> {[    KP_8,                       KP_8 ]};
+    key <KP9> {[    KP_9,                       KP_9 ]};
 //  key <NMLK> {[ equal,                        NoSymbol,                   NoSymbol,                   NoSymbol                    ]};
 //  key <SCLK> {[ Scroll_Lock ]};
     key <KPDV> {[   KP_Divide   ]};
