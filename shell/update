@@ -3,7 +3,7 @@
 echo '### USE XTERM ! ###'
 
 echo 'updating mirror list with reflector'
-sudo reflector --sort score --save /etc/pacman.d/mirrorlist
+sudo reflector --sort score --save /etc/pacman.d/mirrorlist || echo "erreur code ${?} retournée par reflector"
 
 sudo pacman -Syyu || echo "erreur code ${?} retournée par pacman"
 
