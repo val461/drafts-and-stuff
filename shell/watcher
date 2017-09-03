@@ -4,11 +4,10 @@
 
 ## parameters
 
-source_dir='/home/val/mnt/Data/Downloads/Deluge/v/categories'
-#source_dir='/home/val/mnt/Data/Downloads/Deluge/v/2'
-move_to_target_dir=false
-#move_to_target_dir=true
-target_dir='./watched'
+source_dir='/home/val/mnt/Data/Downloads/v/unwatched'
+#~ move_to_target_dir=false
+move_to_target_dir=true
+target_dir='../watched'
 print_help_at_launch=true
 
 file_viewer='spacefm'
@@ -59,58 +58,59 @@ do
     while "${reask}"
     do
         read ans < /dev/tty
-        set -- "${ans}"
-        #~ while [ "${#}" -gt 0 ] # process answer
-        #~ do
-            case "${1}" in
-                #~ ??*)   # several actions
-                    #~ arg="${1}"
-                    #~ shift
-                    #~ while [ -n "${arg}" ]   # parse
-                    #~ do
-                        #~ new_arg="${arg%?}"  # remove last action
-                        #~ action="${arg##${new_arg}}" # and read it
-                        #~ # add action to the list of actions to process
-                        #~ set -- "${action}" "${@}"
-                        #~ arg="${new_arg}"
-                    #~ done
-                    #~ ;;
-                p|P)    # file viewer
-                    shift
-                    [ -d "${dir}" ] && "${file_viewer}" "${dir}" >/dev/null 2>&1 &
-                    ;;
-                r|R)    # replay
-                    shift
-                    _play_vid
-                    ;;
-                d|D)    # delete file
-                    shift
-                    rm -v "${file}"
-                    ;;
-                ''|n|N)    # skip next actions
-                    shift
-                    reask=false
-                    #~ break
-                    ;;
-                q|Q)    # exit
-                    echo 'Quit.'
-                    exit 0
-                    ;;
-                ' ')    # skip argument
-                    shift
-                    ;;
-                y|Y)   # move file
-                    shift
-                    "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
-                    ;;
-                *)    # print help
-                    _usage
-                    ;;
-            esac
+        case "${ans}" in
+            #~ ??*)   # several actions
+                #~ arg="${1}"
+                #~ shift
+                #~ while [ -n "${arg}" ]   # parse
+                #~ do
+                    #~ new_arg="${arg%?}"  # remove last action
+                    #~ action="${arg##${new_arg}}" # and read it
+                    #~ # add action to the list of actions to process
+                    #~ set -- "${action}" "${@}"
+                    #~ arg="${new_arg}"
+                #~ done
+                #~ ;;
+            p|P)    # file viewer
+                shift
+                [ -d "${dir}" ] && "${file_viewer}" "${dir}" >/dev/null 2>&1 &
+                ;;
+            r|R)    # replay
+                shift
+                _play_vid
+                ;;
+            d|D)    # delete file
+                shift
+                rm -v "${file}"
+                reask=false
+                ;;
+            n|N)    # skip next actions
+                shift
+                reask=false
+                #~ break
+                ;;
+            q|Q)    # exit
+                echo 'Quitting.'
+                exit 0
+                ;;
+            '')
+                shift
+                if "${move_to_target_dir}"; then
+                    ans='y'
+                else
+                    ans='n'
+                fi
+                ;;
+            y|Y)   # move file
+                shift
+                "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+                ;;
+            *)    # print help
+                _usage
+                ;;
+        esac
         if "${reask}"; then
             _question
         fi
-        #~ done
     done
 done
-#~ done

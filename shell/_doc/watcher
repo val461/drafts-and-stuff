@@ -8,7 +8,7 @@ _usage()
 	 This program doesn’t resume until you quit VLC.
 
 	EOF
-#	"${move_to_target_dir}" && echo "      y: move video to “ ${target_dir} ”"
+	"${move_to_target_dir}" && echo "      y: move video to “ ${target_dir} ”"
 	cat <<-'EOF'
 	      n: next video
 	      q: quit
