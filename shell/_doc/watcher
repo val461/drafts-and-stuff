@@ -5,7 +5,6 @@ _usage()
 	cat <<-'EOF'
 
 	 Type an action and validate with [enter].
-	 This program doesn’t resume until you quit VLC.
 
 	EOF
 	"${move_to_target_dir}" && echo "      y: move video to “ ${target_dir} ”"

@@ -42,7 +42,9 @@ _question()
 
 _play_vid()
 {
-    "${no_video}" || vlc "${file}" 1>/dev/null 2>&1
+    if ! "${no_video}"; then
+        vlc "${file}" 1>/dev/null 2>&1 & disown
+    fi
 }
 
 #~ while true
@@ -59,51 +61,32 @@ do
     do
         read ans < /dev/tty
         case "${ans}" in
-            #~ ??*)   # several actions
-                #~ arg="${1}"
-                #~ shift
-                #~ while [ -n "${arg}" ]   # parse
-                #~ do
-                    #~ new_arg="${arg%?}"  # remove last action
-                    #~ action="${arg##${new_arg}}" # and read it
-                    #~ # add action to the list of actions to process
-                    #~ set -- "${action}" "${@}"
-                    #~ arg="${new_arg}"
-                #~ done
-                #~ ;;
             p|P)    # file viewer
-                shift
                 [ -d "${dir}" ] && "${file_viewer}" "${dir}" >/dev/null 2>&1 &
                 ;;
             r|R)    # replay
-                shift
                 _play_vid
                 ;;
             d|D)    # delete file
-                shift
                 rm -v "${file}"
                 reask=false
                 ;;
             n|N)    # skip next actions
-                shift
                 reask=false
-                #~ break
                 ;;
             q|Q)    # exit
                 echo 'Quitting.'
                 exit 0
                 ;;
-            '')
-                shift
-                if "${move_to_target_dir}"; then
-                    ans='y'
-                else
-                    ans='n'
-                fi
-                ;;
             y|Y)   # move file
-                shift
                 "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+                reask=false
+                ;;
+            '')
+                if "${move_to_target_dir}"; then
+                    "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+                fi
+                reask=false
                 ;;
             *)    # print help
                 _usage

@@ -22,13 +22,13 @@ done
 
 if ~/bin/wait_until_quit -p 1 'firefox'; then
     echo -n "${PROG_NAME}: Firefox does not seem to be running anymore."
-
-    if "${debug}"; then
-        echo -n ' Shut down? [enter|ctrl-c] '
-        read ans
-    fi
-
-    shutdown now
 else
     echo "${PROG_NAME}: ‘wait_until_quit’ returned with error ‘${?}’." >&2
 fi
+
+if "${debug}"; then
+    echo -n ' Shut down? [enter|ctrl-c] '
+    read ans
+fi
+
+shutdown now
