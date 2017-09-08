@@ -69,7 +69,6 @@ do
                 ;;
             d|D)    # delete file
                 rm -v "${file}"
-                reask=false
                 ;;
             n|N)    # skip next actions
                 reask=false
@@ -79,14 +78,12 @@ do
                 exit 0
                 ;;
             y|Y)   # move file
-                "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
-                reask=false
+                "${move_to_target_dir}" && mv -vi "${file}" "${target_dir}"
                 ;;
             '')
                 if "${move_to_target_dir}"; then
-                    "${move_to_target_dir}" && mv -v "${file}" "${target_dir}"
+                    "${move_to_target_dir}" && mv -vi "${file}" "${target_dir}"
                 fi
-                reask=false
                 ;;
             *)    # print help
                 _usage
