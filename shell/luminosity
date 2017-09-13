@@ -63,7 +63,7 @@ _printDirection()
 }
 
 slowness=3
-op='-'
+op='+'
 
 max="$(cat "${file_max}")"
 echo "max brightness: ${max}"
@@ -74,29 +74,31 @@ do
     let "modifier = ${brightness} / ${slowness}"
     [ "${modifier}" -ge 1 ] || modifier=1
     printf  'current slowness: %s ' "${slowness}"
-        _printDirection
-        read ans
-        case "${ans}" in
-            '') ;;
-           x|X|q|Q) break ;;
-            +*) op='+' ; _printDirection ; continue ;;
-            -*) op='-' ; _printDirection ; continue ;;
-            r|R) _actualizeBrightness ; continue ;;
-      *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
-             *)
-                [ "${ans}" -ge 1 ] && let "slowness=${ans}"
-                printf 'slowness: %s ' "${slowness}"
-                _printDirection
-                continue
-                ;;
-        esac
-    let "new=brightness ${op} ${modifier}"
-    if [ "${new}" -lt 1 ]; then
-        echo "error: brightness (${new}) must be positive." >&2
-        new=1
-    elif [ "${new}" -gt "${max}" ]; then
-        echo "error: brightness (${new}) must be inferior to ${max}" >&2
-        new="${max}"
-    fi
-    _setBrightness "${new}"
+    _printDirection
+    read ans
+    case "${ans}" in
+        '')
+            let "new=brightness ${op} ${modifier}"
+            if [ "${new}" -lt 1 ]; then
+                echo "error: brightness (${new}) must be positive." >&2
+                new=1
+            elif [ "${new}" -gt "${max}" ]; then
+                echo "error: brightness (${new}) must be inferior to ${max}" >&2
+                new="${max}"
+            fi
+            _setBrightness "${new}"
+            ;;
+        x|X|q|Q) break ;;
+        +*) op='+' ; _printDirection ; continue ;;
+        -*) op='-' ; _printDirection ; continue ;;
+        r|R) _actualizeBrightness ; continue ;;
+        *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
+        *)
+            # is a number
+            [ "${ans}" -ge 1 ] && let "slowness=${ans}"
+            printf 'slowness: %s ' "${slowness}"
+            _printDirection
+            continue
+            ;;
+    esac
 done
