@@ -3,11 +3,13 @@
 # supposed to be launched by i3 from ~/.i3/config when i3 starts
 
 firefox &
-spacefm &
 
-sleep 1
+i3-msg "workspace 3; append_layout ~/.i3/workspace-3-1.json"
+
+spacefm &
 geany &
 cherrytree &
+
 #~ ~/.fehbg &
 
 i3-msg "workspace 2; append_layout ~/.i3/workspace-2-2.json"
