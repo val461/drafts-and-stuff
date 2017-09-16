@@ -4,7 +4,7 @@
 
 import pyautogui, time
 
-#~ print('Adapt the script to the local context before running.'); exit()
+print('Adapt the script to the local context before running.'); exit()
 
 i_first = 1
 i_last = 1
