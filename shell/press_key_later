@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# press_key_later [duration [key [time unit]]] - wait then press some key (default: wait 40 minutes then press space)
+
+
+# duration
+duration="${1:-40}"
+
+# key to press (see pyautogui documentation to find valid values)
+key="${2:-space}"
+
+# time unit (see bin/chrono documentation to find valid values)
+unit="${3:-m}"
+
+
+# Code
+
+go=true
+[ "${#}" -ge 3 ] && go=false
+case "${1}" in
+    (-h|--help) go=false;;
+esac
+
+if [ "${go}" = false ]; then
+    echo "${0}: Bad usage: you probably should read the source before using that script."
+    exit 1
+else
+    ~/bin/chrono -m "${duration}" "${unit}"
+    python -c "import pyautogui;pyautogui.press('${key}')"
+fi
