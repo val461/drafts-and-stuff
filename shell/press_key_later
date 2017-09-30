@@ -15,13 +15,14 @@ key="${3:-space}"
 
 # Code
 
-error=false
-[ "${#}" -ge 4 ] && error=true
 case "${1}" in
-    (-h|--help) error=true;;
+    (-h|--help)
+        printf '%s\n' 'Usage:   press_key_later [duration [time_unit [key]]]' 'Purpose: wait then simulate pressing some key (default: wait 40 minutes then press space).'
+        exit 1
+        ;;
 esac
 
-if "${error}"; then
+if [ "${#}" -ge 4 ]; then
     echo "${0}: Bad usage: you probably should read the source before using that script."
     exit 1
 else
