@@ -63,7 +63,7 @@ _printDirection()
 }
 
 slowness=3
-op='+'
+op='-'
 
 max="$(cat "${file_max}")"
 echo "max brightness: ${max}"

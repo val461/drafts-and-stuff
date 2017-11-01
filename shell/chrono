@@ -12,6 +12,7 @@ step=1
 unit='m'
 alarm='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
 total_time=''
+verbose=true
 
 _usage()
 {
@@ -34,6 +35,8 @@ _usage()
 	    Enable alarm.
 	-m
 	    Disable alarm.
+	-q
+	    Attempt to make output less verbose.
 	-h, --help
 	    Display this help and exit.
 
@@ -60,7 +63,7 @@ do
                 shift
             else
                 echo "Bad usage: option -a necessitates an argument which should be the path of a regular file. (Received: “${1}”.)" >&2
-        _usage
+                _usage
                 exit "${WRONG_USAGE}"
             fi
             ;;
@@ -88,6 +91,9 @@ do
                 exit "${WRONG_USAGE}"
             fi
             shift
+            ;;
+        (-q)
+            verbose=false
             ;;
         (-h|--help)
             _usage
@@ -149,19 +155,24 @@ done
 if [ -z "${total_time}" ]; then
     i=0
     fac=1
+    print_steps=true
 else
     i="${total_time}"
     fac=-1
+    print_steps="${verbose}"
 fi
 
-date
-echo "${i}${unit}"
+if "${verbose}"; then
+    date
+    echo "${i}${unit}"
+fi
+
 i="$((i+fac*step))"
 # launch chronometer
 while [ "${i}" -ge 0 ]
 do
     sleep "${step}${unit}"
-    echo "${i}${unit}"
+    "${print_steps}" && echo "${i}${unit}"
     i="$((i+fac*step))"
 done
 
@@ -169,3 +180,4 @@ if [ -n "${alarm}" ]; then
     # launch alarm
     vlc "${alarm}" >/dev/null 2>&1 & disown
 fi
+"${verbose}" && date
