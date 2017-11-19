@@ -4,10 +4,11 @@
 
 ## parameters
 
-source_dir='/home/val/mnt/Data/Downloads/v/unwatched'
-#~ move_to_target_dir=false
-move_to_target_dir=true
-target_dir='../watched'
+#~ source_dir='/home/val/mnt/Data/Downloads/v/unwatched'
+source_dir='/home/val/mnt/Data/Downloads/v/'
+move_to_target_dir=false
+#~ move_to_target_dir=true
+target_dir="../$(date -I)"
 print_help_at_launch=true
 
 file_viewer='spacefm'
@@ -22,11 +23,6 @@ PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
 
 cd "${source_dir}" || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while changing directory"; exit 1; }
 
-# make target dir if necessary
-if "${move_to_target_dir}"; then
-    mkdir -vp "${target_dir}" || { move_to_target_dir=false ; echo "Problem while creating directory ${target_dir}" >&2 ; }
-fi
-
 # debug mode
 no_video=false
 [ "${#}" -gt 0 ] && no_video=true
@@ -36,7 +32,15 @@ no_video=false
 _question()
 {
     printf '“ %s ”. Action ? ' "${file}"
-    "${move_to_target_dir}" && printf '[y]/n/' || printf '[n]/'
+    if "${move_to_target_dir}"; then
+        if "${moved}"; then
+            printf '[n]/y/'
+        else
+            printf '[y]/n/'
+        fi
+    else
+        printf '[n]/'
+    fi
     printf '%s\n' 'q/r/d/p/h'
 }
 
@@ -47,6 +51,15 @@ _play_vid()
     fi
 }
 
+_move_to_target_dir()
+{
+    if mkdir -vp "${target_dir}"; then
+        mv -vi "${file}" "${target_dir}" && moved=true
+    else
+        echo "${PROGNAME}: an error occurred when attempting to create directory ${target_dir}" >&2
+    fi
+}
+
 #~ while true
 #~ do
 # launch up to 20 files
@@ -54,11 +67,12 @@ _play_vid()
 do
     [ -e "${file}" ] || break   # check if user removed file
     dir="$(dirname "${file}")"
-    _question
+    moved=false
     _play_vid
     reask=true
     while "${reask}"
     do
+        _question
         read ans < /dev/tty
         case "${ans}" in
             p|P)    # file viewer
@@ -68,7 +82,7 @@ do
                 _play_vid
                 ;;
             d|D)    # delete file
-                rm -v "${file}"
+                rm -v "${file}" && moved=true
                 ;;
             n|N)    # skip next actions
                 reask=false
@@ -78,19 +92,20 @@ do
                 exit 0
                 ;;
             y|Y)   # move file
-                "${move_to_target_dir}" && mv -vi "${file}" "${target_dir}"
+                
+                "${move_to_target_dir}" && _move_to_target_dir
                 ;;
             '')
-                if "${move_to_target_dir}"; then
-                    "${move_to_target_dir}" && mv -vi "${file}" "${target_dir}"
+                if "${move_to_target_dir}" && ! "${moved}"; then
+                    _move_to_target_dir
+                else
+                    reask=false
                 fi
                 ;;
             *)    # print help
+                printf '%s\n' 'Invalid command.'
                 _usage
                 ;;
         esac
-        if "${reask}"; then
-            _question
-        fi
     done
 done
