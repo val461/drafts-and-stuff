@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
+# ./manualDownload.py quantity
 # ./manualDownload.py i_first i_last
+
 # Download links from an opened browser page.
+
+# quantity (integer): number of items to copy.
 # i_first (integer): number of the first item to copy.
 # i_last (integer): number of the last item to copy.
 
