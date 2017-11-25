@@ -9,11 +9,11 @@
 # i_first (integer): number of the first item to copy.
 # i_last (integer): number of the last item to copy.
 
-from iterateHotkeys import iterate_cmdarg as iterate
+from iterateHotkeys import iterate_cmdarg as iterate_hotkeys
 
 print('Adapt the script to the local context before running.'); exit()
 
-iterate(
+iterate_hotkeys(
     hotkeys_before = [['winleft', 'tab']],
     hotkeys_loop = [
         ['alt', 'enter'],
