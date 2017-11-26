@@ -3,7 +3,7 @@
 # ./manualDownload.py quantity
 # ./manualDownload.py i_first i_last
 
-# Download links from an opened browser page.
+# Download the targets of links of an opened browser page.
 
 # quantity (integer): number of items to copy.
 # i_first (integer): number of the first item to copy.

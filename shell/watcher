@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# watcher - launch files with VLC
+# watcher - launch video files with some player
 
 ## parameters
 
-#~ source_dir='/home/val/mnt/Data/Downloads/v/unwatched'
-source_dir='/home/val/mnt/Data/Downloads/v/'
-move_to_target_dir=false
-#~ move_to_target_dir=true
-target_dir="../$(date -I)"
 print_help_at_launch=true
+file_browser='spacefm'
+video_player='vlc'
 
-file_viewer='spacefm'
+dir_root='/home/val/mnt/Data/Downloads/v'
+dir_videos_to_play="${dir_root}/unwatched"
+
+if [ -d "${dir_videos_to_play}" ]; then
+    move_videos=true
+    dir_moved_videos="${dir_root}/$(date -I)"
+else
+    move_videos=false
+    dir_videos_to_play="${dir_root}"
+fi
 
 ## code
 
@@ -20,8 +26,6 @@ PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
 
 # load libraries
 . "${PROGDIR}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${PROGDIR}/_utils/load ”" >&2 ; exit 1; }
-
-cd "${source_dir}" || { _error "${PROGNAME}: line ${LINENO}: error code ${?} while changing directory"; exit 1; }
 
 # debug mode
 no_video=false
@@ -32,7 +36,7 @@ no_video=false
 _question()
 {
     printf '“ %s ”. Action ? ' "${file}"
-    if "${move_to_target_dir}"; then
+    if "${move_videos}"; then
         if "${moved}"; then
             printf '[n]/y/'
         else
@@ -47,23 +51,23 @@ _question()
 _play_vid()
 {
     if ! "${no_video}"; then
-        vlc "${file}" 1>/dev/null 2>&1 & disown
+        "${video_player}" "${file}" 1>/dev/null 2>&1 & disown
     fi
 }
 
-_move_to_target_dir()
+_move_video()
 {
-    if mkdir -vp "${target_dir}"; then
-        mv -vi "${file}" "${target_dir}" && moved=true
+    if mkdir -vp "${dir_moved_videos}"; then
+        mv -vi "${file}" "${dir_moved_videos}" && moved=true
     else
-        echo "${PROGNAME}: an error occurred when attempting to create directory ${target_dir}" >&2
+        echo "${PROGNAME}: an error occurred when attempting to create directory ${dir_moved_videos}" >&2
     fi
 }
 
 #~ while true
 #~ do
 # launch up to 20 files
-"${PROGDIR}/pick_file" 20 . | while read file
+"${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
 do
     [ -e "${file}" ] || break   # check if user removed file
     dir="$(dirname "${file}")"
@@ -75,8 +79,8 @@ do
         _question
         read ans < /dev/tty
         case "${ans}" in
-            p|P)    # file viewer
-                [ -d "${dir}" ] && "${file_viewer}" "${dir}" >/dev/null 2>&1 &
+            p|P)    # file browser
+                [ -d "${dir}" ] && "${file_browser}" "${dir}" >/dev/null 2>&1 &
                 ;;
             r|R)    # replay
                 _play_vid
@@ -93,11 +97,11 @@ do
                 ;;
             y|Y)   # move file
                 
-                "${move_to_target_dir}" && _move_to_target_dir
+                "${move_videos}" && _move_video
                 ;;
             '')
-                if "${move_to_target_dir}" && ! "${moved}"; then
-                    _move_to_target_dir
+                if "${move_videos}" && ! "${moved}"; then
+                    _move_video
                 else
                     reask=false
                 fi
