@@ -46,5 +46,7 @@ alias sd='~/bin/setDNS'
 alias sdo='~/bin/setDNS odns'
 alias sdr='~/bin/setDNS resgp'
 alias sdd='~/bin/setDNS default'
+alias sdn='~/bin/sdn'
+alias shoes="~/'.shoes/walkabout/shoes'"
 alias unc='unclutter -idle 1'
 alias vi='vim'
