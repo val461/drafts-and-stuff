@@ -8,7 +8,8 @@
 	br = branch
 	ci = commit
 	st = status
-	unstage = reset HEAD --
 	pu = "!git push ; git push --tags"
 [core]
 	editor = nano
+[log]
+	date = iso-local
