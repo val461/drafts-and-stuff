@@ -8,11 +8,10 @@ print_help_at_launch=true
 file_browser='spacefm'
 video_player='vlc'
 
-dir_root='/home/val/mnt/Data/Downloads/v'
+dir_root=~/'mnt/Data/Downloads/v'
 dir_videos_to_play="${dir_root}/unwatched"
 
-if [ -d "${dir_videos_to_play}" ] && [ -n "$(ls -A "${dir_videos_to_play}")" ]; then
-# if directory is not empty
+if ~/'bin/dir_not_empty' "${dir_videos_to_play}"; then
     move_videos=true
     dir_moved_videos="${dir_root}/$(date -I)"
 else
