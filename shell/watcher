@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # watcher - launch video files with some player
 
@@ -11,12 +11,13 @@ video_player='vlc'
 dir_root='/home/val/mnt/Data/Downloads/v'
 dir_videos_to_play="${dir_root}/unwatched"
 
-if [ -d "${dir_videos_to_play}" ]; then
+if [ -d "${dir_videos_to_play}" ] && [ -n "$(ls -A "${dir_videos_to_play}")" ]; then
+# if directory is not empty
     move_videos=true
     dir_moved_videos="${dir_root}/$(date -I)"
 else
-    move_videos=false
     dir_videos_to_play="${dir_root}"
+    move_videos=false
 fi
 
 ## code
