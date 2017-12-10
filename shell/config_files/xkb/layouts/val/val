@@ -110,7 +110,7 @@ xkb_symbols "t3" {
 
 
 // high row
-    key <AE01> {[   quotedbl,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // "
+    key <AE01> {[   asterisk,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // *
     key <AE07> {[   question,                   NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // ?
     key <AE08> {[   exclam,                     NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // !
     key <AE09> {[   ampersand,                  NoSymbol,                   NoSymbol,                   NoSymbol                    ]}; // &
@@ -120,7 +120,7 @@ xkb_symbols "t3" {
     key <AD11> {[   parenleft,                  braceleft,                  NoSymbol,                   NoSymbol                    ]}; // ({
     key <AD12> {[   parenright,                 braceright,                 NoSymbol,                   NoSymbol                    ]}; // )}
 // third row
-    key <AC10> {[   apostrophe,                 asterisk,                   NoSymbol,                   NoSymbol                    ]}; // '*
+    key <AC10> {[   quotedbl,                   apostrophe,                 NoSymbol,                   NoSymbol                    ]}; // "'
     key <AC11> {[   bracketleft,                less,                       NoSymbol,                   NoSymbol                    ]}; // [<‘
     key <BKSL> {[   bracketright,               greater,                    NoSymbol,                   NoSymbol                    ]}; // ]>’
 // fourth row
