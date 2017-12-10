@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # interactive saver for flv videos in flash cache
 # this saves these videos into ${target_dir}

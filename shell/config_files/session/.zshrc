@@ -35,9 +35,8 @@ alias cdr="cd '/home/val/Documents/Dev/languages/scripting/Ruby/workspace'"
 alias chr='~/bin/chrono'
 alias k="kill -s KILL"
 alias ka="killall -s KILL"
-alias ls='ls -Fa --color=auto'
 alias ll='ls -Flah --color=auto'
-alias l='ls'
+alias l='ls -Fa --color=auto'
 alias lu='sudo /home/val/bin/luminosity'
 alias pm='xterm -e sh ~/bin/update & disown ; exit'
 alias py='python'
