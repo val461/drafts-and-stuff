@@ -64,52 +64,53 @@ _move_video()
     fi
 }
 
-#~ while true
-#~ do
-# launch up to 20 files
-"${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
+while [ "${?}" = 0 ]
 do
-    [ -e "${file}" ] || break   # check if user removed file
-    dir="$(dirname "${file}")"
-    moved=false
-    _play_vid
-    reask=true
-    while "${reask}"
+    # launch up to 20 files
+    "${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
     do
-        _question
-        read ans < /dev/tty
-        case "${ans}" in
-            p|P)    # file browser
-                [ -d "${dir}" ] && "${file_browser}" "${dir}" >/dev/null 2>&1 &
-                ;;
-            r|R)    # replay
-                _play_vid
-                ;;
-            d|D)    # delete file
-                rm -v "${file}" && moved=true
-                ;;
-            n|N)    # skip next actions
-                reask=false
-                ;;
-            q|Q)    # exit
-                echo 'Quitting.'
-                exit 0
-                ;;
-            y|Y)   # move file
-                
-                "${move_videos}" && _move_video
-                ;;
-            '')
-                if "${move_videos}" && ! "${moved}"; then
-                    _move_video
-                else
+        [ -e "${file}" ] || break   # check if user removed file
+        dir="$(dirname "${file}")"
+        moved=false
+        _play_vid
+        reask=true
+        while "${reask}"
+        do
+            _question
+            read ans < /dev/tty
+            case "${ans}" in
+                p|P)    # file browser
+                    [ -d "${dir}" ] && "${file_browser}" "${dir}" >/dev/null 2>&1 &
+                    ;;
+                r|R)    # replay
+                    _play_vid
+                    ;;
+                d|D)    # delete file
+                    rm -v "${file}" && moved=true
+                    ;;
+                n|N)    # skip next actions
                     reask=false
-                fi
-                ;;
-            *)    # print help
-                printf '%s\n' 'Invalid command.'
-                _usage
-                ;;
-        esac
+                    ;;
+                q|Q)    # exit
+                    echo 'Quitting.'
+                    # exit the subshell of our loop
+                    exit 1
+                    ;;
+                y|Y)   # move file
+                    "${move_videos}" && _move_video
+                    ;;
+                '')
+                    if "${move_videos}" && ! "${moved}"; then
+                        _move_video
+                    else
+                        reask=false
+                    fi
+                    ;;
+                *)    # print help
+                    printf '%s\n' 'Invalid command.'
+                    _usage
+                    ;;
+            esac
+        done
     done
 done

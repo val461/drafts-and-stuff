@@ -22,6 +22,6 @@ else
     echo 'Profiles available:'
     for file in "${basename}".*.conf
     do
-        echo "${file}"
+        printf '%s\n' "${file}"
     done
 fi
