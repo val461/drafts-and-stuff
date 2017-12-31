@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# press_key_often [duration [key]]
+# wait then press some key (default: wait two minutes then press shift)
+
+# duration (see “man sleep” to find valid values)
+duration="${1:-2m}"
+
+# key to press (see pyautogui documentation to find valid values)
+key="${3:-shift}"
+
+# Code
+
+case "${1}" in
+    (-h|--help)
+        printf '%s\n' 'Usage:   press_key_often [duration [key]]' 'Purpose: FIXME.'
+        exit 1
+        ;;
+esac
+
+if [ "${#}" -ge 4 ]; then
+    echo "${0}: Bad usage: you probably should read the source before using that script."
+    exit 1
+else
+    while true
+    do
+        sleep "${duration}"
+        python -c "import pyautogui;pyautogui.press('${key}')"
+    done
+fi
