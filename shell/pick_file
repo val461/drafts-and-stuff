@@ -7,7 +7,7 @@ PROGDIR="$(cd "$(dirname "${0}")" && pwd)"
 SCRIPTS_ROOT="${HOME}/bin"
 
 # load libraries
-. "${SCRIPTS_ROOT}/_utils/load" || { echo "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
+. "${SCRIPTS_ROOT}/_utils/load" || { printf '%s\n' "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/load ”" >&2 ; exit 1; }
 . "${SCRIPTS_ROOT}/_utils/math/load_types" || _bug "${PROGNAME}: line ${LINENO}: error code ${?} while sourcing “ ${SCRIPTS_ROOT}/_utils/math/load_types ”"
 
 if [ "${#}" -eq 0 ]; then
@@ -38,7 +38,7 @@ do
             ;;
         -?|--*) # unknown option
             shift
-            echo "invalid option: ${arg}" >&2
+            printf '%s\n' "invalid option: ${arg}" >&2
             _usage
             exit 1
             ;;
@@ -90,7 +90,7 @@ do
     [ "${length}" -gt 0 ] || exit 1
     j="$("${SCRIPTS_ROOT}/new_rand" 0 "${length}")"    # get random index
     file="${files[j]}"    # select file at random index
-    echo "${file}"
-    ${unicity} && files=("${files[@]:0:${j}}" "${files[@]:$[j+1]}")    # remove file from the list
+    printf '%s\n' "${file}"
+    "${unicity}" && files=("${files[@]:0:${j}}" "${files[@]:$[j+1]}")    # remove file from the list
 done
 exit 0
