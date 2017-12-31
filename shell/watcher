@@ -64,7 +64,8 @@ _move_video()
     fi
 }
 
-while [ "${?}" = 0 ]
+keep_looping='true'
+while "${keep_looping}"
 do
     # launch up to 20 files
     "${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
@@ -93,7 +94,7 @@ do
                     ;;
                 q|Q)    # exit
                     echo 'Quitting.'
-                    # exit the subshell of our loop
+                    # exit the subshell of the file picking loop with code 1 to mean the main script should stop too
                     exit 1
                     ;;
                 y|Y)   # move file
@@ -113,4 +114,6 @@ do
             esac
         done
     done
+    [ "${?}" = 1 ] && keep_looping='false'
+    ~/'bin/dir_not_empty' "${dir_videos_to_play}" || keep_looping='false'
 done
