@@ -2,7 +2,7 @@
 
 echo '### Use xterm to be able to scroll. ###'
 
-printf '\n%s\n\n' '~/bin/update: Updating mirror list with reflector.'
+printf '%s\n' '~/bin/update: Updating mirror list with reflector.'
 sudo reflector --sort score --save /etc/pacman.d/mirrorlist || echo "erreur code ${?} retournée par reflector"
 
 printf '%s\n\n' '~/bin/update: Updating packages with pacman.'
