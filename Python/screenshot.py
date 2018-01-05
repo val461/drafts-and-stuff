@@ -20,21 +20,16 @@ directions = ["left","right","top","bottom"]
 
 if set(zone.keys()) != set(directions):
     zone = {}
-
-    for d in directions[:2]:
+    for d in directions:
         try:
-            zone[d] = int(input('{} border (with mouse or keyboard); press enter to validate: '.format(d)))
+            zone[d] = int(input('select {} border (with the mouse or type a number) [enter]'.format(d)))
+            mode = "keyboard"
         except ValueError:
-            zone[d] = pyautogui.position()[0]
-        print(zone[d])
+            dimension = int(d in ["top","bottom"])
+            zone[d] = pyautogui.position()[dimension]
+            mode = "mouse"
+        print(zone[d], "(selected from {} input)".format(mode))
 
-
-    for d in directions[2:]:
-        try:
-            zone[d] = int(input('{} border (with mouse or keyboard); press enter to validate: '.format(d)))
-        except ValueError:
-            zone[d] = pyautogui.position()[1]
-        print(zone[d])
 
 print(repr(zone))
 
