@@ -17,6 +17,7 @@ last_episode=16
 extension_to_remove='.mp4'
 new_extension='.en.srt'
 subtitles_dir='.'
+always_ask_for_confirmation=true
 
 if [ "${1}" != '-f' ]; then
     echo 'Source should be appropriately adapted to local context before running.' >&2
@@ -35,7 +36,12 @@ do
         filename="$(basename "${episode_file}" "${extension_to_remove}")"
         file_to_rename="$(echo "${subtitles_dir}"/*"${subtitle_prefix}${zero}${i}"*)"
         if [ -e "${file_to_rename}" ]; then
+            if "${always_ask_for_confirmation}"; then
+                printf '\n\n%s\n%s\n\nRename or abort? [enter|ctrl-c]\n\n' "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
+                read ans
+            fi
             mv -vi "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
+            echo
         elif [ -z "${file_to_rename}" ]; then
             echo "${0}: warning: No file to rename was found (i: ${i})" >&2
         else
