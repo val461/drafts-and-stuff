@@ -35,13 +35,13 @@ do
     if [ -e "${episode_file}" ]; then
         filename="$(basename "${episode_file}" "${extension_to_remove}")"
         file_to_rename="$(echo "${subtitles_dir}"/*"${subtitle_prefix}${zero}${i}"*)"
+        new_name="${subtitles_dir}/${filename}${new_extension}"
         if [ -e "${file_to_rename}" ]; then
             if "${always_ask_for_confirmation}"; then
-                printf '\n\n%s\n%s\n\nRename or abort? [enter|ctrl-c]\n\n' "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
+                printf '---\n  Current name: %s\nSuggested name: %s\n\nRename? [enter | ctrl-c]\n' "${file_to_rename}" "${new_name}"
                 read ans
             fi
-            mv -vi "${file_to_rename}" "${subtitles_dir}/${filename}${new_extension}"
-            echo
+            mv -vi "${file_to_rename}" "${new_name}"
         elif [ -z "${file_to_rename}" ]; then
             echo "${0}: warning: No file to rename was found (i: ${i})" >&2
         else
