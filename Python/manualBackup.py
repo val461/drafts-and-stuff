@@ -2,13 +2,13 @@
 
 # ./manualBackup.py
 
-# Zip folders and upload them. (UNTESTED)
+# Zip folders and upload them.
 
-import pyautogui
+import pyautogui, time
 
 print('Adapt the script to the local context before running.'); exit()
 
-pyautogui.PAUSE = 0.6
+pyautogui.PAUSE = 1.5
 
 def make_zip():
     pyautogui.hotkey('n')
@@ -23,6 +23,7 @@ def open_import_menu():
     pyautogui.hotkey('enter')
     pyautogui.click(x=328, y=249)
 
+# go to file manager
 pyautogui.hotkey('winleft', 'left')
 pyautogui.hotkey('ctrl', 't')
 
@@ -37,11 +38,13 @@ pyautogui.hotkey('enter')
 pyautogui.click(x=371, y=219, button='right')
 make_zip()
 
+# go to web browser
 pyautogui.hotkey('winleft', '1')
 pyautogui.hotkey('ctrl', 't')
 pyautogui.typewrite('dr')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
+time.sleep(1)
 
 open_import_menu()
 pyautogui.click(x=885, y=506)
@@ -53,5 +56,5 @@ pyautogui.hotkey('enter')
 pyautogui.click(x=794, y=273)
 pyautogui.hotkey('enter')
 
+# go back
 pyautogui.hotkey('winleft', '3')
-pyautogui.hotkey('winleft', 'right')
