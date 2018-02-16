@@ -4,9 +4,10 @@
 
 # Zip folders and upload them.
 
-import pyautogui, time
+import pyautogui, time, sys
 
-print('Adapt the script to the local context before running.'); exit()
+if len(sys.argv) <= 1 or sys.argv[1] != '-f':
+    print('Adapt the script to the local context before running.'); exit()
 
 pyautogui.PAUSE = 1.5
 
@@ -47,7 +48,7 @@ pyautogui.hotkey('enter')
 time.sleep(1)
 
 open_import_menu()
-pyautogui.click(x=885, y=506)
+pyautogui.click(x=761, y=495)
 pyautogui.hotkey('enter')
 
 open_import_menu()
