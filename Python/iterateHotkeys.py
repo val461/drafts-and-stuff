@@ -19,9 +19,9 @@ def iterate(quantity, hotkeys_before, hotkeys_loop, hotkeys_after, pause_duratio
     do_hotkeys(hotkeys_end)
 
 def iterate_cmdarg(hotkeys_before, hotkeys_loop, hotkeys_after, pause_duration = 0.6):
-    if len(sys.argv) >= 2:
+    if len(sys.argv) >= 3:
         indices = map(int, sys.argv[1:3])           # get the first two command line arguments as integers
         quantity = indices[1] - (indices[0] - 1)
     else:
-        quantity = int(sys.argv[0])
+        quantity = int(sys.argv[1])
     iterate(quantity, hotkeys_before, hotkeys_loop, hotkeys_after, pause_duration)
