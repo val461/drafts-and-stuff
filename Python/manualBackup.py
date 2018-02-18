@@ -19,6 +19,7 @@ def make_zip():
 
 def open_import_menu():
     pyautogui.click(x=69, y=247)
+    time.sleep(0.5)
     pyautogui.hotkey('down')
     pyautogui.hotkey('down')
     pyautogui.hotkey('enter')
@@ -30,7 +31,7 @@ pyautogui.hotkey('ctrl', 't')
 
 pyautogui.typewrite('do')
 pyautogui.hotkey('enter')
-pyautogui.click(x=371, y=458, button='right')
+pyautogui.click(x=85, y=446, button='right')
 make_zip()
 
 pyautogui.hotkey('winleft', 'left')
