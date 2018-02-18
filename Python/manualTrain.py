@@ -22,7 +22,7 @@ def main(origin, destination):
     pyautogui.typewrite('sn')
     pyautogui.hotkey('down')
     pyautogui.hotkey('enter')
-    time.sleep(1)
+    time.sleep(2)
 
     # use the webpage
     pyautogui.click(x=376, y=473)
