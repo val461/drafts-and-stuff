@@ -176,4 +176,6 @@ do
     i="$((i+1))"
 done
 
-"${verbose}" && echo "${PROG_NAME}: success! (debug information: ${count} <= ${limit})"
+"${verbose}" && echo "${PROG_NAME}: success!"
+"${verbose}" && [ "${count}" -ne "${limit}" ] && printf '%s\n' "(debug information: ${count} <= ${limit})"
+exit "${SUCCESS}"
