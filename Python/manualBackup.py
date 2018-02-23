@@ -16,10 +16,10 @@ def make_zip():
     pyautogui.hotkey('a')
     pyautogui.hotkey('enter')
     pyautogui.hotkey('enter')
+    time.sleep(1)
 
 def open_import_menu():
     pyautogui.click(x=69, y=247)
-    time.sleep(0.5)
     pyautogui.hotkey('down')
     pyautogui.hotkey('down')
     pyautogui.hotkey('enter')
@@ -46,7 +46,7 @@ pyautogui.hotkey('ctrl', 't')
 pyautogui.typewrite('dr')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
-time.sleep(1)
+time.sleep(6)
 
 open_import_menu()
 pyautogui.click(x=761, y=495)

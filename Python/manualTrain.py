@@ -22,17 +22,17 @@ def main(origin, destination):
     pyautogui.typewrite('sn')
     pyautogui.hotkey('down')
     pyautogui.hotkey('enter')
-    time.sleep(2)
+    time.sleep(3)
 
     # use the webpage
-    pyautogui.click(x=376, y=473)
+    pyautogui.click(x=414, y=445)
     for i in range(5):
         pyautogui.hotkey('tab')
     fillTown(origin)
     fillTown(destination)
     input("Type enter to resume. ")
     pyautogui.hotkey('winleft', '1')
-    pyautogui.click(x=917, y=597)
+    pyautogui.click(x=917, y=558)
     pyautogui.typewrite('12')
     pyautogui.hotkey('tab')
     pyautogui.hotkey('tab')
