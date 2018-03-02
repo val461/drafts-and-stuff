@@ -14,9 +14,10 @@ pyautogui.PAUSE = 1.5
 def make_zip():
     pyautogui.hotkey('n')
     pyautogui.hotkey('a')
+    time.sleep(1.5)
     pyautogui.hotkey('enter')
     pyautogui.hotkey('enter')
-    time.sleep(1)
+    time.sleep(2)
 
 def open_import_menu():
     pyautogui.click(x=69, y=247)
@@ -52,6 +53,7 @@ open_import_menu()
 pyautogui.click(x=761, y=495)
 pyautogui.hotkey('enter')
 
+time.sleep(1)
 open_import_menu()
 pyautogui.click(x=755, y=453)
 pyautogui.hotkey('enter')
