@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# ./manualTrainToC.py
+# ./manualTrain.py
 # Display available trains.
 
 import pyautogui, time, sys
