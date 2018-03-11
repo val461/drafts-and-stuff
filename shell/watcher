@@ -13,7 +13,19 @@ dir_videos_to_play="${dir_root}/unwatched"
 
 if ~/'bin/dir_not_empty' "${dir_videos_to_play}"; then
     move_videos=true
-    dir_moved_videos="${dir_root}/$(date -I)"
+
+    i="$(cat "${dir_root}/last")"
+    printf '%s ' 'Update count? [y]/n'
+    read ans
+    case "${ans}" in
+        n|N) ;;
+        *)
+            let 'i++'
+            echo "${i}" > "${dir_root}/last"
+            ;;
+    esac
+
+    dir_moved_videos="${dir_root}/${i}"
 else
     dir_videos_to_play="${dir_root}"
     move_videos=false

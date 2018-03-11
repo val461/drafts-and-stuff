@@ -5,4 +5,4 @@
 
 import manualTrain
 
-manualTrain.main('reims c', 'thierry')
+manualTrain.main('reims', 'thierry')

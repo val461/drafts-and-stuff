@@ -10,7 +10,10 @@ if len(sys.argv) <= 1 or sys.argv[1] != '-f':
 
 def fillTown(town):
     pyautogui.typewrite(town)
-    time.sleep(0.3)
+    time.sleep(0.7)
+    pyautogui.hotkey('down')
+    pyautogui.hotkey('down')
+    pyautogui.hotkey('tab')
     pyautogui.hotkey('tab')
 
 def main(origin, destination):
@@ -25,15 +28,14 @@ def main(origin, destination):
     time.sleep(3)
 
     # use the webpage
-    pyautogui.click(x=414, y=445)
-    for i in range(5):
-        pyautogui.hotkey('tab')
+    for i in range(3):
+        pyautogui.hotkey('down')
+    pyautogui.click(x=579, y=580)
     fillTown(origin)
     fillTown(destination)
     input("Type enter to resume. ")
     pyautogui.hotkey('winleft', '1')
-    pyautogui.click(x=917, y=558)
-    pyautogui.typewrite('12')
-    pyautogui.hotkey('tab')
-    pyautogui.hotkey('tab')
+    pyautogui.click(x=668, y=785)
+    pyautogui.hotkey('ctrl', 'a')
+    pyautogui.typewrite('13:00')
     pyautogui.hotkey('enter')
