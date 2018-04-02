@@ -1,1 +1,6 @@
-/home/val/Dev/drafts-and-stuff/Python/manualBackup.py
+#!/bin/sh
+
+zip -r ~/'Documents/Vie pratique.zip' ~/'Documents/Vie pratique' &
+zip -r ~/'Documents/Texts/own.zip' ~/'Documents/Texts/own' &
+
+~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
