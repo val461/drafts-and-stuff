@@ -1,5 +1,7 @@
 #!/bin/sh
 
+starting_time="$(date)"
+
 PROG_NAME="$(basename "${0}")"
 SUCCESS=0
 WRONG_USAGE=1
@@ -121,7 +123,7 @@ do
             ;;
         (*[!0-9]*) # not an option
             echo "Invalid argument: “${arg}”." >&2
-        _usage
+	    _usage
             exit "${WRONG_USAGE}"
             ;;
         (*) # integer
@@ -130,7 +132,7 @@ do
     esac
 done
 
-# process any remaining arguments
+# process arguments after double dash
 while [ "${#}" -gt 0 ]
 do
     arg="${1}"
@@ -162,10 +164,7 @@ else
     print_steps="${verbose}"
 fi
 
-if "${verbose}"; then
-    date
-    echo "${i}${unit}"
-fi
+"${print_steps}" && echo "${i}${unit}"
 
 i="$((i+fac*step))"
 # launch chronometer
@@ -180,4 +179,10 @@ if [ -n "${alarm}" ]; then
     # launch alarm
     vlc "${alarm}" >/dev/null 2>&1 & disown
 fi
-"${verbose}" && date
+
+if "${verbose}"; then
+    printf 'start:\t%s\n' "${starting_time}"
+    printf 'end:\t'
+    date
+    [ "${fac}" -le 0 ] && printf 'planned: %s\n' "${total_time}${unit}"
+fi
