@@ -39,4 +39,3 @@ pyautogui.hotkey('enter')
 
 # go back
 pyautogui.hotkey('winleft', '3')
-pyautogui.hotkey('winleft', 'right')
