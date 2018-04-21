@@ -3,7 +3,7 @@
 # ./dl: wrapper for youtube-dl
 # download videos listed in ‘playlist_file’ into ‘video_dir’.
 
-# ‘tmp_playlist_file’ is not supposed to be edited manually, especially while ./dl is running.
+# ‘tmp_playlist_file’ is not supposed to be edited manually, especially when ./dl is running.
 
 working_dir='/home/val/mnt/Data/Downloads/YouTube'
 playlist_file='list'
