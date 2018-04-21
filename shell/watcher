@@ -11,26 +11,6 @@ video_player='vlc'
 dir_root=~/'mnt/Data/Downloads/v'
 dir_videos_to_play="${dir_root}/unwatched"
 
-if ~/'bin/dir_not_empty' "${dir_videos_to_play}"; then
-    move_videos=true
-
-    i="$(cat "${dir_root}/last")"
-    printf '%s ' 'Update count? [y]/n'
-    read ans
-    case "${ans}" in
-        n|N) ;;
-        *)
-            let 'i++'
-            echo "${i}" > "${dir_root}/last"
-            ;;
-    esac
-
-    dir_moved_videos="${dir_root}/${i}"
-else
-    dir_videos_to_play="${dir_root}"
-    move_videos=false
-fi
-
 ## code
 
 PROGNAME="watcher"
@@ -44,6 +24,11 @@ no_video=false
 [ "${#}" -gt 0 ] && no_video=true
 
 "${print_help_at_launch}" && _usage
+
+_dir_contains_videos()
+{
+    [ "$(ls -A -- "${dir_videos_to_play}")" != '0_download' ]
+}
 
 _question()
 {
@@ -70,11 +55,39 @@ _play_vid()
 _move_video()
 {
     if mkdir -vp "${dir_moved_videos}"; then
-        mv -vi "${file}" "${dir_moved_videos}" && moved=true
+        if mv -vi "${file}" "${dir_moved_videos}"; then
+            moved=true
+            if "${save_count}"; then
+                echo "${i}" > "${dir_root}/last"
+                save_count=false
+            fi
+        fi
     else
         echo "${PROGNAME}: an error occurred when attempting to create directory ${dir_moved_videos}" >&2
     fi
 }
+
+if _dir_contains_videos
+    move_videos=true
+
+    i="$(cat "${dir_root}/last")"
+    printf '%s ' 'Update count? [y]/n'
+    read ans
+    case "${ans}" in
+        n|N)
+            save_count=false
+            ;;
+        *)
+            let 'i++'
+            save_count=true
+            ;;
+    esac
+
+    dir_moved_videos="${dir_root}/${i}"
+else
+    dir_videos_to_play="${dir_root}"
+    move_videos=false
+fi
 
 keep_looping='true'
 while "${keep_looping}"
@@ -82,6 +95,7 @@ do
     # launch up to 20 files
     "${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
     do
+        [ "${file}" = '0_download' ] && continue    # check that file is not a script
         [ -e "${file}" ] || break   # check if user removed file
         dir="$(dirname "${file}")"
         moved=false
@@ -106,7 +120,7 @@ do
                     ;;
                 q|Q)    # exit
                     echo 'Quitting.'
-                    # exit the subshell of the file picking loop with code 1 to mean the main script should stop too
+                    # exit the subshell of the file-picking loop with code 1 to mean the main script should stop too
                     exit 1
                     ;;
                 y|Y)   # move file
@@ -127,5 +141,5 @@ do
         done
     done
     [ "${?}" = 1 ] && keep_looping='false'
-    ~/'bin/dir_not_empty' "${dir_videos_to_play}" || keep_looping='false'
+    _dir_contains_videos || keep_looping='false'
 done
