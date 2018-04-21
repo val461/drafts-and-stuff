@@ -93,4 +93,3 @@ do
     printf '%s\n' "${file}"
     "${unicity}" && files=("${files[@]:0:${j}}" "${files[@]:$[j+1]}")    # remove file from the list
 done
-exit 0
