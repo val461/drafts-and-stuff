@@ -16,6 +16,7 @@ def open_import_menu():
     pyautogui.hotkey('down')
     pyautogui.hotkey('down')
     pyautogui.hotkey('enter')
+    time.sleep(1)
     pyautogui.click(x=328, y=249)
 
 # go to web browser
@@ -30,7 +31,6 @@ open_import_menu()
 pyautogui.click(x=761, y=495)
 pyautogui.hotkey('enter')
 
-time.sleep(1)
 open_import_menu()
 pyautogui.click(x=755, y=453)
 pyautogui.hotkey('enter')
