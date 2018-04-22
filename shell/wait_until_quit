@@ -5,6 +5,7 @@
 
 PROG_NAME="$(basename "${0}")"
 
+# constants
 SUCCESS=0
 MAX_EXCEEDED=1
 WRONG_USAGE=2
@@ -12,9 +13,11 @@ INTERRUPTION=3
 
 trap 'exit "${INTERRUPTION}"' HUP INT QUIT TERM
 
+
+# default values
 limit=3
 max=0
-period=3
+period=5
 verbose=true
 
 _usage()
@@ -162,7 +165,6 @@ if [ -z "${process_keyword}" ]; then
 fi
 
 # wait for processes to quit
-wait=true
 _actualize
 i=1
 while [ "${count}" -gt "${limit}" ]
