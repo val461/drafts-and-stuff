@@ -67,7 +67,7 @@ _move_video()
     fi
 }
 
-if _dir_contains_videos
+if _dir_contains_videos; then
     move_videos=true
 
     i="$(cat "${dir_root}/last")"
