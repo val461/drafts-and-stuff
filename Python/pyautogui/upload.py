@@ -6,8 +6,8 @@
 
 import pyautogui, time, sys
 
-# ~ if len(sys.argv) <= 1 or sys.argv[1] != '-f':
-    # ~ print('Adapt the script to the local context before running.'); exit()
+if len(sys.argv) <= 1 or sys.argv[1] != '-f':
+    print('Adapt the script to the local context before running.'); exit()
 
 pyautogui.PAUSE = 1.5
 
@@ -17,7 +17,7 @@ pyautogui.hotkey('ctrl', 't')
 pyautogui.typewrite('dr')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
-time.sleep(6)
+time.sleep(7)
 
 # open import menu
 pyautogui.click(x=69, y=247)
