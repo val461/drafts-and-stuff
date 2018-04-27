@@ -14,7 +14,7 @@ from iterateHotkeys import iterate_cmdarg as iterate_hotkeys
 print('Adapt the script to the local context before running.'); exit()
 
 iterate_hotkeys(
-    hotkeys_start = [['winleft', 'left']],
+    hotkeys_before = [['winleft', 'left']],
     hotkeys_loop = [
         ['ctrl', 'c'],
         ['ctrl', 'tab'],
@@ -22,6 +22,6 @@ iterate_hotkeys(
         ['ctrl', 'shift', 'tab'],
         ['down'],
     ],
-    hotkeys_end = [['winleft', 'right']],
+    hotkeys_after = [['winleft', 'right']],
     pause_duration = 0.3,
 )

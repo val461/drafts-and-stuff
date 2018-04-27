@@ -11,12 +11,12 @@ def do_hotkeys(hotkeys):
 def iterate(quantity, hotkeys_before, hotkeys_loop, hotkeys_after, pause_duration):
     pyautogui.PAUSE = pause_duration
 
-    do_hotkeys(hotkeys_start)
+    do_hotkeys(hotkeys_before)
 
     for i in range(quantity):
         do_hotkeys(hotkeys_loop)
 
-    do_hotkeys(hotkeys_end)
+    do_hotkeys(hotkeys_after)
 
 def iterate_cmdarg(hotkeys_before, hotkeys_loop, hotkeys_after, pause_duration = 0.6):
     if len(sys.argv) >= 3:
