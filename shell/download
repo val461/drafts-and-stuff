@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+echo 'Title:'
+read title
+
+#~ echo 'Extension:'
+#~ read ext
+
+echo 'URL:'
+read url
+
+dest="${title}${ext:+.${ext}}"
+
+printf 'Target: %s\n' "${dest}"
+echo 'OK? [enter|ctrl-c]'
+read answer
+
+if [ -e "${dest}" ]; then
+    printf 'destination already exists: “%s”\n' "${dest}"
+    exit 2
+fi
+
+if ! curl \
+    -L \
+    --continue-at - \
+    --output "${dest}" \
+    "${url}"
+then
+    echo "curl returned error code ‘${?}’." >&2
+    exit 3
+fi
