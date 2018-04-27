@@ -24,9 +24,12 @@ pyautogui.click(x=69, y=247)
 pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
-time.sleep(4)
-pyautogui.click(x=328, y=249)
 
+pyautogui.hotkey('winleft', '3')
+input("Press [enter] when the archives are done: ")
+pyautogui.hotkey('winleft', '1')
+
+pyautogui.click(x=328, y=249)
 pyautogui.click(x=761, y=495)
 pyautogui.hotkey('enter')
 
@@ -35,9 +38,10 @@ pyautogui.click(x=69, y=247)
 pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
-time.sleep(2)
-pyautogui.click(x=328, y=249)
 
+time.sleep(2)
+
+pyautogui.click(x=328, y=249)
 pyautogui.click(x=755, y=453)
 pyautogui.hotkey('enter')
 pyautogui.click(x=794, y=273)
