@@ -32,6 +32,7 @@ pyautogui.hotkey('winleft', '1')
 pyautogui.click(x=328, y=249)
 pyautogui.click(x=761, y=495)
 pyautogui.hotkey('enter')
+time.sleep(1)
 
 # open import menu
 pyautogui.click(x=69, y=247)
