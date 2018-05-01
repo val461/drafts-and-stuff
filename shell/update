@@ -1,16 +1,13 @@
 #!/bin/sh
 
-echo '### Use xterm to be able to scroll. ###'
+log_file=~/'tmp/stuff/update.log'
 
-printf 'debug: ~/bin/update: (%s)\n' 'Updating mirror list with reflector.'
-sudo reflector --sort score --save /etc/pacman.d/mirrorlist || echo "erreur code ${?} retournée par reflector"
+printf '~/bin/update: Delete last log? [n]/y '
+read ans
+case "${ans}" in
+    (y|Y) rm -v "${log_file}" ;;
+esac
 
-printf 'debug: ~/bin/update: (%s)\n\n' 'Updating packages with pacman.'
-if sudo pacman -Syu; then
-    printf '\ndebug: ~/bin/update: (%s)\n\n' 'Updating ruby gems.'
-    gem update || echo "erreur code ${?} retournée par gem"
-else
-    echo "erreur code ${?} retournée par pacman"
-fi
-
-zsh
+script -ac ~/bin/_utils/update "${log_file}"
+printf '\n' >> "${log_file}"
+exec zsh
