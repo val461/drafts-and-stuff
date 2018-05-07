@@ -2,12 +2,20 @@
 
 log_file=~/'tmp/stuff/update.log'
 
-printf '~/bin/update: Delete last log? [n]/y '
+printf '~/bin/update: Delete the log? n/[y]: '
 read ans
 case "${ans}" in
-    (y|Y) rm -v "${log_file}" ;;
+    (y|Y|'')
+        printf '~/bin/update: Deleting the log.\n'
+        rm -v "${log_file}"
+        ;;
+    (*)
+        printf '~/bin/update: Keeping the log.\n'
+        printf '\n' >> "${log_file}"
+        ;;
 esac
 
-script -ac ~/bin/_utils/update "${log_file}"
-printf '\n' >> "${log_file}"
+printf '\n'
+script -aqc ~/bin/_utils/update "${log_file}"
+
 exec zsh
