@@ -12,7 +12,8 @@ trap 'exit "${INTERRUPTION}"' HUP INT QUIT TERM
 # default values
 step=1
 unit='m'
-alarm='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
+alarm_file='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
+alarm=true
 total_time=''
 verbose=true
 
@@ -32,13 +33,16 @@ _usage()
 	    A message shows up every ‘step’ ‘unit’s.
 	-s <step> (default: ${step})
 	    A message shows up every ‘step’ ‘unit’.
-	-a <alarm> (default: '${alarm}')
-	    Set the path of the file to launch with VLC after the waiting time.
-	    Enable alarm.
+	-a
+	    Launch the alarm file with VLC after the waiting time.
+	    (Default: ${alarm}.)
 	-m
-	    Disable alarm.
+	    Do not launch the alarm file with VLC after the waiting time.
+	-f <file>
+	    Set the alarm file.
+	    (Default: '${alarm_file}'.)
 	-q
-	    Attempt to make output less verbose.
+	    Attempt to output less text.
 	-h, --help
 	    Display this help and exit.
 
@@ -60,18 +64,15 @@ do
             unit="${arg}"
             ;;
         (-a)
-            if [ -f "${1}" ]; then
-                alarm="${1}"
-                shift
-            else
-                echo "Bad usage: option -a necessitates an argument which should be the path of a regular file. (Received: “${1}”.)" >&2
-                _usage
-                exit "${WRONG_USAGE}"
-            fi
+            alarm=true
             ;;
         (-m)
-            alarm=''
+            alarm=false
             ;;
+	(-f)
+	    alarm_file="${1}"
+	    shift
+	    ;;
         (-s)
             case "${1}" in
                 (''|*[!0-9]*)
@@ -175,9 +176,8 @@ do
     i="$((i+fac*step))"
 done
 
-if [ -n "${alarm}" ]; then
-    # launch alarm
-    vlc "${alarm}" >/dev/null 2>&1 & disown
+if "${alarm}"; then
+    vlc "${alarm_file}" >/dev/null 2>&1 & disown
 fi
 
 if "${verbose}"; then
