@@ -26,7 +26,7 @@ pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
 
 pyautogui.hotkey('winleft', '3')
-input("Press [enter] when the archives are done: ")
+input("Press [enter] if the two archives are done with with code zero: ")
 pyautogui.hotkey('winleft', '1')
 
 pyautogui.click(x=328, y=249)
