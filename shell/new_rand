@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# new_rand - print random integers
+# new_rand - print random non-negative integers
 
 PROGNAME="new_rand"
 PROGDIR="$(dirname "${0}")"
@@ -25,13 +25,20 @@ case "${#}" in
 		_random_int "${1}" "${2}"
 		;;
 	3)
+		if [ "${3}" -ge 11 ]
+		then
+			sep=' '
+		else
+			sep=''
+		fi
 		i=0
 		while [ "${i}" -lt "${1}" ]
 		do
-    		_random_int "${2}" "${3}"
-    		let 'i++'
-    	done
-    	;;
+				_random_int "${2}" "${3}"
+				printf "${sep}"
+				let 'i++'
+		done
+		;;
 	*)
 		_error "bad usage. Use option -h or --help to get help."
 		exit 1
