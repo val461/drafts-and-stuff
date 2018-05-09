@@ -1,17 +1,16 @@
 #!/bin/sh
 
-printf '\n%s\n\n' '### Use xterm to be able to scroll. ###'
+PROG_NAME='~/bin/_utils/update'
 
-format_string='~/bin/_utils/update: debug: %s\n'
+printf '\n${PROG_NAME}: info: %s\n\n' 'Use xterm to be able to scroll.'
 
-printf "${format_string}" 'Updating mirror list with reflector.'
-sudo reflector --sort score --save /etc/pacman.d/mirrorlist || echo "erreur code ${?} retournée par reflector"
+printf "${PROG_NAME}: debug: %s\n" 'Updating mirror list with reflector.'
+sudo reflector --sort score --save /etc/pacman.d/mirrorlist || printf "${PROG_NAME}: error: %s\n" "reflector returned code ${?}"
 
-printf "${format_string}\n" 'Updating packages with pacman.'
+printf "${PROG_NAME}: debug: %s\n\n" 'Updating packages with pacman.'
 if sudo pacman -Syu --noprogressbar; then
-    printf "\n${format_string}\n" 'Updating ruby gems.'
-    gem update || echo "erreur code ${?} retournée par gem"
+    printf "\n${PROG_NAME}: debug: %s\n\n" 'Updating ruby gems.'
+    gem update || printf "${PROG_NAME}: error: %s\n" "gem returned code ${?}"
 else
-    echo "erreur code ${?} retournée par pacman"
+    printf "${PROG_NAME}: error: %s\n" "pacman returned code ${?}"
 fi
-printf '\n'
