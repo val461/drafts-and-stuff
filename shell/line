@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# line <number> [file]
+# print a line from a file or from standard input
+
+PROGNAME="line"
+PROGDIR="$(dirname "${0}")"
+
+if [ "${1}" = '-h' ] || [ "${1}" = '--help' ]; then
+    printf 'Bad usage.\n' >&2
+    exit 1
+fi
+
+case "${#}" in
+    (1|2)
+        case "${1}" in
+            (''|*[!0-9]*)
+                printf 'Bad usage.\n' >&2
+                exit 1
+                ;;
+            (*) # ${1} is a positive integer
+                awk "NR==${1}{print;exit}" "${2}"
+                ;;
+        esac
+        ;;
+    (*)
+        printf 'Bad usage.\n' >&2
+        exit 1
+esac
