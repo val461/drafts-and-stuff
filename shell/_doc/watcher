@@ -14,6 +14,8 @@ _usage()
 	      r: replay video
 	      d: delete video
 	      p: show folder in file browser
+	      t: tag the video
+	      u: untag the video
 	      h: print this help
 
 	EOF

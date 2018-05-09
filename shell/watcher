@@ -8,7 +8,10 @@ print_help_at_launch=true
 file_browser='spacefm'
 video_player='vlc'
 
-dir_root=~/'mnt/Data/Downloads/v'
+tmsu_data=~/'mnt/Data/Downloads/Transmission'
+tmsu_mountpoint=~/'mnt/tmsu'
+
+dir_root=~/'mnt/Data/Downloads/Transmission/v'
 dir_videos_to_play="${dir_root}/unwatched"
 
 ## code
@@ -28,9 +31,29 @@ _dir_contains_videos()
     ~/bin/dir_not_empty "${dir_videos_to_play}"
 }
 
+_load_list()
+{
+    if "${move_videos}"
+    then
+        list="$(find "${dir_videos_to_play}")"
+    else
+        list="$(find "${dir_videos_to_play}" -mindepth 1 -type f)"
+    fi
+    list_size="$(wc -l <<-EOF
+		${list}
+		EOF
+	)"
+}
+
 _question()
 {
-    printf '“ %s ”. Action ? ' "${file}"
+    printf '“ %s ”.\n' "${file}"
+    tags="$(tmsu tags "${file}")"
+    if [ -n "${tags}" ]
+    then
+        printf 'tags: %s\n' "${tags}"
+    fi
+    printf 'Action ? '
     if "${move_videos}"; then
         if "${moved}"; then
             printf '[n]/y/'
@@ -40,7 +63,7 @@ _question()
     else
         printf '[n]/'
     fi
-    printf '%s\n' 'q/r/d/p/h'
+    printf '%s\n' 'q/r/d/p/t/u/h'
 }
 
 _play_vid()
@@ -55,8 +78,19 @@ _move_video()
     if mkdir -vp "${dir_moved_videos}"; then
         if mv -vi "${file}" "${dir_moved_videos}"; then
             moved=true
-            if "${save_count}"; then
-                echo "${i}" > "${dir_root}/last"
+            new_path="${dir_moved_videos}/$(basename "${file}")"
+
+            # transfer tags
+            if ! tmsu repair --manual "${file}" "${new_path}"
+            then
+                printf "${PROGNAME}: tmsu gave error ${?} after trying to transfer tags from “${file}” to “${new_path}”.\n" >&2
+            fi
+
+            file="${new_path}"
+
+            if "${save_count}"
+            then
+                echo "${folder_number}" > "${dir_root}/last"
                 save_count=false
             fi
         fi
@@ -65,23 +99,27 @@ _move_video()
     fi
 }
 
+mkdir -p "${tmsu_mountpoint}"
+cd "${tmsu_data}"
+tmsu mount "${tmsu_mountpoint}"
+
 if _dir_contains_videos; then
     move_videos=true
 
-    i="$(cat "${dir_root}/last")"
+    folder_number="$(cat "${dir_root}/last")"
     printf '%s ' 'Update count? [y]/n'
     read ans
     case "${ans}" in
-        n|N)
+        (n|N)
             save_count=false
             ;;
-        *)
-            let 'i++'
+        (*)
+            let 'folder_number++'
             save_count=true
             ;;
     esac
 
-    dir_moved_videos="${dir_root}/${i}"
+    dir_moved_videos="${dir_root}/${folder_number}"
 else
     dir_videos_to_play="${dir_root}"
     move_videos=false
@@ -89,60 +127,88 @@ fi
 
 "${print_help_at_launch}" && _usage
 
-keep_looping='true'
+printf 'current tags:\n'
+tmsu tags
+echo
+
+keep_looping=true
+_load_list
 while "${keep_looping}"
 do
-    # launch up to 20 files
-    "${PROGDIR}/pick_file" 20 "${dir_videos_to_play}" | while read file
+    if [ "${list_size}" -lt 1 ]
+    then
+        keep_looping=false
+        break
+    fi
+    # pick video
+    i="$(~/bin/new_rand 1 "${list_size}")"
+    file="$(~/bin/line "${i}" <<-EOF
+		${list}
+		EOF
+	)"
+    if ! [ -e "${file}" ]
+    then
+        _load_list
+        continue
+    fi
+    # remove video from list
+    list="$(sed "${i}d" <<-EOF
+		${list}
+		EOF
+	)"
+    dir="$(dirname "${file}")"
+    moved=false
+    _play_vid
+    reask=true
+    while "${reask}"
     do
-        [ "${file}" = '0_download' ] && continue    # check that file is not a script
-        [ -e "${file}" ] || break   # check if user removed file
-        dir="$(dirname "${file}")"
-        moved=false
-        _play_vid
-        reask=true
-        while "${reask}"
-        do
-            _question
-            read ans < /dev/tty
-            case "${ans}" in
-                p|P)    # file browser
-                    [ -d "${dir}" ] && "${file_browser}" "${dir}" >/dev/null 2>&1 &
-                    ;;
-                r|R)    # replay
-                    _play_vid
-                    ;;
-                d|D)    # delete file
-                    rm -v "${file}" && moved=true
-                    ;;
-                n|N)    # skip next actions
+        _question
+        read ans
+        case "${ans}" in
+            (p|P)    # file browser
+                "${file_browser}" "${dir}" 1>/dev/null 2>&1 & disown
+                ;;
+            (t|T)    # tag
+                printf "tag this video: "
+                read ans
+                tmsu tag --tags "${ans}" "${file}"
+                ;;
+            (u|U)    # untag
+                printf "untag this video: "
+                read ans
+                tmsu untag --tags "${ans}" "${file}"
+                ;;
+            (r|R)    # replay
+                _play_vid
+                ;;
+            (d|D)    # delete file
+                rm -v "${file}" && moved=true
+                ;;
+            (n|N)    # skip next actions
+                reask=false
+                ;;
+            (q|Q)    # exit
+                echo 'Quitting.'
+                keep_looping=false
+                break
+                ;;
+            (y|Y)   # move file
+                "${move_videos}" && _move_video
+                ;;
+            ('')
+                if "${move_videos}" && ! "${moved}"; then
+                    _move_video
+                else
                     reask=false
-                    ;;
-                q|Q)    # exit
-                    echo 'Quitting.'
-                    # exit the subshell of the file-picking loop with code 1 to mean the main script should stop too
-                    exit 1
-                    ;;
-                y|Y)   # move file
-                    "${move_videos}" && _move_video
-                    ;;
-                '')
-                    if "${move_videos}" && ! "${moved}"; then
-                        _move_video
-                    else
-                        reask=false
-                    fi
-                    ;;
-                h)    # print help
-                    _usage
-                    ;;
-                *)
-                    printf '%s\n' 'Invalid command.'
-                    _usage
-                    ;;
-            esac
-        done
+                fi
+                ;;
+            (h)    # print help
+                _usage
+                ;;
+            (*)
+                printf '%s\n' 'Invalid command.'
+                _usage
+                ;;
+        esac
     done
-    [ "${?}" = 1 ] && keep_looping='false'
-    _dir_contains_videos || keep_looping='false'
 done
