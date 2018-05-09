@@ -1,48 +1,80 @@
 #!/usr/bin/env sh
 
 default_ext='mp4'
+max_attempts=100    # maximal number of attempts to find an available file name (set at 0 to use no limit)
 
-echo 'Title:'
-read title
+while true
+do
+    echo 'Title:'
+    read title
 
-echo 'URL:'
-read url
+    echo 'URL:'
+    read url
 
-printf "Extension [${default_ext}]: "
-read ext
-# (type a hyphen if you want no extension)
+    printf "Extension [${default_ext}]: "
+    # (type a hyphen if you want no extension)
+    read ext
 
-title="$(tr '/' '-' <<-EOF
-	${title}
-	EOF
-)"
+    if [ -n "${title}" ]
+    then
+        title="$(tr '/' '-' <<-EOF
+			${title}
+			EOF
+		)"
+    else
+        title="$(~/bin/new_rand)"
+    fi
 
-case "${ext}" in
-    ('')
-        ext="${default_ext}"
-        ;;
-    (-)
-        ext=''
-        ;;
-esac
+    case "${ext}" in
+        ('')
+            ext=".${default_ext}"
+            ;;
+        (-)
+            ext=''
+            ;;
+        (.*)
+            ;;
+        (*)
+            ext=".${ext}"
+            ;;
+    esac
 
-dest="${title}${ext:+.${ext}}"
+    dest="${title}${ext}"
 
-printf 'Target: %s\n' "${dest}"
-echo 'OK? [enter|ctrl-c]'
-read answer
+    if [ -e "${dest}" ]
+    then
+        echo "Filename already taken: “${dest}”"
+        original_dest="${dest}"
+        title="${title}_"
+        i=1
+        available=true
+        while [ -e "${dest}" ]
+        do
+            if [ "${i}" -gt "${max_attempts}" ]
+            then
+                printf 'Using that name anyway.\n'
+                dest="${original_dest}"
+                available=false
+                break
+            fi
+            title="${title}$(~/bin/new_rand)"
+            dest="${title}${ext}"
+            let 'i++'
+        done
+        "${available}" && printf 'Using a different filename.\n'
+    fi
 
-if [ -e "${dest}" ]; then
-    printf 'destination already exists: “%s”\n' "${dest}"
-    exit 2
-fi
+    printf 'Target: %s\n' "${dest}"
+    echo 'OK? [enter|ctrl-c]'
+    read answer
 
-if ! curl \
-    -L \
-    --continue-at - \
-    --output "${dest}" \
-    "${url}"
-then
-    echo "curl returned error code ‘${?}’." >&2
-    exit 3
-fi
+    if ! curl \
+        -L \
+        --continue-at - \
+        --output "${dest}" \
+        "${url}"
+    then
+        echo "curl returned error code ‘${?}’." >&2
+        exit 3
+    fi
+done
