@@ -1,13 +1,30 @@
 #!/usr/bin/env sh
 
+default_ext='mp4'
+
 echo 'Title:'
 read title
 
-#~ echo 'Extension:'
-#~ read ext
-
 echo 'URL:'
 read url
+
+printf "Extension [${default_ext}]: "
+read ext
+# (type a hyphen if you want no extension)
+
+title="$(tr '/' '-' <<-EOF
+	${title}
+	EOF
+)"
+
+case "${ext}" in
+    ('')
+        ext="${default_ext}"
+        ;;
+    (-)
+        ext=''
+        ;;
+esac
 
 dest="${title}${ext:+.${ext}}"
 
