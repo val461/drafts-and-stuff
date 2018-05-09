@@ -1,21 +1,10 @@
 #!/bin/sh
 
-log_file=~/'tmp/stuff/update.log'
+log_dir=~/'tmp/stuff/update'
+log_file="${log_dir}/$(date -Iseconds).log"
 
-printf '~/bin/update: Delete the log? n/[y]: '
-read ans
-case "${ans}" in
-    (y|Y|'')
-        printf '~/bin/update: Deleting the log.\n'
-        rm -v "${log_file}"
-        ;;
-    (*)
-        printf '~/bin/update: Keeping the log.\n'
-        printf '\n' >> "${log_file}"
-        ;;
-esac
+mkdir -p "${log_dir}"
 
-printf '\n'
 script -aqc ~/bin/_utils/update "${log_file}"
 
 exec zsh
