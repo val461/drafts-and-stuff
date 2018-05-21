@@ -8,11 +8,11 @@ print_help_at_launch=true
 file_browser='spacefm'
 video_player='vlc'
 
-tmsu_data=~/'mnt/Data/Downloads/Transmission'
+tmsu_data=~/'mnt/Data/Downloads/Transmission/v'
 tmsu_mountpoint=~/'mnt/tmsu'
 
 dir_root=~/'mnt/Data/Downloads/Transmission/v'
-dir_videos_to_play="${dir_root}/unwatched"
+dir_videos_to_play="${dir_root}/all/unwatched"
 
 ## code
 
@@ -47,12 +47,7 @@ _load_list()
 
 _question()
 {
-    printf '“ %s ”.\n' "${file}"
-    tags="$(tmsu tags "${file}")"
-    if [ -n "${tags}" ]
-    then
-        printf 'tags: %s\n' "${tags}"
-    fi
+    printf '“ %s ”\n' "${video_file}"
     printf 'Action ? '
     if "${move_videos}"; then
         if "${moved}"; then
@@ -63,36 +58,39 @@ _question()
     else
         printf '[n]/'
     fi
-    printf '%s\n' 'q/r/d/p/t/u/h'
+    printf '%s\n' 'q/r/d/p/s/v/t/u/h'
 }
 
 _play_vid()
 {
     if ! "${no_video}"; then
-        "${video_player}" "${file}" 1>/dev/null 2>&1 & disown
+        "${video_player}" "${video_file}" 1>/dev/null 2>&1 & disown
     fi
 }
 
 _move_video()
 {
     if mkdir -vp "${dir_moved_videos}"; then
-        if mv -vi "${file}" "${dir_moved_videos}"; then
+        if mv -vi "${video_file}" "${dir_moved_videos}"; then
             moved=true
-            new_path="${dir_moved_videos}/$(basename "${file}")"
+            new_path="${dir_moved_videos}/$(basename "${video_file}")"
 
             # transfer tags
-            if ! tmsu repair --manual "${file}" "${new_path}"
+            if ! tmsu repair --manual "${video_file}" "${new_path}"
             then
-                printf "${PROGNAME}: tmsu gave error ${?} after trying to transfer tags from “${file}” to “${new_path}”.\n" >&2
+                printf "${PROGNAME}: tmsu gave error ${?} after trying to transfer tags from “${video_file}” to “${new_path}”.\n" >&2
             fi
 
-            file="${new_path}"
+            video_file="${new_path}"
+            dir="$(dirname "${video_file}")"
 
             if "${save_count}"
             then
                 echo "${folder_number}" > "${dir_root}/last"
                 save_count=false
             fi
+        else
+            printf "${PROGNAME}: mv gave error ${?} after trying to move “${video_file}” to “${dir_moved_videos}”.\n" >&2
         fi
     else
         echo "${PROGNAME}: an error occurred when attempting to create directory ${dir_moved_videos}" >&2
@@ -119,17 +117,13 @@ if _dir_contains_videos; then
             ;;
     esac
 
-    dir_moved_videos="${dir_root}/${folder_number}"
+    dir_moved_videos="${dir_root}/all/${folder_number}"
 else
-    dir_videos_to_play="${dir_root}"
+    dir_videos_to_play="${dir_root}/all"
     move_videos=false
 fi
 
 "${print_help_at_launch}" && _usage
-
-printf 'current tags:\n'
-tmsu tags
-echo
 
 keep_looping=true
 _load_list
@@ -142,11 +136,11 @@ do
     fi
     # pick video
     i="$(~/bin/new_rand 1 "${list_size}")"
-    file="$(~/bin/line "${i}" <<-EOF
+    video_file="$(~/bin/line "${i}" <<-EOF
 		${list}
 		EOF
 	)"
-    if ! [ -e "${file}" ]
+    if ! [ -e "${video_file}" ]
     then
         _load_list
         continue
@@ -156,7 +150,7 @@ do
 		${list}
 		EOF
 	)"
-    dir="$(dirname "${file}")"
+    dir="$(dirname "${video_file}")"
     moved=false
     _play_vid
     reask=true
@@ -168,21 +162,15 @@ do
             (p|P)    # file browser
                 "${file_browser}" "${dir}" 1>/dev/null 2>&1 & disown
                 ;;
-            (t|T)    # tag
-                printf "tag this video: "
-                read ans
-                tmsu tag --tags "${ans}" "${file}"
-                ;;
-            (u|U)    # untag
-                printf "untag this video: "
-                read ans
-                tmsu untag --tags "${ans}" "${file}"
-                ;;
             (r|R)    # replay
                 _play_vid
                 ;;
-            (d|D)    # delete file
-                rm -v "${file}" && moved=true
+            (d|D)    # delete video file
+                if rm -v "${video_file}"
+                then
+                    moved=true
+                    tmsu untag --all "${video_file}"
+                fi
                 ;;
             (n|N)    # skip next actions
                 reask=false
@@ -192,7 +180,7 @@ do
                 keep_looping=false
                 break
                 ;;
-            (y|Y)   # move file
+            (y|Y)   # move video file
                 "${move_videos}" && _move_video
                 ;;
             ('')
@@ -202,7 +190,30 @@ do
                     reask=false
                 fi
                 ;;
-            (h)    # print help
+            (s|S)    # show tags
+                printf '\nall tags: '
+                tmsu tags
+                printf '\ntags of current video: '
+                tmsu tags "${video_file}"
+                printf '\ntag implications:\n'
+                tmsu imply
+                ;;
+            (v|V)    # show values
+                printf 'values for which tag? '
+                read ans
+                tmsu values "${ans}"
+                ;;
+            (t|T)    # tag
+                printf "tag this video: "
+                read ans
+                tmsu tag --tags "${ans}" "${video_file}"
+                ;;
+            (u|U)    # untag
+                printf "tags to remove from this video: "
+                read ans
+                tmsu untag --tags "${ans}" "${video_file}"
+                ;;
+            (h|H)    # print help
                 _usage
                 ;;
             (*)
