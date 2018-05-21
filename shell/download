@@ -1,29 +1,117 @@
 #!/usr/bin/env sh
 
 default_ext='mp4'
-max_attempts=100    # maximal number of attempts to find an available file name (set at 0 to use no limit)
+
+# maximal number of attempts to find an available filename
+max_attempts=100
+
+# substitute for slashes in titles
+slash_substitute='-'
+
+# for m3u8 mode
+ts_prefix='seg-'
+ts_suffix='-v1'
+
+# to return $index from a URL and to determine $url_end
+_get_ts_file_index()
+{
+    url_end="$(basename "${1}")"
+    url_end="${url_end#${ts_prefix}}"
+    index="${url_end%${ts_suffix}*.ts}"
+    printf '%s' "${index}"
+    url_end="${url_end#${index}}"
+}
+
+help=false
+if [ "${#}" -gt 0 ]
+then
+    help=true
+    printf '%s\n' 'The purpose of this interactive script is to download a video to the current working directory.' \
+        'Anytime you are asked for a detail, you can exit the script with the shortcut <ctrl-c>.'
+fi
 
 while true
 do
-    echo 'Title:'
+    if "${help}"
+    then
+        printf '%s\n' 'The title is the desired filename without its extension.' \
+            "Any slash in the title will be replaced with the character ‘ ${slash_substitute} ’." \
+            'If you leave the title empty, a random number will be used instead.'
+    fi
+    printf 'Title: '
     read title
-
-    echo 'URL:'
-    read url
-
-    printf "Extension [${default_ext}]: "
-    # (type a hyphen if you want no extension)
-    read ext
 
     if [ -n "${title}" ]
     then
-        title="$(tr '/' '-' <<-EOF
+        # replace slashes in filename
+        title="$(tr '/' "${slash_substitute}" <<-EOF
 			${title}
 			EOF
 		)"
     else
+        # random title
         title="$(~/bin/new_rand)"
     fi
+
+    if "${help}"
+    then
+        printf 'The m3u8 mode is useful in case the video is separated in multiple ts files.\n'
+        printf 'You may have to tweak the script to get it to work on some websites.\n'
+        printf 'Activate m3u8 mode? y/[n] '
+    else
+        printf 'm3u8 mode? y/[n] '
+    fi
+    read answer
+
+    case "${answer}" in
+        (y|Y)
+            m3u8=true
+            printf 'Enabled.\n'
+            ;;
+        (*)
+            m3u8=false
+            printf 'Normal mode.\n'
+            ;;
+    esac
+
+    if "${help}"
+    then
+        if "${m3u8}"
+        then
+            printf 'URL of the m3u8 file last downloaded by the browser on the page of the video: '
+        else
+            printf 'URL of the video file to download: '
+        fi
+    else 
+        printf 'URL: '
+    fi
+
+    read url
+
+    if "${m3u8}"
+    then
+        m3u8_file="$(curl -LsS "${url}")"
+        first_ts_url="$(cat "${m3u8_file}" | head -n 1)"
+        last_ts_url="$(cat "${m3u8_file}" | tail -n 2 | head -n 1)"
+        url_start="$(dirname "${last_ts_url}")"
+        if [ "${url_start}" = '.' ]
+        then
+            url_start="$(dirname "${url}")"
+        fi
+        ext="${url_start##*.}"
+        if [ "${#ext}" -le 4 ]
+        then
+            default_ext="${ext}"
+        fi
+        min="$(_get_ts_file_index "${first_ts_url}")"
+        max="$(_get_ts_file_index "${last_ts_url}")"
+        url_format="${url_start}/${ts_prefix}[${min}-${max}]${url_end}"
+        printf 'url_format: “ %s ”\n' "${url_format}"
+    fi
+
+    printf "Extension [${default_ext}]: "
+    # (type a dash if you want no extension)
+    read ext
 
     case "${ext}" in
         ('')
@@ -41,40 +129,88 @@ do
 
     dest="${title}${ext}"
 
-    if [ -e "${dest}" ]
-    then
+    # handle an already taken filename
+    loop=true
+    while "${loop}" && [ -e "${dest}" ]
+    do
         echo "Filename already taken: “${dest}”"
-        original_dest="${dest}"
-        title="${title}_"
-        i=1
-        available=true
-        while [ -e "${dest}" ]
-        do
-            if [ "${i}" -gt "${max_attempts}" ]
-            then
-                printf 'Using that name anyway.\n'
-                dest="${original_dest}"
-                available=false
-                break
-            fi
-            title="${title}$(~/bin/new_rand)"
-            dest="${title}${ext}"
-            let 'i++'
-        done
-        "${available}" && printf 'Using a different filename.\n'
-    fi
+        if "${m3u8}"
+        then
+            printf '%s' '[g]enerate a new name (default) / [o]verwrite: '
+            read answer
+            # adapt to alternate prompting branch
+            case "${answer}" in
+                (r|R|d|D)
+                    # set to default
+                    answer='g'
+                    ;;
+                (o|O)
+                    answer='r'
+                    ;;
+            esac
+        else
+            printf '%s' '[g]enerate a new name (default) / [d]elete / [r]esume: '
+            read answer
+        fi
+        case "${answer}" in
+            (d|D)
+                # delete
+                rm -v "${dest}" || printf '%s\n' "Deletion returned error code ${?}."
+                ;;
+            (r|R)
+                # resume (or, in m3u8 mode, overwrite)
+                loop=false
+                ;;
+            (*)
+                # generate a new name
+                original_dest="${dest}"
+                title="${title}_"
+                i=1
+                available=true
+                while [ -e "${dest}" ]
+                do
+                    if [ "${i}" -gt "${max_attempts}" ]
+                    then
+                        printf 'Failed to find an available name.\n'
+                        dest="${original_dest}"
+                        available=false
+                        break
+                    fi
+                    title="${title}$(~/bin/new_rand)"
+                    dest="${title}${ext}"
+                    let 'i++'
+                done
+                if "${available}"
+                then
+                    printf 'Using a different filename.\n'
+                    loop=false
+                fi
+                ;;
+        esac
+    done
 
+    # last confirmation
     printf 'Target: %s\n' "${dest}"
-    echo 'OK? [enter|ctrl-c]'
+    printf 'OK? ctrl-c/[enter] '
     read answer
 
-    if ! curl \
-        -L \
-        --continue-at - \
-        --output "${dest}" \
-        "${url}"
+    # download
+    if "${m3u8}"
     then
-        echo "curl returned error code ‘${?}’." >&2
-        exit 3
+        if ! curl -L "${url_format}" > "${dest}"
+        then
+            echo "curl returned error code ‘${?}’." >&2
+            exit 3
+        fi
+    else
+        if ! curl \
+            -L \
+            --continue-at - \
+            --output "${dest}" \
+            "${url}"
+        then
+            echo "curl returned error code ‘${?}’." >&2
+            exit 3
+        fi
     fi
 done
