@@ -19,7 +19,7 @@ else
     fi
     echo -n 'Current profile: '
     readlink "${link}"
-    echo 'Profiles available:'
+    echo 'Available profiles:'
     for file in "${basename}".*.conf
     do
         printf '%s\n' "${file}"
