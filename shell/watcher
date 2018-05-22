@@ -193,13 +193,14 @@ do
             (s|S)    # show tags
                 printf '\nall tags: '
                 tmsu tags
-                printf '\ntags of current video: '
+                printf 'tags of current video: '
                 tmsu tags "${video_file}"
                 printf '\ntag implications:\n'
                 tmsu imply
+                echo
                 ;;
             (v|V)    # show values
-                printf 'values for which tag? '
+                printf 'which tag? '
                 read ans
                 tmsu values "${ans}"
                 ;;
