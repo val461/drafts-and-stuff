@@ -1,8 +1,8 @@
 #!/bin/sh
 
-PROG_NAME='~/bin/_utils/update'
+# Please use xterm to be able to scroll.
 
-printf '\n%s: info: %s\n\n' "${PROG_NAME}" 'Use xterm to be able to scroll.'
+PROG_NAME='~/bin/_utils/update'
 
 printf "%s: debug: %s\n" "${PROG_NAME}" 'Updating mirror list with reflector.'
 sudo reflector --sort score --save /etc/pacman.d/mirrorlist || printf "%s: error: %s\n" "${PROG_NAME}" "reflector returned code ${?}"
