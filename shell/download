@@ -12,25 +12,30 @@ slash_substitute='-'
 ts_prefix='seg-'
 ts_suffix='-v1'
 
-# to return $index from a URL and to determine $url_end
+# determine $index and $url_end
 _get_ts_file_index()
 {
     url_end="$(basename "${1}")"
     url_end="${url_end#${ts_prefix}}"
     index="${url_end%${ts_suffix}*.ts}"
-    printf '%s' "${index}"
     url_end="${url_end#${index}}"
 }
 
 help=false
 if [ "${#}" -gt 0 ]
 then
-    help=true
-    printf '%s\n' 'The purpose of this interactive script is to download a video to the current working directory.' \
-        'Anytime you are asked for a detail, you can exit the script with the shortcut <ctrl-c>.'
+    if [ "${#}" -ge 2 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]
+    then
+        help=true
+        printf '%s\n' 'The purpose of this interactive script is to download a video to the current working directory.' \
+            'Anytime you are asked for a detail, you can exit the script with the shortcut <ctrl-c>.'
+    else
+        title="${1}"
+    fi
 fi
 
-while true
+loop0=true
+while "${loop0}"
 do
     if "${help}"
     then
@@ -38,8 +43,14 @@ do
             "Any slash in the title will be replaced with the character ‘ ${slash_substitute} ’." \
             'If you leave the title empty, a random number will be used instead.'
     fi
-    printf 'Title: '
-    read title
+
+    if [ -z "${title}" ]
+    then
+        printf 'Title: '
+        read title
+    else
+        loop0=false
+    fi
 
     if [ -n "${title}" ]
     then
@@ -91,8 +102,8 @@ do
     if "${m3u8}"
     then
         m3u8_file="$(curl -LsS "${url}")"
-        first_ts_url="$(cat "${m3u8_file}" | head -n 1)"
-        last_ts_url="$(cat "${m3u8_file}" | tail -n 2 | head -n 1)"
+        first_ts_url="$(printf '%s' "${m3u8_file}" | grep -m 1 '.ts')"
+        last_ts_url="$(printf '%s' "${m3u8_file}" | tail -n 2 | head -n 1)"
         url_start="$(dirname "${last_ts_url}")"
         if [ "${url_start}" = '.' ]
         then
@@ -103,8 +114,10 @@ do
         then
             default_ext="${ext}"
         fi
-        min="$(_get_ts_file_index "${first_ts_url}")"
-        max="$(_get_ts_file_index "${last_ts_url}")"
+        _get_ts_file_index "${first_ts_url}"
+        min="${index}"
+        _get_ts_file_index "${last_ts_url}"
+        max="${index}"
         url_format="${url_start}/${ts_prefix}[${min}-${max}]${url_end}"
         printf 'url_format: “ %s ”\n' "${url_format}"
     fi
@@ -130,8 +143,8 @@ do
     dest="${title}${ext}"
 
     # handle an already taken filename
-    loop=true
-    while "${loop}" && [ -e "${dest}" ]
+    loop1=true
+    while "${loop1}" && [ -e "${dest}" ]
     do
         echo "Filename already taken: “${dest}”"
         if "${m3u8}"
@@ -159,7 +172,7 @@ do
                 ;;
             (r|R)
                 # resume (or, in m3u8 mode, overwrite)
-                loop=false
+                loop1=false
                 ;;
             (*)
                 # generate a new name
@@ -183,7 +196,7 @@ do
                 if "${available}"
                 then
                     printf 'Using a different filename.\n'
-                    loop=false
+                    loop1=false
                 fi
                 ;;
         esac
@@ -213,4 +226,5 @@ do
             exit 3
         fi
     fi
+    title=''
 done
