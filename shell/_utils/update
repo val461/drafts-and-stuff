@@ -4,10 +4,10 @@
 
 PROG_NAME='~/bin/_utils/update'
 
-printf "%s: debug: %s\n" "${PROG_NAME}" 'Updating mirror list with reflector.'
+printf "%s: debug: %s\n" "${PROG_NAME}" 'Updating mirror list (reflector).'
 sudo reflector --sort score --save /etc/pacman.d/mirrorlist || printf "%s: error: %s\n" "${PROG_NAME}" "reflector returned code ${?}"
 
-printf "%s: debug: %s\n\n" "${PROG_NAME}" 'Updating packages with pacman.'
+printf "%s: debug: %s\n\n" "${PROG_NAME}" 'Updating packages (pacman).'
 if sudo pacman -Syu --noprogressbar; then
     printf "\n%s: debug: %s\n\n" "${PROG_NAME}" 'Updating ruby gems.'
     gem update || printf "%s: error: %s\n" "${PROG_NAME}" "gem returned code ${?}"
