@@ -110,16 +110,20 @@ do
             url_start="$(dirname "${url}")"
         fi
         ext="${url_start##*.}"
-        if [ "${#ext}" -le 4 ]
-        then
-            default_ext="${ext}"
-        fi
         _get_ts_file_index "${first_ts_url}"
         min="${index}"
         _get_ts_file_index "${last_ts_url}"
         max="${index}"
         url_format="${url_start}/${ts_prefix}[${min}-${max}]${url_end}"
         printf 'url_format: “ %s ”\n' "${url_format}"
+    else
+        ext="${url%%'?'*}"
+        ext="${ext##*.}"
+    fi
+
+    if [ 1 -le "${#ext}" ] && [ "${#ext}" -le 4 ]
+    then
+        default_ext="${ext}"
     fi
 
     printf "Extension [${default_ext}]: "
@@ -210,19 +214,20 @@ do
     # download
     if "${m3u8}"
     then
-        if ! curl -L "${url_format}" > "${dest}"
+        if ! curl -kL "${url_format}" > "${dest}"
         then
-            echo "curl returned error code ‘${?}’." >&2
+            echo "curl exited with an error." >&2
             exit 3
         fi
     else
         if ! curl \
+            -k \
             -L \
             --continue-at - \
             --output "${dest}" \
             "${url}"
         then
-            echo "curl returned error code ‘${?}’." >&2
+            echo "curl exited with an error." >&2
             exit 3
         fi
     fi
