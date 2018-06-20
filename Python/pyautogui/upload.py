@@ -21,6 +21,7 @@ time.sleep(7)
 
 # open import menu
 pyautogui.click(x=69, y=247)
+time.sleep(1)
 pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
@@ -30,7 +31,7 @@ input("Press [enter] if the two archives are done with with code zero: ")
 pyautogui.hotkey('winleft', '1')
 
 pyautogui.click(x=328, y=249)
-pyautogui.click(x=761, y=495)
+pyautogui.click(x=761, y=471)
 pyautogui.hotkey('enter')
 time.sleep(1)
 
@@ -40,10 +41,8 @@ pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
 
-time.sleep(2)
-
 pyautogui.click(x=328, y=249)
-pyautogui.click(x=755, y=453)
+pyautogui.click(x=755, y=414)
 pyautogui.hotkey('enter')
 pyautogui.click(x=794, y=273)
 pyautogui.hotkey('enter')
