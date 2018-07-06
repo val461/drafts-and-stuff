@@ -9,8 +9,10 @@ max_attempts=100
 slash_substitute='-'
 
 # for m3u8 mode
-ts_prefix='seg-'
-ts_suffix='-v1'
+#~ ts_prefix='seg-'
+#~ ts_suffix='-v1'
+ts_prefix='480p.mp4-n_'
+ts_suffix='_0_0'
 
 # determine $index and $url_end
 _get_ts_file_index()
@@ -123,7 +125,13 @@ do
 
     if [ 1 -le "${#ext}" ] && [ "${#ext}" -le 4 ]
     then
-        default_ext="${ext}"
+        case "${ext}" in
+            (smil) # guess is probably bad, keep default
+                ;;
+            (*)
+                default_ext="${ext}"
+                ;;
+        esac
     fi
 
     printf "Extension [${default_ext}]: "
