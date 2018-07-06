@@ -83,12 +83,6 @@ _move_video()
 
             video_file="${new_path}"
             dir="$(dirname "${video_file}")"
-
-            if "${save_count}"
-            then
-                echo "${folder_number}" > "${dir_root}/last"
-                save_count=false
-            fi
         else
             printf "${PROGNAME}: mv gave error ${?} after trying to move “${video_file}” to “${dir_moved_videos}”.\n" >&2
         fi
@@ -99,25 +93,12 @@ _move_video()
 
 mkdir -p "${tmsu_mountpoint}"
 cd "${tmsu_data}"
+tmsu unmount --all  # fixes the bug that sometimes happens when (un-)mounting something already (un-)mounted
 tmsu mount "${tmsu_mountpoint}"
 
 if _dir_contains_videos; then
     move_videos=true
-
-    folder_number="$(cat "${dir_root}/last")"
-    printf '%s ' 'Update count? [y]/n'
-    read ans
-    case "${ans}" in
-        (n|N)
-            save_count=false
-            ;;
-        (*)
-            let 'folder_number++'
-            save_count=true
-            ;;
-    esac
-
-    dir_moved_videos="${dir_root}/all/${folder_number}"
+    dir_moved_videos="${dir_root}/all/$(date -I)"
 else
     dir_videos_to_play="${dir_root}/all"
     move_videos=false
@@ -195,7 +176,7 @@ do
                 tmsu tags
                 printf '\ntag implications:\n'
                 tmsu imply
-                printf '\ntags of current video: '
+                printf '\ntags of current video:\n'
                 tmsu tags "${video_file}"
                 echo
                 ;;
