@@ -167,7 +167,7 @@ bar {
 }
 
 # prevent focus theft
-focus_on_window_activation urgent
+focus_on_window_activation none
 
 # use xprop if you need to determine the class (WM_CLASS)
 assign [class="Firefox"] 1
