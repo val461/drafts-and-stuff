@@ -41,7 +41,6 @@ pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
 
-pyautogui.click(x=328, y=249)
 pyautogui.click(x=755, y=414)
 pyautogui.hotkey('enter')
 pyautogui.click(x=794, y=273)
