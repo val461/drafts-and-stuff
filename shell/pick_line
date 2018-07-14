@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# ./pick_line [file]
+# print a pseudo-random line from $file
+
+if [ -f "${1}" ]
+then
+    file="${1}"
+else
+    file=~/'bin/pick_line_list'
+fi
+
+printf 'picking from %s\n' "${file}"
+
+count="$(wc -l <"${file}")"
+
+line="$(~/bin/new_rand 1 "$((count+1))")"
+awk "NR==${line}{print;exit}" "${file}"
