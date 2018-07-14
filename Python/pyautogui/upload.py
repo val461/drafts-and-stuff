@@ -17,11 +17,11 @@ pyautogui.hotkey('ctrl', 't')
 pyautogui.typewrite('dr')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
-time.sleep(7)
+time.sleep(5)
 
 # open import menu
 pyautogui.click(x=69, y=247)
-time.sleep(1)
+time.sleep(4)
 pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
