@@ -2,7 +2,7 @@
 
 _usage()
 {
-	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'print random integers'
+	printf "\n${TITLE}${PROGNAME}${DESC} - %s${PLAIN}\n"        'print random non-negative integers'
 	printf "\n${SECTION}%s${PLAIN}\n"                             'Usage:'
 	printf "  ${TITLE}%s"                                             "${PROGNAME}"
 	str=" ${SECTION}%s${PARAM}%s${SECTION}%s"
