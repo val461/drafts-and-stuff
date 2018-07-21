@@ -10,7 +10,7 @@ else
     file=~/'bin/pick_line_list'
 fi
 
-printf 'picking from %s\n' "${file}"
+printf '(picking from %s)\n' "${file}"
 
 count="$(wc -l <"${file}")"
 
