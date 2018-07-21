@@ -21,7 +21,6 @@ time.sleep(5)
 
 # open import menu
 pyautogui.click(x=69, y=247)
-time.sleep(4)
 pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
