@@ -33,12 +33,7 @@ _dir_contains_videos()
 
 _load_list()
 {
-    if "${move_videos}"
-    then
-        list="$(find "${dir_videos_to_play}")"
-    else
-        list="$(find "${dir_videos_to_play}" -mindepth 1 -type f)"
-    fi
+    list="$(find "${dir_videos_to_play}" -type f)"
     list_size="$(wc -l <<-EOF
 		${list}
 		EOF
