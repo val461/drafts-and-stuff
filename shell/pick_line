@@ -3,11 +3,15 @@
 # ./pick_line [file]
 # print a pseudo-random line from $file
 
-if [ -f "${1}" ]
+if [ -z "${1}" ]
+then
+    file=~/'bin/pick_line_list'
+elif [ -f "${1}" ]
 then
     file="${1}"
 else
-    file=~/'bin/pick_line_list'
+    printf 'bad usage: argument should be a file or left empty. (Value: “ %s ”)\n' "${1}"
+    exit 2
 fi
 
 printf '(picking from %s)\n' "${file}"
