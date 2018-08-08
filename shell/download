@@ -8,6 +8,10 @@ max_attempts=100
 # substitute for slashes in titles
 slash_substitute='-'
 
+m3u8_mode='never'
+#~ m3u8_mode='always'
+#~ m3u8_mode='ask_every_time'
+
 # for m3u8 mode
 #~ ts_prefix='seg-'
 #~ ts_suffix='-v1'
@@ -66,25 +70,36 @@ do
         title="$(~/bin/new_rand)"
     fi
 
-    if "${help}"
-    then
-        printf 'The m3u8 mode is useful in case the video is separated in multiple ts files.\n'
-        printf 'You may have to tweak the script to get it to work on some websites.\n'
-        printf 'Activate m3u8 mode? y/[n] '
-    else
-        printf 'm3u8 mode? y/[n] '
-    fi
-    read answer
-
-    case "${answer}" in
-        (y|Y)
-            m3u8=true
-            printf 'Enabled.\n'
-            ;;
-        (*)
+    case "${m3u8_mode}" in
+        (never)
             m3u8=false
-            printf 'Normal mode.\n'
+            #~ printf 'm3u8 mode disabled.\n'
             ;;
+        (always)
+            m3u8=true
+            #~ printf 'm3u8 mode enabled.\n'
+            ;;
+        (*) # ask
+            if "${help}"
+            then
+                printf 'The m3u8 mode is useful in case the video is separated in multiple ts files.\n'
+                printf 'You may have to tweak the script to get it to work on some websites.\n'
+                printf 'Activate m3u8 mode? y/[n] '
+            else
+                printf 'm3u8 mode? y/[n] '
+            fi
+            read answer
+
+            case "${answer}" in
+                (y|Y)
+                    m3u8=true
+                    printf 'Enabled.\n'
+                    ;;
+                (*)
+                    m3u8=false
+                    printf 'Normal mode.\n'
+                    ;;
+            esac
     esac
 
     if "${help}"
