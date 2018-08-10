@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+# This script is meant to be copied in a series folder.
+# Then, edit the parameters as you see fit.
+
+printf '%s\n' 'bad usage: please adapt this script to the local context.' >&2
+exit 2
+
+season=7
+folder="/home/val/Downloads/Transmission/Series/animation/Archer/season ${season}"
+
+# File to store episode number. Does not need to exist. Its contents get read and overwritten by the script.
+data_file='../next_episode'
+# If you want to force an episode number, you can pass it as first argument.
+
+# Name of the series. Used in filenames of episodes.
+series="$(basename "$(dirname "${folder}")")"
+
+mkdir -p "${folder}"
+if ! cd "${folder}"
+then
+    printf '%s\n' 'error: cd returned an error.' >&2
+    exit 2
+fi
+
+if [ -n "${1}" ]
+then
+    episode="${1}"
+    echo "${episode}" > "${data_file}"
+else
+    [ -f "${data_file}" ] && episode="$(cat "${data_file}")"
+    [ -n "${episode}" ] || episode=1
+fi
+
+[ "${season}" -lt 10 ] && s_prefix='0' || s_prefix=''
+[ "${episode}" -lt 10 ] && e_prefix='0' || e_prefix=''
+
+title="${series} S${s_prefix}${season}E${e_prefix}${episode}"
+printf '%s\n' "${title}"
+
+if ~/bin/download "${title}"
+then
+    echo "$((episode + 1))" > "${data_file}"
+fi
