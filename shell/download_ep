@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 
-# This script is meant to be copied in a series folder.
+# download_ep [episode_number]
+# A wrapper for ~/bin/download.
+
+# This wrapper is meant to be copied in a series folder.
 # Then, edit the parameters as you see fit.
 
 printf '%s\n' 'bad usage: please adapt this script to the local context.' >&2
@@ -9,7 +12,7 @@ exit 2
 season=7
 folder="/home/val/Downloads/Transmission/Series/animation/Archer/season ${season}"
 
-# File to store episode number. Does not need to exist. Its contents get read and overwritten by the script.
+# File to store episode number. The data file gets overwritten by the script.
 data_file='../next_episode'
 # If you want to force an episode number, you can pass it as first argument.
 
