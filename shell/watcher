@@ -24,7 +24,10 @@ PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
 
 # debug mode
 no_video=false
-[ "${#}" -gt 0 ] && no_video=true
+if [ "${#}" -gt 0 ]; then
+    no_video=true
+    printf '%s' 'To disable no_video mode, run this script without arguments.'
+fi
 
 _dir_contains_videos()
 {
