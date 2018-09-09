@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import pyautogui
+from pyautogui import moveTo
 
 # put the mouse in front of lu
-pyautogui.moveTo(760, 98)
+moveTo(760, 98)

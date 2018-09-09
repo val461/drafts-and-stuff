@@ -2,21 +2,44 @@
 
 # supposed to be launched by i3 from ~/.i3/config when i3 starts
 
-firefox &
+place="$(printf '%s\n' nesles gp ufr | dmenu)"
 
 i3-msg "workspace 3; append_layout ~/.i3/workspace-3-1.json"
 
-cherrytree &
+if [ "${place}" = ufr ]
+then
+    falkon &
+else
+    firefox &
+    cherrytree &
+fi
+
 spacefm &
 geany &
 
-#~ ~/.fehbg &
-
-i3-msg "workspace 2; append_layout ~/.i3/workspace-2-2.json"
+if [ "${place}" = nesles ]
+then
+    i3-msg "workspace 2; append_layout ~/.i3/workspace-2-3.json"
+    transmission-qt &
+else
+    i3-msg "workspace 2; append_layout ~/.i3/workspace-2-2.json"
+fi
 
 # i3’s exec command makes sure that the windows open in the workspaces where they were started from
 i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
         exec st -f "Source Code Pro" alsamixer'
         #~ exec st -f "Source Code Pro" ~/.fehbg -i'
+
+case "${place}" in
+    (nesles)
+        ~/bin/setDNS odns
+        ;;
+    (gp)
+        ~/bin/setDNS resgp
+        ;;
+    (ufr)
+        ~/bin/setDNS odns ufr
+        ;;
+esac
 
 ~/bin/config_files/session/startup_2.py
