@@ -27,6 +27,23 @@ _get_ts_file_index()
     url_end="${url_end#${index}}"
 }
 
+# test parsed extension stored in $ext
+_ext_seems_good()
+{
+    result='false'
+    if [ "${#ext}" -ge 1 ] && [ "${#ext}" -le 4 ]
+    then
+        case "${ext}" in
+            (*[!a-zA-Z0-9]*);;
+            (smil|com);;
+            (*) # seems good
+                result='true'
+                ;;
+        esac
+    fi
+    "${result}"
+}
+
 help=false
 if [ "${#}" -gt 0 ]
 then
@@ -122,31 +139,36 @@ do
         first_ts_url="$(printf '%s' "${m3u8_file}" | grep -m 1 '.ts')"
         last_ts_url="$(printf '%s' "${m3u8_file}" | tail -n 2 | head -n 1)"
         url_start="$(dirname "${last_ts_url}")"
+
         if [ "${url_start}" = '.' ]
         then
             url_start="$(dirname "${url}")"
         fi
+
         ext="${url_start##*.}"
         _get_ts_file_index "${first_ts_url}"
         min="${index}"
         _get_ts_file_index "${last_ts_url}"
         max="${index}"
         url_format="${url_start}/${ts_prefix}[${min}-${max}]${url_end}"
+
         printf 'url_format: “ %s ”\n' "${url_format}"
     else
         ext="${url%%'?'*}"
         ext="${ext##*.}"
+        ext="${ext%/}"
+
+        if ! _ext_seems_good
+        then
+            # try differently
+            ext="${url##*.}"
+        fi
     fi
 
-    if [ 1 -le "${#ext}" ] && [ "${#ext}" -le 4 ]
+    if _ext_seems_good
     then
-        case "${ext}" in
-            (smil) # guess is probably bad, keep default
-                ;;
-            (*)
-                default_ext="${ext}"
-                ;;
-        esac
+        # alter default
+        default_ext="${ext}"
     fi
 
     printf "Extension [${default_ext}]: "
