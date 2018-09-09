@@ -16,7 +16,7 @@ folder="/home/val/Downloads/Transmission/Series/animation/Archer/season ${season
 data_file='../next_episode'
 # If you want to force an episode number, you can pass it as first argument.
 
-# Name of the series. Used in filenames of episodes.
+# Name of the series. Used in filenames of episodes and subtitles.
 series="$(basename "$(dirname "${folder}")")"
 
 mkdir -p "${folder}"
@@ -41,7 +41,18 @@ fi
 title="${series} S${s_prefix}${season}E${e_prefix}${episode}"
 printf '%s\n' "${title}"
 
+printf '# %s:\n' "subtitles"
 if ~/bin/download "${title}"
 then
-    echo "$((episode + 1))" > "${data_file}"
+    printf '# %s:\n' "video"
+    if ~/bin/download "${title}"
+    then
+        echo "$((episode + 1))" > "${data_file}"
+    else
+        printf '%s\n' "error: bin/download returned error code ‘$?’" >&2
+        exit 2
+    fi
+else
+    printf '%s\n' "error: bin/download returned error code ‘$?’" >&2
+    exit 2
 fi
