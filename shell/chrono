@@ -12,7 +12,7 @@ trap 'exit "${INTERRUPTION}"' HUP INT QUIT TERM
 # default values
 step=1
 unit='m'
-alarm_file='/home/val/mnt/Data/Downloads/music/genres/ambient/new age/Gladiator Theme • Now We Are Free • Hans Zimmer & Lisa Gerrard (NBE-uBgtINg).webm'
+alarm_file='/home/val/Music/Grandfather-clock-chimes/Grandfather-clock-chimes.mp3'
 alarm=true
 total_time=''
 verbose=true
