@@ -171,10 +171,12 @@ focus_on_window_activation none
 
 # use xprop if you need to determine the class (WM_CLASS)
 assign [class="Firefox"] 1
+assign [class="Falkon"] 1
 assign [class="transmission"] 2
 assign [class="Spacefm"] 3
 assign [class="Geany"] 3
 assign [class="Cherrytree"] 3
 
 # use exec_always instead of exec if you also need the command to run when restarting i3
-exec_always --no-startup-id ~/bin/config_files/session/startup_1
+#~ exec_always --no-startup-id ~/bin/config_files/session/startup_1
+exec --no-startup-id ~/bin/config_files/session/startup_1
