@@ -2,20 +2,39 @@
 
 # supposed to be launched by i3 from ~/.i3/config when i3 starts
 
-place="$(printf '%s\n' nesles gp ufr | dmenu)"
+place="$(dmenu <<EOF
+ufr
+gp
+nesles
+EOF
+)"
 
-i3-msg "workspace 3; append_layout ~/.i3/workspace-3-1.json"
+case "${place}" in
+    (nesles)
+        ~/bin/setDNS odns
+        ;;
+    (gp)
+        ~/bin/setDNS resgp
+        ;;
+    (*)
+        place=ufr
+        ~/bin/setDNS default
+        ;;
+esac
 
 if [ "${place}" = ufr ]
 then
     falkon &
+    i3-msg "workspace 3; append_layout ~/.i3/workspace-3-2.json"
+    geany ~/'bin/config_files/session/geany_sessions/ufr.geany' &
 else
     firefox &
+    i3-msg "workspace 3; append_layout ~/.i3/workspace-3-1.json"
     cherrytree &
+    geany ~/'bin/config_files/session/geany_sessions/session.geany' &
 fi
 
 spacefm &
-geany &
 
 if [ "${place}" = nesles ]
 then
@@ -25,21 +44,26 @@ else
     i3-msg "workspace 2; append_layout ~/.i3/workspace-2-2.json"
 fi
 
+sudo ~/bin/luminosity 725
+
 # i3’s exec command makes sure that the windows open in the workspaces where they were started from
 i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
         exec st -f "Source Code Pro" alsamixer'
         #~ exec st -f "Source Code Pro" ~/.fehbg -i'
 
-case "${place}" in
-    (nesles)
-        ~/bin/setDNS odns
-        ;;
-    (gp)
-        ~/bin/setDNS resgp
-        ;;
-    (ufr)
-        ~/bin/setDNS odns ufr
-        ;;
-esac
-
 ~/bin/config_files/session/startup_2.py
+
+if [ -d '/sys/class/power_supply/BAT0' ]
+then
+    capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+    while [ "${capacity}" -ge 21 ]
+    do
+        sleep 1m
+        capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
+    done
+    while true
+    do
+        echo 'Battery level low, please shut down!' | dmenu
+        sleep 1m
+    done
+fi
