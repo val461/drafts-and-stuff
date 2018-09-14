@@ -29,9 +29,9 @@
                     "percent": 1,
                     "swallows": [
                        {
-                       // "class": "^transmission$",
+                         "class": "^transmission$",
                        // "instance": "^transmission\\-qt$",
-                       // "title": "^Transmission$",
+                         "title": "^Transmission$"
                        // "transient_for": "^$"
                        }
                     ],
@@ -53,9 +53,9 @@
             "percent": 0.127114930906639,
             "swallows": [
                {
-               // "class": "^st\\-256color$",
+                 "class": "^st\\-256color$",
                // "instance": "^st\\-256color$",
-               // "title": "^sudo$",
+                 "title": "^sudo$"
                // "transient_for": "^$"
                }
             ],
@@ -75,9 +75,9 @@
             "percent": 0.539551735760027,
             "swallows": [
                {
-               // "class": "^st\\-256color$",
+                 "class": "^st\\-256color$",
                // "instance": "^st\\-256color$",
-               // "title": "^alsamixer$",
+                 "title": "^alsamixer$"
                // "transient_for": "^$"
                }
             ],
