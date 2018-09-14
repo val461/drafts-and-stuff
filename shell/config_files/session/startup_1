@@ -2,6 +2,8 @@
 
 # supposed to be launched by i3 from ~/.i3/config when i3 starts
 
+sudo ~/bin/luminosity 725
+
 place="$(dmenu <<EOF
 ufr
 gp
@@ -40,18 +42,19 @@ if [ "${place}" = nesles ]
 then
     i3-msg "workspace 2; append_layout ~/.i3/workspace-2-3.json"
     transmission-qt &
+    mouse_height=357
 else
     i3-msg "workspace 2; append_layout ~/.i3/workspace-2-2.json"
+    mouse_height=98
 fi
 
-sudo ~/bin/luminosity 725
+# put the mouse in front of lu
+python -c "from pyautogui import moveTo; moveTo(760, ${mouse_height})"
 
 # i3’s exec command makes sure that the windows open in the workspaces where they were started from
 i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
         exec st -f "Source Code Pro" alsamixer'
         #~ exec st -f "Source Code Pro" ~/.fehbg -i'
-
-~/bin/config_files/session/startup_2.py
 
 if [ -d '/sys/class/power_supply/BAT0' ]
 then
