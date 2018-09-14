@@ -21,9 +21,9 @@
             "percent": 0.190672396359959,
             "swallows": [
                {
-                "class": "^st\\-256color$",
+                 "class": "^st\\-256color$",
                // "instance": "^st\\-256color$",
-                "title": "^sudo$"
+                 "title": "^sudo$"
                // "transient_for": "^$"
                }
             ],
