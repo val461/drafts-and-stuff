@@ -14,7 +14,8 @@ pyautogui.PAUSE = 1.5
 # go to web browser
 pyautogui.hotkey('winleft', '1')
 pyautogui.hotkey('ctrl', 't')
-pyautogui.typewrite('dr')
+pyautogui.typewrite('drive/u/0')
+time.sleep(1)
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
 time.sleep(5)
@@ -30,7 +31,7 @@ input("Press [enter] if the two archives are done with code zero: ")
 pyautogui.hotkey('winleft', '1')
 
 pyautogui.click(x=328, y=249)
-pyautogui.click(x=761, y=471)
+pyautogui.click(x=761, y=443)
 pyautogui.hotkey('enter')
 time.sleep(1)
 
@@ -40,7 +41,7 @@ pyautogui.hotkey('down')
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
 
-pyautogui.click(x=755, y=414)
+pyautogui.click(x=755, y=388)
 pyautogui.hotkey('enter')
 pyautogui.click(x=794, y=273)
 pyautogui.hotkey('enter')
