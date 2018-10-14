@@ -5,9 +5,9 @@
 sudo ~/bin/luminosity 725
 
 place="$(dmenu <<EOF
-ufr
 gp
 nesles
+ufr
 EOF
 )"
 
@@ -48,14 +48,15 @@ else
     mouse_height=98
 fi
 
-# put the mouse in front of lu
-python -c "from pyautogui import moveTo; moveTo(760, ${mouse_height})"
-
 # i3’s exec command makes sure that the windows open in the workspaces where they were started from
 i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
         exec st -f "Source Code Pro" alsamixer'
         #~ exec st -f "Source Code Pro" ~/.fehbg -i'
 
+# put the mouse in front of lu
+python -c "from pyautogui import moveTo; moveTo(760, ${mouse_height})"
+
+# if battery in use, then warn when battery level gets low
 if [ -d '/sys/class/power_supply/BAT0' ]
 then
     capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
