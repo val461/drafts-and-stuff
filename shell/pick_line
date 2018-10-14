@@ -5,7 +5,7 @@
 
 if [ -z "${1}" ]
 then
-    file=~/'bin/pick_line_list'
+    file=~/'bin/pick_line_list3'
 elif [ -f "${1}" ]
 then
     file="${1}"

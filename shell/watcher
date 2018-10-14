@@ -8,10 +8,12 @@ print_help_at_launch=true
 file_browser='spacefm'
 video_player='vlc'
 
-tmsu_data=~/'mnt/Data/Downloads/Transmission/v'
+#~ tmsu_data=~/'mnt/Data/Downloads/Transmission/v'
+tmsu_data='/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK/Data/Downloads/Transmission/v'
 tmsu_mountpoint=~/'mnt/tmsu'
 
-dir_root=~/'mnt/Data/Downloads/Transmission/v'
+#~ dir_root=~/'mnt/Data/Downloads/Transmission/v'
+dir_root='/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK/Data/Downloads/Transmission/v'
 dir_videos_to_play="${dir_root}/all/unwatched"
 
 ## code
