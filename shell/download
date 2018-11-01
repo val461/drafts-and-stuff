@@ -198,7 +198,7 @@ do
         echo "Filename already taken: “${dest}”"
         if "${m3u8}"
         then
-            printf '%s' '[g]enerate a new name (default) / [o]verwrite: '
+            printf '%s' '[g]enerate a new name (default) / [o]verwrite / [c]ancel: '
             read answer
             # adapt to alternate prompting branch
             case "${answer}" in
@@ -211,9 +211,10 @@ do
                     ;;
             esac
         else
-            printf '%s' '[g]enerate a new name (default) / [d]elete / [r]esume: '
+            printf '%s' '[g]enerate a new name (default) / [d]elete / [r]esume / [c]ancel: '
             read answer
         fi
+        cancel=false
         case "${answer}" in
             (d|D)
                 # delete
@@ -222,6 +223,11 @@ do
             (r|R)
                 # resume (or, in m3u8 mode, overwrite)
                 loop1=false
+                ;;
+            (c|C)
+                # cancel
+                loop1=false
+                cancel=true
                 ;;
             (*)
                 # generate a new name
@@ -251,30 +257,33 @@ do
         esac
     done
 
-    # last confirmation
-    printf 'Target: %s\n' "${dest}"
-    printf 'OK? ctrl-c/[enter] '
-    read answer
-
-    # download
-    if "${m3u8}"
+    if ! "${cancel}"
     then
-        if ! curl -kL "${url_format}" > "${dest}"
+        # last confirmation
+        printf 'Target: %s\n' "${dest}"
+        printf 'OK? ctrl-c/[enter] '
+        read answer
+
+        # download
+        if "${m3u8}"
         then
-            echo "curl exited with an error." >&2
-            exit 3
+            if ! curl -kL "${url_format}" > "${dest}"
+            then
+                echo "curl exited with an error." >&2
+                exit 3
+            fi
+        else
+            if ! curl \
+                -k \
+                -L \
+                --continue-at - \
+                --output "${dest}" \
+                "${url}"
+            then
+                echo "curl exited with an error." >&2
+                exit 3
+            fi
         fi
-    else
-        if ! curl \
-            -k \
-            -L \
-            --continue-at - \
-            --output "${dest}" \
-            "${url}"
-        then
-            echo "curl exited with an error." >&2
-            exit 3
-        fi
+        title=''
     fi
-    title=''
 done
