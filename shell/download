@@ -51,7 +51,7 @@ then
     then
         help=true
         printf '%s\n' 'The purpose of this interactive script is to download a video to the current working directory.' \
-            'Anytime you are asked for a detail, you can exit the script with the shortcut <ctrl-c>.'
+            'Anytime you are asked for information, you can exit the script with the shortcut <ctrl-c>.'
     else
         title="${1}"
     fi
@@ -198,7 +198,7 @@ do
         echo "Filename already taken: “${dest}”"
         if "${m3u8}"
         then
-            printf '%s' '[g]enerate a new name (default) / [o]verwrite / [c]ancel: '
+            printf '%s' '[g]enerate a new name (default) / [o]verwrite: '
             read answer
             # adapt to alternate prompting branch
             case "${answer}" in
@@ -211,10 +211,9 @@ do
                     ;;
             esac
         else
-            printf '%s' '[g]enerate a new name (default) / [d]elete / [r]esume / [c]ancel: '
+            printf '%s' '[g]enerate a new name (default) / [d]elete / [r]esume: '
             read answer
         fi
-        cancel=false
         case "${answer}" in
             (d|D)
                 # delete
@@ -223,11 +222,6 @@ do
             (r|R)
                 # resume (or, in m3u8 mode, overwrite)
                 loop1=false
-                ;;
-            (c|C)
-                # cancel
-                loop1=false
-                cancel=true
                 ;;
             (*)
                 # generate a new name
@@ -257,33 +251,36 @@ do
         esac
     done
 
-    if ! "${cancel}"
-    then
-        # last confirmation
-        printf 'Target: %s\n' "${dest}"
-        printf 'OK? ctrl-c/[enter] '
-        read answer
+    # last confirmation
+    printf 'Target: %s\n' "${dest}"
+    printf 'OK? [y]/n '
+    read answer
 
-        # download
-        if "${m3u8}"
-        then
-            if ! curl -kL "${url_format}" > "${dest}"
+    case "${answer}" in
+        (n*|N*)
+            ;;
+        (*)
+            # download
+            if "${m3u8}"
             then
-                echo "curl exited with an error." >&2
-                exit 3
+                if ! curl -kL "${url_format}" > "${dest}"
+                then
+                    echo "curl exited with an error." >&2
+                    exit 3
+                fi
+            else
+                if ! curl \
+                    -k \
+                    -L \
+                    --continue-at - \
+                    --output "${dest}" \
+                    "${url}"
+                then
+                    echo "curl exited with an error." >&2
+                    exit 3
+                fi
             fi
-        else
-            if ! curl \
-                -k \
-                -L \
-                --continue-at - \
-                --output "${dest}" \
-                "${url}"
-            then
-                echo "curl exited with an error." >&2
-                exit 3
-            fi
-        fi
-        title=''
-    fi
+            title=''
+            ;;
+    esac
 done
