@@ -1,23 +1,124 @@
 #!/usr/bin/env sh
 
-# download_ep [episode_number]
+# download_ep
 # A wrapper for ~/bin/download.
-
 # This wrapper is meant to be copied in a series folder.
-# Then, edit the parameters as you see fit.
+# Adjust the parameters in the source code before running.
+
+# Usage:
+
+# download_ep [season_number [episode_number]]
+# Missing arguments are read from data files, otherwise they are set to default
+# values.
+
+# download_ep '+' [episode_number]
+# Add 1 to season_number and reset episode_number.
 
 printf '%s\n' 'bad usage: please adapt this script to the local context.' >&2
 exit 2
 
-season=7
-folder="/home/val/Downloads/Transmission/Series/animation/Archer/season ${season}"
+## Parameters
 
-# File to store episode number. The data file gets overwritten by the script.
-data_file='../next_episode'
-# If you want to force an episode number, you can pass it as first argument.
+#~ root_dir="/home/val/Downloads/Transmission/Series/live action/Orange is the New Black"
+root_dir="/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK/Data/Downloads/Transmission/series/live action/Orange is the New Black"
+
+# Files in which the script stores season and episode numbers.
+file_episode_number="${root_dir}/current_episode"
+file_season_number="${root_dir}/current_season"
 
 # Name of the series. Used in filenames of episodes and subtitles.
-series="$(basename "$(dirname "${folder}")")"
+series="$(basename "${root_dir}")"
+
+_is_int()
+{
+    case "${1}" in
+        (''|*[!0-9]*)
+            false
+            ;;
+        (*)
+            true
+            ;;
+    esac
+}
+
+## Read data files
+
+[ -f "${file_season_number}" ] && season="$(cat "${file_season_number}")"
+[ -f "${file_episode_number}" ] && episode="$(cat "${file_episode_number}")"
+
+if ! _is_int "${season}"
+then
+    season=1
+fi
+
+if ! _is_int "${episode}"
+then
+    episode=1
+fi
+
+## Parse arguments
+
+if [ "${#}" -ge 1 ]
+then
+    if [ "${#}" -ge 3 ] || [ "${1}" = '-h' ] || [ "${1}" = '--help' ]
+    then
+        echo 'error: bad usage.' >&2
+        exit 3
+    fi
+    if [ "${1}" = '+' ]
+    then
+        season="$((season + 1))"
+        if [ "${#}" -eq 1 ]
+        then
+            episode=1
+        else # 2 arguments
+            case "${2}" in
+                (''|*[!0-9]*)
+                    echo 'error: bad usage (argument 2).' >&2
+                    exit 3
+                    ;;
+                (*)
+                    episode="${2}"
+                    ;;
+            esac
+        fi
+    else
+        if [ "${#}" -eq 1 ]
+        then
+            if _is_int "${1}"
+            then
+                episode="${1}"
+            else
+                echo 'error: bad usage.' >&2
+                exit 3
+            fi
+        else # 2 arguments
+            if _is_int "${1}"
+            then
+                season="${1}"
+            else
+                echo 'error: bad usage (argument 1).' >&2
+                exit 3
+            fi
+
+            if _is_int "${2}"
+            then
+                episode="${2}"
+            else
+                echo 'error: bad usage (argument 2).' >&2
+                exit 3
+            fi
+        fi
+    fi
+fi
+
+## Write to data files
+
+echo "${season}" > "${file_season_number}"
+echo "${episode}" > "${file_episode_number}"
+
+# folder where to save video and subtitle files
+folder="${root_dir}/season ${season}"
 
 mkdir -p "${folder}"
 if ! cd "${folder}"
@@ -26,14 +127,7 @@ then
     exit 2
 fi
 
-if [ -n "${1}" ]
-then
-    episode="${1}"
-    echo "${episode}" > "${data_file}"
-else
-    [ -f "${data_file}" ] && episode="$(cat "${data_file}")"
-    [ -n "${episode}" ] || episode=1
-fi
+## Interact with user
 
 [ "${season}" -lt 10 ] && s_prefix='0' || s_prefix=''
 [ "${episode}" -lt 10 ] && e_prefix='0' || e_prefix=''
@@ -47,7 +141,7 @@ then
     printf '# %s:\n' "video"
     if ~/bin/download "${title}"
     then
-        echo "$((episode + 1))" > "${data_file}"
+        echo "$((episode + 1))" > "${file_episode_number}"
     else
         printf '%s\n' "error: bin/download returned error code ‘$?’" >&2
         exit 2
