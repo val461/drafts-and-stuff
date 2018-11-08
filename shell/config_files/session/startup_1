@@ -5,9 +5,9 @@
 sudo ~/bin/luminosity 725
 
 place="$(dmenu <<EOF
+ufr
 gp
 nesles
-ufr
 EOF
 )"
 
@@ -56,18 +56,20 @@ i3-msg 'exec st -f "Source Code Pro" sudo ~/bin/luminosity;
 # put the mouse in front of lu
 python -c "from pyautogui import moveTo; moveTo(760, ${mouse_height})"
 
-# if battery in use, then warn when battery level gets low
-if [ -d '/sys/class/power_supply/BAT0' ]
-then
-    capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
-    while [ "${capacity}" -ge 21 ]
-    do
-        sleep 1m
+# warn if battery level gets low
+while true
+do
+    if [ -d '/sys/class/power_supply/BAT0' ]
+    then
         capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
-    done
-    while true
-    do
-        echo 'Battery level low, please shut down!' | dmenu
-        sleep 1m
-    done
-fi
+        status="$(cat /sys/class/power_supply/BAT0/status)"
+        if [ "${status}" != 'Charging' ] then   # DEBUG
+            echo "${status}" >> ~/tmp/sandbox/battery_statuses
+        fi
+        if [ "${status}" != 'Charging' ] && [ "${capacity}" -lt 21 ]
+        then
+            echo 'Battery level low, please shut down!' | dmenu
+        fi
+    fi
+    sleep 1m
+done
