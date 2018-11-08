@@ -63,10 +63,7 @@ do
     then
         capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
         status="$(cat /sys/class/power_supply/BAT0/status)"
-        if [ "${status}" != 'Charging' ] then   # DEBUG
-            echo "${status}" >> ~/tmp/sandbox/battery_statuses
-        fi
-        if [ "${status}" != 'Charging' ] && [ "${capacity}" -lt 21 ]
+        if [ "${status}" = 'Discharging' ] && [ "${capacity}" -lt 21 ]
         then
             echo 'Battery level low, please shut down!' | dmenu
         fi
