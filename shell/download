@@ -253,7 +253,7 @@ do
 
     # last confirmation
     printf 'Target: %s\n' "${dest}"
-    printf 'OK? [y]/n '
+    printf 'OK? n/[y] '
     read answer
 
     case "${answer}" in
