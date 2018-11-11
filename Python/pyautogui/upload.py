@@ -14,7 +14,7 @@ pyautogui.PAUSE = 1.5
 # go to web browser
 pyautogui.hotkey('winleft', '1')
 pyautogui.hotkey('ctrl', 't')
-pyautogui.typewrite('drive/u/0')
+pyautogui.typewrite('drive/u/1')
 time.sleep(1)
 pyautogui.hotkey('down')
 pyautogui.hotkey('enter')
