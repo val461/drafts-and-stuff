@@ -28,7 +28,7 @@ PROGDIR="$(cd "$(dirname "${0}")" && pwd -P)"
 no_video=false
 if [ "${#}" -gt 0 ]; then
     no_video=true
-    printf '%s' 'To disable no_video mode, run this script without arguments.'
+    printf '%s\n' 'To disable no_video mode, run this script without arguments.'
 fi
 
 _dir_contains_videos()
@@ -87,14 +87,14 @@ _move_video()
             printf "${PROGNAME}: mv gave error ${?} after trying to move “${video_file}” to “${dir_moved_videos}”.\n" >&2
         fi
     else
-        echo "${PROGNAME}: an error occurred when attempting to create directory ${dir_moved_videos}" >&2
+        printf '%s: mv gave error %s after trying to move “%s” to “%s”.\n' "${PROGNAME}" "${?}" "${video_file}" "${dir_moved_videos}" >&2
     fi
 }
 
-mkdir -p "${tmsu_mountpoint}"
+#~ mkdir -p "${tmsu_mountpoint}"
 cd "${tmsu_data}"
-tmsu unmount --all  # fixes the bug that sometimes happens when (un-)mounting something already (un-)mounted
-tmsu mount "${tmsu_mountpoint}"
+#~ tmsu unmount --all  # fixes the bug that sometimes happens when (un-)mounting something already (un-)mounted
+#~ tmsu mount "${tmsu_mountpoint}"
 
 if _dir_contains_videos; then
     move_videos=true
@@ -102,6 +102,10 @@ if _dir_contains_videos; then
 else
     dir_videos_to_play="${dir_root}/all"
     move_videos=false
+    if ! _dir_contains_videos; then
+        printf '%s: error: no videos found.\n' "${PROGNAME}" >&2
+        exit 2
+    fi
 fi
 
 "${print_help_at_launch}" && _usage
@@ -114,6 +118,10 @@ do
     then
         keep_looping=false
         break
+    fi
+    if ! _dir_contains_videos; then
+        printf '%s: error: no videos found.\n' "${PROGNAME}" >&2
+        exit 2
     fi
     # pick video
     i="$(~/bin/new_rand 1 "${list_size}")"

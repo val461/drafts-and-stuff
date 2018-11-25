@@ -5,22 +5,22 @@
 sudo ~/bin/luminosity 725
 
 place="$(dmenu <<EOF
+nesles
 ufr
 gp
-nesles
 EOF
 )"
 
 case "${place}" in
     (nesles)
-        ~/bin/setDNS odns
+        ~/bin/setDNS odns4
         ;;
     (gp)
-        ~/bin/setDNS resgp
+        ~/bin/setDNS odns4
         ;;
     (*)
         place=ufr
-        ~/bin/setDNS default
+        ~/bin/setDNS ufr
         ;;
 esac
 

@@ -6,17 +6,18 @@ basename='/etc/resolvconf'
 link="${basename}.conf"
 target="${basename}.${1}.conf"
 
-if [ -f "${target}" ]; then
-    if sudo ln -vsf "${target}" "${link}"; then
-        # update config:
-        sudo resolvconf -u || echo "setDNS: error: resolvconf returned code ${?}." >&2
+if [ "${#}" -gt 0 ]; then
+    if [ -f "${target}" ]; then
+        if sudo ln -vsf "${target}" "${link}"; then
+            # update config:
+            sudo resolvconf -u || echo "setDNS: error: resolvconf returned code ${?}." >&2
+        else
+            echo "setDNS: error: ln returned code ${?}." >&2
+        fi
     else
-        echo "setDNS: error: ln returned code ${?}." >&2
-    fi
-else
-    if [ "${#}" -gt 0 ]; then
         echo "setDNS: error: not a file: “${target}”" >&2
     fi
+else
     echo -n 'Current profile: '
     readlink "${link}"
     echo 'Available profiles:'
