@@ -1,0 +1,21 @@
+#!/bin/sh
+
+printf '%s ~/bin/update_mirrors: starting.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_MESSAGE
+
+if ! reflector --connection-timeout 2 -a 6 --score 40 --sort rate --save /etc/pacman.d/mirrorlist.reflector
+then
+    printf '%s ~/bin/update_mirrors: reflector failed.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_ERROR
+    exit 2
+fi
+
+if ! mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+then
+    printf '%s ~/bin/update_mirrors: first "mv" command failed.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_ERROR
+    exit 2
+fi
+
+if ! mv /etc/pacman.d/mirrorlist.reflector /etc/pacman.d/mirrorlist
+then
+    printf '%s ~/bin/update_mirrors: second "mv" command failed.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_ERROR
+    exit 2
+fi

@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+# accumulate data to plot battery charge across time
+
+echo >> /home/val/tmp/sandbox/log_battery_charge
+echo >> /home/val/tmp/sandbox/log_battery_full
+echo >> /home/val/tmp/sandbox/log_date
+
+if [ -d '/sys/class/power_supply/BAT0' ]
+then
+    while true
+    do
+        status="$(cat /sys/class/power_supply/BAT0/status)"
+        if [ "${status}" = 'Discharging' ]
+        then
+            charge_now="$(cat /sys/class/power_supply/BAT0/charge_now)"
+            charge_full="$(cat /sys/class/power_supply/BAT0/charge_full)"
+            printf '%d\n' "${charge_now}" >> /home/val/tmp/sandbox/log_battery_charge
+            printf '%d\n' "${charge_full}" >> /home/val/tmp/sandbox/log_battery_full
+            date -Iseconds >> /home/val/tmp/sandbox/log_date
+        fi
+        sleep 1m
+    done
+fi
