@@ -1,4 +1,4 @@
-Matlab/*.png
-Ruby/doc
-Ruby/practice
-shell/pick_line_*
+/Matlab/*.png
+/Ruby/doc/
+/Ruby/practice/
+/shell/pick_line_*
