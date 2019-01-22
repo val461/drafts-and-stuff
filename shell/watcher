@@ -5,7 +5,7 @@
 ## parameters
 
 print_help_at_launch=true
-file_browser='spacefm'
+file_browser='nemo'
 video_player='vlc'
 
 #~ tmsu_data=~/'mnt/Data/Downloads/Transmission/v'
