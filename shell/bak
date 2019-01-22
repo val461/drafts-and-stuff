@@ -1,9 +1,9 @@
 #!/bin/sh
 
 cd ~/'Documents'
-{ zip -r ~/'Documents/Vie pratique.zip' 'Vie pratique' >/dev/null ; printf '~/bin/bak: zip 1: code %s\n' "${?}" ; } &
+{ zip -r ~/'Documents/Vie pratique.zip' 'Vie pratique' --quiet; printf '~/bin/bak: zip 1: code %s\n' "${?}" ; } &
 
 cd ~/'Documents/Texts'
-{ zip -r ~/'Documents/Texts/own.zip' 'own' >/dev/null ; printf '~/bin/bak: zip 2: code %s\n' "${?}" ; } &
+{ zip -r ~/'Documents/Texts/own.zip' 'own' --quiet; printf '~/bin/bak: zip 2: code %s\n' "${?}" ; } &
 
-~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
+#~ ~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
