@@ -19,3 +19,5 @@ then
     printf '%s ~/bin/update_mirrors: second "mv" command failed.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_ERROR
     exit 2
 fi
+
+printf '%s ~/bin/update_mirrors: done.\n' "$(date -Iseconds)" >> /home/val/Desktop/CRON_MESSAGE
