@@ -3,10 +3,10 @@
 #~ echo Running.
 
 cd ~/'Documents/Texts'
-{ zip -r ~/'Documents/Texts/own.zip' 'own' --quiet; printf '~/bin/bak: zip Texts/own: code %s\n' "${?}" ; }
+{ zip -r -FS --quiet ~/'Documents/Texts/own.zip' 'own'; printf '~/bin/bak: zip Texts/own: code %s\n' "${?}" ; }
 
 cd ~/'Documents'
-{ zip -r ~/'Documents/Vie pratique.zip' 'Vie pratique' --quiet; printf '~/bin/bak: zip Vie pratique: code %s\n' "${?}" ; }
+{ zip -r -FS --quiet ~/'Documents/Vie pratique.zip' 'Vie pratique'; printf '~/bin/bak: zip Vie pratique: code %s\n' "${?}" ; }
 
 #~ ~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
 
