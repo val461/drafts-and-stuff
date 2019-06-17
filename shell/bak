@@ -2,12 +2,9 @@
 
 #~ echo Running.
 
-cd ~/'Documents/Texts'
-{ zip -r -FS --quiet ~/'Documents/Texts/own.zip' 'own'; printf '~/bin/bak: zip Texts/own: code %s\n' "${?}" ; }
-
-cd ~/'Documents'
-{ zip -r -FS --quiet ~/'Documents/Vie pratique.zip' 'Vie pratique'; printf '~/bin/bak: zip Vie pratique: code %s\n' "${?}" ; }
-
+cd ~/'bin/bak_files/to_archive' || exit "${?}"
+{ zip -r -FS --quiet '../archive/stuff.zip' *; printf '~/bin/bak: zip: code %s\n' "${?}" ; }
+s
 #~ ~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
 
 #~ echo Done.
