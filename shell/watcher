@@ -91,10 +91,10 @@ _move_video()
     fi
 }
 
-#~ mkdir -p "${tmsu_mountpoint}"
+mkdir -p "${tmsu_mountpoint}"
 cd "${tmsu_data}"
 #~ tmsu unmount --all  # fixes the bug that sometimes happens when (un-)mounting something already (un-)mounted
-#~ tmsu mount "${tmsu_mountpoint}"
+tmsu mount "${tmsu_mountpoint}"
 
 if _dir_contains_videos; then
     move_videos=true
