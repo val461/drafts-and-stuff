@@ -3,8 +3,9 @@
 #~ echo Running.
 
 cd ~/'bin/bak_files/to_archive' || exit "${?}"
-{ zip -r -FS --quiet '../archive/stuff.zip' *; printf '~/bin/bak: zip: code %s\n' "${?}" ; }
-s
+zip -r -FS --quiet '../stuff.zip' *
+printf '~/bin/bak: zip: code %s\n' "${?}" 
+
 #~ ~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
 
 #~ echo Done.
