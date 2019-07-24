@@ -104,7 +104,6 @@ class Node:
         # return self.value
         return self.__str__()
 
-    #TODO: time this function vs equality of strings
     def __eq__(self, other):
         return self.value == other.value and self.children == other.children
 
