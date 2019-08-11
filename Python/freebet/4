@@ -1,0 +1,6 @@
+E = g_cas_1 * p1 + g_cas_2 * p2
+E = (g1 - l2)/cote1 + g2/cote2
+E = (g1 - mise2) / cote1 + (cote2 - 1) * mise2 / cote2
+E = g1 / cote1 - mise2 / cote1 + (cote2 - 1) * mise2 / cote2
+E = g1 / cote1 - mise2 * (1 / cote1 + (cote2 - 1) / cote2)
+E = g1 / cote1 - mise2 * (1 / cote1 + 1 - 1 / cote2)

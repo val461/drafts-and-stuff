@@ -1,0 +1,30 @@
+g_cas_1 et g_cas_2 sont fonctions affines de mise2, de pentes de signe opposé.
+    g_cas_1 = g1 - l2 = g1 - mise2
+        (g1 est constante, de valeur (cote1 - 1) * mise1.)
+    g_cas_2 = g2 - l1 = g2 = (cote2 - 1) * mise2
+
+Pour que g_cas_1 et g_cas_2 soient tous deux aussi élevés :
+    g_cas_1 = g_cas_2
+    g1 - mise2 = (cote2 - 1) * mise2
+    g1 = cote2 * mise2
+    mise2 = g1 / cote2
+    g_cas_1 = g1 - g1 / cote2 = g1 * (1 - 1 / cote2)
+    g_cas_2 = (cote2 - 1) * g1 / cote2 = g1 * (1 - 1 / cote2)
+
+Choisissons g_cas_1 et g_cas_2 en pondérant ce point d'égalité Q = g1 * (1 - 1 / cote2) par les probabilités :
+    g1 = p1 * Q
+    g2 = p2 * Q
+    p1/p2 = cote2/cote1
+    (1-p2)/p2 = cote2/cote1
+    1/p2-1 = cote2/cote1
+    1/p2 = cote2/cote1 + 1
+    p2 = 1/(cote2/cote1 + 1) = cote1 / (cote1 + cote2)
+    p1 = 1 - p2 = cote2 / (cote1 + cote2)
+
+Ça semble donner des valeurs non atteintes pour g_cas_1 et g_cas_2.
+    Q = g1 * (1 - 1 / cote2)
+    g1_conseil = p1_alt * Q
+    g2_conseil = p2_alt * Q
+
+Choisissons g_cas_1 et g_cas_2 en pondérant par les probabilités :
+    g_cas_1 / g_cas_2 = cote 2 / cote1
