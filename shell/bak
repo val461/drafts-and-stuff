@@ -2,9 +2,11 @@
 
 #~ echo Running.
 
-cd ~/'bin/bak_files/to_archive' || exit "${?}"
-zip -r -FS --quiet '../stuff.zip' *
-printf '~/bin/bak: zip: code %s\n' "${?}" 
+#cd ~/'bin/bak_files/to_archive' || exit "${?}"
+cd ~/'Documents' || exit "${?}"
+#zip -r -FS --quiet '../stuff.zip' *
+zip -r -FS --quiet --symlinks ~/'bin/bak_files/stuff.zip' './Minecraft' './Texts/own' './Vie pratique'
+printf '~/bin/bak: zip: code %s\n' "${?}"
 
 #~ ~/'Dev/drafts-and-stuff/Python/pyautogui/upload.py'
 
