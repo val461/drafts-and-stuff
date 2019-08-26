@@ -1,0 +1,7 @@
+Nodes: the dictionary of nodes
+
+Node
+    id: key in the dictionary of nodes
+    title: string
+    parents: list of node ids
+    children: list of node ids
