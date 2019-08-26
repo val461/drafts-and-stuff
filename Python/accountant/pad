@@ -1,9 +1,53 @@
-planned features
-    show balance
-    organize expenses under hierarchic categories
-    tree of categories
-    sort by date
-    filter with certain categories of the tree
-    summary by period size
-    recurring expenses
-    handle several bank accounts
+use the decimal module
+
+ledger
+    accounts
+        assets
+            bank accounts
+            cash
+            commodities
+            owed to me
+        equity
+        liabilities
+        income
+        expenses
+    transactions
+
+transaction
+    comment
+    splits
+    cleared
+    date
+    other parties than me
+        stores
+        persons
+        associations
+    tags
+
+invoice / register
+    receivable by one debtor
+
+tags
+    imply rules
+    example
+        imply rules
+            orange => fruit
+        user-given tags
+            seller: Leclerc
+            item type: orange
+        implied tags
+            fruit
+
+amount input
+    supporter les additions et soustractions
+
+créer des transactions à partir de balances
+    input
+        paramètres
+            2 comptes, dont un dont l'utilisateur doit fournir les balances à certaines dates qu'il fournit aussi
+        valeurs
+            liste des balances à certaines dates d'un des 2 comptes
+                et des dates en question
+    possibilité de le faire à partir d'un CSV exporté de LibreOffice Calc
+
+trier les transactions par date
