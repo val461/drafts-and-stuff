@@ -8,7 +8,6 @@
 
 
 from tkinter import Tk
-import time
 
 
 _r = Tk()
