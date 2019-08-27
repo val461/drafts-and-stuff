@@ -19,27 +19,34 @@ import Split
 
 class Transaction:
 
-    def __init__(self, comment = None, default_currency = None, date = None, cleared = False, other_parties = None, tags = None):
+    def __init__(self, comment = None, date = None, cleared = None, other_parties = None, tags = None, product_name = None, product_amount = None, product_unit = None):
         self.comment = comment
-        self.default_currency = default_currency
         self.date = date
         self.cleared = cleared
         self.other_parties = other_parties
         self.tags = tags
         self.splits = []
 
-        # DELETE ME ONCE IMPORTATION IS OVER
-        self.product_details = {'name': None, 'amount': None, 'unit': None}
+        # DELETE THESE 3 ARGS ONCE IMPORTATION IS OVER
+        self.product_name = product_name
+        self.product_amount = product_amount
+        self.product_unit = product_unit
 
+
+    def new_split(self, **kwargs):
+        self.splits.append(Split(**kwargs))
 
     # todo
-    def add_split(self, **args):
-        self.splits.append(Split(self, **args))
-
-    # todo
-    def seems_valid(self):
+    def check_valid(self):
         # check that parameters are set with correct types
         return True
+
+
+    # check me
+    def to_dictionary(self):
+        result = self.__dict__.copy()
+        result['splits'] = [split.__repr__() for split in self.splits]
+        return result
 
 
     # todo

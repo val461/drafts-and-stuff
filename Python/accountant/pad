@@ -12,6 +12,18 @@ ledger
         income
         expenses
     transactions
+    serialization
+        convert to dictionary
+            using __dict__.copy()
+        load from dictionary
+        JSON module
+            save dictionary to JSON
+            load dictionary from JSON
+        implement compositions of the above functions
+            convert to JSON
+            load from JSON
+            save to JSON file
+            load from JSON file
 
 transaction
     comment

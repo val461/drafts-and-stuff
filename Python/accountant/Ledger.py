@@ -34,24 +34,35 @@ class Ledger:
 
         with open(filename, 'r') as ledger_file:
             line = ledger_file.readline()
+            line_number = 1
             while line:
-                if re.match(r'^[0-9]', line):
+                if re.match(r'^[0-9]', line): # transaction found
                     number_of_transactions += 1
-                    print(f'transactions #{number_of_transactions}')
+                    print(f'transaction #{number_of_transactions}')
+                    # transaction header
                     matched_groups = re.match(r'^(?:([0-9]{4})/([0-9]{2})/([0-9]{2})) *([^;]*)(?:;(.*))?$', line)
-                    assert(matched_groups)
+                    assert matched_groups, f'header, line {line_number}'
                     date = datetime.date(*map(int, matched_groups.group(1, 2, 3)))
                     matched = dict(zip(['description', 'tags'], matched_groups.group(4, 5)))
                     tags = dict(tag.split(': ') for tag in matched['tags'].strip().split(','))
                     if 'seller' in tags:
                         sellers = [tags['seller']]
+                        del tags['seller']
                     else:
                         sellers = None
-                    transaction = Transaction(comment = matched['description'], default_currency = self.default_currency, date = date, cleared = False, other_parties = sellers, tags = tags)
+                    transaction = Transaction(comment = matched['description'], date = date, other_parties = sellers, tags = tags, cleared = None)
                     line = ledger_file.readline()
-                    if re.match(r'^ *([a-zA-Z0-9:]+) *([-+]? *[0-9]+) *([^.]+)()', line):# todo: float or int, semicolon or not, comment or not
-
-                line = ledger_file.readline()
+                    line_number += 1
+                    # splits
+                    while len(line) > 1:   # line bigger than just '\n'
+                        matched_groups = re.match(r'^ *([^ ]+) *([-+]? *[0-9.]+) *([^ ;]+)(?:;(.*))?$', line)
+                        assert matched_groups, f'split, line {line_number}'
+                        matched = dict(zip(['account', 'amount', 'currency', 'comment'], matched_groups.group(*range(1, 5))))
+                        transaction.new_split(**matched)
+                        line = ledger_file.readline()
+                        line_number += 1
+                    # check there is at least one split
+                    assert transaction.splits, f'no splits, line {line_number}'
 
         print(f'number_of_transactions: {number_of_transactions}')
         return ledger

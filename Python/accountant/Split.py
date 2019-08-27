@@ -1,34 +1,33 @@
 #!/usr/bin/env python3
 
-# account
-# currency
-# amount
+import json
 
 class Split:
 
-    def __init__(self, parent, account = None, currency = None, amount = None, cleared = None):
-        self.parent = parent
-        self.account = account
-        self.currency = currency
-        self.amount = amount
-        self.cleared = cleared
+    auto_attributes = 'account amount cleared comment'.split()
+
+    def __init__(self, **kwargs):
+        for attribute in auto_attributes:
+            if attribute in kwargs:
+                setattr(self, attribute, kwargs[attribute])
+            else:
+                setattr(self, attribute, None)
 
 
     # todo
-    def seems_valid(self):
-        # check that parameters are set with correct types
+    def check_valid(self):
         return True
 
 
-    # todo
     def __str__(self):
-        return ''
+        return self.__repr__()
 
 
     # todo
     def __repr__(self):
-        # (fixme: ambiguous output)
-        return self.__str__()
-    
+        d = self.__dict__.copy()
+        d.amount = self.amount.__repr__()
+        return d.__repr__()
+
 
 # if __name__ == '__main__':
