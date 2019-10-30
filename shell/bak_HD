@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo Warning: not working yet.
+exit
+
+cd ~ || exit "${?}"
+geany '/home/val/Documents/Vie pratique/sensitive/bak'
+zip -e -r -y -FS '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK/stuff-encrypted.zip' 'Documents/Vie pratique' .* -x . ..
+zip -r -y -FS '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK/documents.zip' 'Documents' -x . .. 'Documents/Vie pratique'
+printf '~/bin/bak_encrypt: zip: code %s\n' "${?}"
