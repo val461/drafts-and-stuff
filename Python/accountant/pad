@@ -63,3 +63,12 @@ créer des transactions à partir de balances
     possibilité de le faire à partir d'un CSV exporté de LibreOffice Calc
 
 trier les transactions par date
+
+gestion de budget mensuel
+    revenus récurrents
+    dépenses récurrentes
+        part des dépenses récurrentes déjà payées ce mois-ci
+        part des dépenses récurrentes restantes ce mois-ci
+    budget libre
+        part du budget libre déjà dépensée ou épargnée ce mois-ci
+        part du budget libre restante

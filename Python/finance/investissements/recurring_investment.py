@@ -13,13 +13,13 @@ def divisors_of(n):
 
 
 # account_type = None
-account_type = 'PEA'
-# account_type = 'AV'
+# account_type = 'PEA'
+account_type = 'AV'
 saved_per_month = 25            # currency amount
 # saved_per_month = 0            # currency amount
 duration_in_months = 12*8
 # duration_in_months = 12
-opening_balance = 2000          # currency amount
+opening_balance = 2600          # currency amount
 # opening_balance = 100          # currency amount
 
 
@@ -28,7 +28,7 @@ opening_balance = 2000          # currency amount
 
 # percentages
 portfolio_wanted_percentages = [100]
-portfolio_return_rates_per_year = [10]
+portfolio_return_rates_per_year = [15.31]
 # portfolio_wanted_percentages = [90, 10]
 # portfolio_return_rates_per_year = [10, 3]
 
@@ -48,8 +48,8 @@ rebalance_periods_to_try = [None]   # do not simulate rebalancing
 
 tick = None
 
-show_plot = False
-# show_plot = True
+# show_plot = False
+show_plot = True
 
 x_axis = period_sizes_to_try
 # x_axis = rebalance_periods_to_try
@@ -58,14 +58,17 @@ show_many_examples = True
 # show_many_examples = False
 
 fees_rate_per_year_PEA = 0          # percentage for PEA
-fee_by_contribution_PEA = 1      # currency amount for PEA
-# fee_by_contribution_PEA = 0      # currency amount for PEA
+# fee_by_contribution_PEA = 1      # currency amount for PEA
+fee_by_contribution_PEA = 0      # currency amount for PEA
 # withdrawal_fees_PEA = 6             # currency amount
-withdrawal_fees_PEA = 6+8*12*duration_in_months/12*fee_by_contribution_PEA             # currency amount
+withdrawal_fees_PEA = 0             # currency amount
+# withdrawal_fees_PEA = 6+4*4*duration_in_months/12*fee_by_contribution_PEA             # currency amount
 
-fees_rate_per_year_AV = 0.75       # percentage for AV
-fee_by_contribution_AV = 0         # currency amount for AV
-withdrawal_fees_AV = 6             # currency amount
+fees_rate_per_year_AV = 0.6       # percentage for AV
+# fee_by_contribution_AV = 0         # currency amount for AV
+fee_by_contribution_AV = '0.1 %'         # currency amount for AV   TODO
+# withdrawal_fees_AV = 6             # currency amount
+withdrawal_fees_AV = 0             # currency amount
 
 if not account_type:
     fees_rate_per_year = 0          # percentage
@@ -105,7 +108,7 @@ if show_many_examples:
 else:
     # chosen_example_for_PEA = ExampleForACertainPeriod(saved_per_month, duration_in_months, opening_balance, withdrawal_fees, portfolio_wanted_percentages, portfolio_return_rates_per_year, rebalance_period_in_months, fees_rate_per_year = fees_rate_per_year_PEA, fee_by_contribution = fee_by_contribution_PEA, period_size_in_months = 3, tick = tick, account_type = 'PEA')
 
-    chosen_example_for_PEA = ExampleForACertainPeriod(saved_per_month = 25, duration_in_months = 96, opening_balance = 2000, withdrawal_fees = 6, portfolio_wanted_percentages = [90, 10], portfolio_return_rates_per_year = [10, 3], rebalance_period_in_months = rebalance_period_in_months, fees_rate_per_year = 0, fee_by_contribution = 0, period_size_in_months = 0.25, tick = tick, account_type = 'PEA')
+    chosen_example_for_PEA = ExampleForACertainPeriod(saved_per_month = 25, duration_in_months = 96, opening_balance = 2600, withdrawal_fees = 0, portfolio_wanted_percentages = [100], portfolio_return_rates_per_year = [15.31], rebalance_period_in_months = None, fees_rate_per_year = 0, fee_by_contribution = 0, period_size_in_months = 0.25, tick = 0.25, account_type = 'PEA')
 
     chosen_example_for_AV = ExampleForACertainPeriod(saved_per_month, duration_in_months, opening_balance, withdrawal_fees, portfolio_wanted_percentages, portfolio_return_rates_per_year, rebalance_period_in_months, fees_rate_per_year = fees_rate_per_year_AV, fee_by_contribution = fee_by_contribution_AV, period_size_in_months = 0.25, tick = tick, account_type = 'AV')
 
