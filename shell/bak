@@ -5,6 +5,7 @@
 cd ~/'bin/bak_files/to_archive' || exit "${?}"
 #cd ~/'Documents' || exit "${?}"
 zip -r -FS --quiet '../stuff.zip' *
+#zip -r -FS '../stuff.zip' *
 #zip -r -FS --quiet ~/'bin/bak_files/stuff.zip' './Texts/own' './Vie pratique'
 printf '~/bin/bak: zip: code %s\n' "${?}"
 
