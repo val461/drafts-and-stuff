@@ -4,16 +4,20 @@
 # Check the parameters as well as the line marked “EDIT ME”, then run this
 # script in the directory of the subtitles to rename.
 
-season=8
-first_episode=1
-last_episode=8
+season=1
+first_episode=36
+last_episode=36
 
-z='0'
+z1='0'
+z2='0'
 i="${first_episode}"
 while [ "${i}" -le "${last_episode}" ]
 do
-  [ "${i}" -ge 10 ] && z=''
-  mv -vi *."S0${season}E${z}${i}".*.srt "Archer S0${season}E${z}${i}.srt"  # EDIT ME
-  #~ mv -vi "0${season}.${z}${i} "*.srt "Archer S0${season}E${z}${i}.srt"  # EDIT ME
+  [ "${i}" -ge 10 ] && z1=''
+  [ "${i}" -ge 100 ] && z2=''
+  #mv -vi "[apreder]Un_si_grand_soleil_s.${season}_ep.${z2}${z1}${i}("*")"*.srt "Un si grand soleil S0${season}E${z1}${i}.srt"  # EDIT ME
+  mv -vi *."S0${season}E${z1}${i}".*.srt "Un si grand soleil S0${season}E${z1}${i}.srt"  # EDIT ME
+  #mv -vi *."S0${season}E${z}${i}".*.srt "Archer S0${season}E${z}${i}.srt"  # EDIT ME
+  #mv -vi "0${season}.${z}${i} "*.srt "Archer S0${season}E${z}${i}.srt"  # EDIT ME
   let 'i++'
 done
