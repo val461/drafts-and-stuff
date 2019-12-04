@@ -28,15 +28,11 @@ long_line_behaviour=1
 long_line_column=79
 
 [files]
-current_page=7
-FILE_NAME_0=3519;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2FDocuments%2FVie%20pratique%2Forganisation%2Fcalendar;0;4
+current_page=3
+FILE_NAME_0=10689;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2FDocuments%2FVie%20pratique%2Forganisation%2Fcalendar;0;4
 FILE_NAME_1=134;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2FDocuments%2FVie%20pratique%2Forganisation%2Fpad;0;4
-FILE_NAME_2=126;Sh;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fpick_line;0;4
-FILE_NAME_3=60;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fpick_line_list;0;4
-FILE_NAME_4=24;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fpick_line_list2;0;4
-FILE_NAME_5=0;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fpick_line_list3;0;4
-FILE_NAME_6=0;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fpick_line_list4;0;4
-FILE_NAME_7=1441;Sh;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Fbin%2Fconfig_files%2Fsession%2Fstartup_1;0;4
+FILE_NAME_2=34425;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2FDocuments%2FVie%20pratique%2Ffinances%2FComptabilité%2Fhledger%2F1.journal;0;4
+FILE_NAME_3=83;None;0;EUTF-8;0;1;1;%2Fhome%2Fval%2Ftmp%2Fbooks%2FLink%20to%20Mike%20Dooley%20-%20study%20notes;0;4
 
 [VTE]
 last_dir=/home/val
