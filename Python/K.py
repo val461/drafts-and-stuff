@@ -9,10 +9,16 @@ def chrono(duration = 1, quiet = False, separator = ' '):
     if quiet:
         time.sleep(duration)
     else:
-        for remaining in range(duration, 0, -1):
+        floor = math.floor(duration)
+        fractional = duration - floor
+        if fractional > 0:
+            print(duration, end = separator, flush = True)
+            time.sleep(fractional)
+        for remaining in range(floor, 0, -1):
             print(remaining, end = separator, flush = True)
             time.sleep(1)
-        print(0)
+        print()
+        # print(0)
 
 
 class Exercise:
@@ -30,29 +36,14 @@ class Exercise:
             self.name = type(self).__name__
 
 
-    def increase_difficulty(self):
-        print(f'Previous: {self}.')
-
-        self.repetitions += self.repetitions_increment
-
-        print(f'New: {self}.')
-
-
-    def decrease_difficulty(self):
-        print(f'Previous: {self}.')
-
-        new = self.repetitions - self.repetitions_increment
-        if new > 0:
-            self.repetitions = new
-
-        print(f'New: {self}.')
-
-
     def __str__(self, verbose = False):
         if verbose:
             return f'{self.name} (hold {self.hold_duration}, rest {self.rest_duration}, repeat {self.repetitions})'
         else:
             return f'{self.name}\t(H {self.hold_duration:2},  R {self.rest_duration:2},  T {self.repetitions:2})'
+
+    def __repr__(self):
+        return f'{type(self).__name__}(hold_duration = {self.hold_duration}, rest_duration = {self.rest_duration}, repetitions = {self.repetitions}, hold_increment = {self.hold_increment}, rest_increment = {self.rest_increment}, repetitions_increment = {self.repetitions_increment}, name = {self.name.__repr__()})'
 
     def perform(self):
         print(f'\nNext exercise: {self}.\nReady? [enter]')
@@ -62,6 +53,24 @@ class Exercise:
             chrono(self.hold_duration)
             print('Rest.')
             chrono(self.rest_duration)
+
+
+    def increase_difficulty(self):
+        self._change_difficulty(self.repetitions_increment)
+
+
+    def decrease_difficulty(self):
+        self._change_difficulty(-self.repetitions_increment)
+
+
+    def _change_difficulty(self, difference):
+        print(f'Previous: {self}.')
+        new = self.repetitions + difference
+        if new > 0:
+            self.repetitions = new
+        else:
+            print(f'Did not decrease (too low).')
+        print(f'New: {self}.')
 
 
 class Quick(Exercise):
@@ -85,8 +94,33 @@ class Medium(Exercise):
 
 class Long(Exercise):
 
-    def __init__(self, hold_duration = 10, rest_duration = 5, repetitions = 5, *args, **kw_args):
-        super().__init__(hold_duration = hold_duration, rest_duration = rest_duration, repetitions = repetitions, *args, **kw_args)
+    def __init__(self, hold_duration = 10, rest_duration = 5, repetitions = 5, hold_increment = 2, rest_increment = 1, *args, **kw_args):
+        super().__init__(hold_duration = hold_duration, rest_duration = rest_duration, repetitions = repetitions, hold_increment = hold_increment, rest_increment = rest_increment, *args, **kw_args)
+
+
+    def increase_difficulty(self):
+        print(f'Previous: {self}.')
+        if self.hold_duration < 20:
+            self.hold_duration += self.hold_increment
+            self.rest_duration += self.rest_increment
+        else:
+            print(f'Did not increase (too high).')
+        print(f'New: {self}.')
+
+
+    def decrease_difficulty(self):
+        print(f'Previous: {self}.')
+        new_hold = self.hold_duration - self.hold_increment
+        new_rest = self.rest_duration - self.rest_increment
+        if new_hold > 0 and new_rest > 0:
+            self.hold_duration = new_hold
+            self.rest_duration = new_rest
+        else:
+            print(f'Did not decrease (too low).')
+        print(f'New: {self}.')
+
+
+    _change_difficulty = None
 
 
 class Session:
@@ -102,22 +136,35 @@ class Session:
 
 
     def __str__(self):
-        return '\n'.join(map(str, self.exercises))
+        return '\n'.join(exercise.__str__() for exercise in self.exercises)
 
 
+    def __repr__(self):
+        return '\n'.join(exercise.__repr__() for exercise in self.exercises)
+
+
+    # testme
     def load(self, filename = None):
         if not filename:
             filename = self.filename
-        data = None
-        # todo
-        return data
+        if not filename:
+            print('Error: filename not specified.')
+            exercises = None
+        else:
+            with open(filename, 'r') as my_file:
+                exercises = map(eval, my_file.readlines())
+        return exercises
 
 
+    # testme
     def save(self, filename = None):
         if not filename:
             filename = self.filename
-        # todo
-        pass
+        if not filename:
+            print('Error: filename not specified.')
+        else:
+            with open(filename, 'w') as my_file:
+                my_file.write(self.__repr__())
 
 
     def run(self):
