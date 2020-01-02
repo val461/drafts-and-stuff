@@ -64,13 +64,13 @@ class Exercise:
 
 
     def _change_difficulty(self, difference):
-        print(f'Previous: {self}.')
+        print(f'Previous:\t{self}.')
         new = self.repetitions + difference
         if new > 0:
             self.repetitions = new
         else:
             print(f'Did not decrease (too low).')
-        print(f'New: {self}.')
+        print(f'New:\t\t{self}.')
 
 
 class Quick(Exercise):
@@ -79,7 +79,7 @@ class Quick(Exercise):
         super().__init__(hold_duration = hold_duration, rest_duration = rest_duration, repetitions = repetitions, *args, **kw_args)
 
     def perform(self):
-        print(f'\nNext exercise: {self}.\nYou will have to press <enter> each time you release.\nReady? [enter]')
+        print(f'\nNext exercise: {self}.\nYou are supposed to press <enter> each time you release.\nReady? [enter]')
         input()
         for r in range(1, self.repetitions + 1):
             print(f'Hold and release.')
@@ -99,17 +99,17 @@ class Long(Exercise):
 
 
     def increase_difficulty(self):
-        print(f'Previous: {self}.')
+        print(f'Previous:\t{self}.')
         if self.hold_duration < 20:
             self.hold_duration += self.hold_increment
             self.rest_duration += self.rest_increment
         else:
             print(f'Did not increase (too high).')
-        print(f'New: {self}.')
+        print(f'New:\t\t{self}.')
 
 
     def decrease_difficulty(self):
-        print(f'Previous: {self}.')
+        print(f'Previous:\t{self}.')
         new_hold = self.hold_duration - self.hold_increment
         new_rest = self.rest_duration - self.rest_increment
         if new_hold > 0 and new_rest > 0:
@@ -117,7 +117,7 @@ class Long(Exercise):
             self.rest_duration = new_rest
         else:
             print(f'Did not decrease (too low).')
-        print(f'New: {self}.')
+        print(f'New:\t\t{self}.')
 
 
     _change_difficulty = None
@@ -126,12 +126,11 @@ class Long(Exercise):
 class Session:
 
     def __init__(self, load_from_file = False, filename = None):
+        self.exercises = None
         self.filename = filename
         if load_from_file:
-            # todo
-            data = load(filename)
-            self.exercises = [Medium(), Quick(), Long()]
-        else:
+            self.exercises = self.load(filename)
+        if not self.exercises:
             self.exercises = [Medium(), Quick(), Long()]
 
 
@@ -145,31 +144,40 @@ class Session:
 
     # testme
     def load(self, filename = None):
+        exercises = None
         if not filename:
             filename = self.filename
         if not filename:
             print('Error: filename not specified.')
-            exercises = None
         else:
-            with open(filename, 'r') as my_file:
-                exercises = map(eval, my_file.readlines())
+            try:
+                with open(filename, 'r') as my_file:
+                    exercises = map(eval, my_file.readlines())
+            except OSError as error:
+                print(f'Error: failed to load file " {filename} ". ({error}.)')
         return exercises
 
 
     # testme
     def save(self, filename = None):
+        done = False
         if not filename:
             filename = self.filename
         if not filename:
             print('Error: filename not specified.')
         else:
-            with open(filename, 'w') as my_file:
-                my_file.write(self.__repr__())
+            try:
+                with open(filename, 'w') as my_file:
+                    my_file.write(self.__repr__()+'\n')
+                    done = True
+                    print(f'Saved to file {filename}.')
+            except OSError as error:
+                print(f'Error: failed to save to file " {filename} ". ({error})')
+        return done
 
 
     def run(self):
         print(self)
-        # for exercise in self.exercises:
         for exercise in self.exercises:
             exercise.perform()
             print('[i]ncrease / [d]ecrease difficulty? (Or <enter> to make no changes.)')
@@ -178,8 +186,18 @@ class Session:
                 exercise.increase_difficulty()
             elif answer == 'd':
                 exercise.decrease_difficulty()
+        print(self)
+        print('Save? [y]/n')
+        answer = input().lower()
+        if answer == 'n':
+            print('Not saving.')
+        else:
+            print('Saving.')
+            self.save()
 
 
 if __name__ == '__main__':
-    s = Session()
+    s = Session(load_from_file = True, filename = 'K_data')
+    # s = Session(filename = 'K_data')
+    # s.save()
     s.run()
