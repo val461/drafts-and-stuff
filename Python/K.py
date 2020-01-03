@@ -17,8 +17,8 @@ def chrono(duration = 1, quiet = False, separator = ' '):
         for remaining in range(floor, 0, -1):
             print(remaining, end = separator, flush = True)
             time.sleep(1)
-        print()
-        # print(0)
+        # print()
+        print(0)
 
 
 class Exercise:
@@ -168,7 +168,7 @@ class Session:
     def run(self):
         print(self)
         print()
-        for exercise in self.exercises[1:2]:
+        for exercise in self.exercises:
             # print(f'exercise: {exercise}.') #comment me
             exercise.perform()
             print('[i]ncrease / [d]ecrease difficulty? (<enter> to make no changes.)')
