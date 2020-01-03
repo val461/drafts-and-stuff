@@ -31,9 +31,11 @@ zero='0'
 while [ "${i}" -le "${last_episode}" ]
 do
     [ "${i}" -ge 10 ] && zero=''
+    # ADAPT NEXT LINE TO LOCAL CONTEXT
     episode_file="$(echo "${episodes_dir}"/*"${episode_prefix}${zero}${i}"*"${extension_to_remove}")"
     if [ -e "${episode_file}" ]; then
         filename="$(basename "${episode_file}" "${extension_to_remove}")"
+        # ADAPT NEXT LINE TO LOCAL CONTEXT
         file_to_rename="$(echo "${subtitles_dir}"/*"${subtitle_prefix}${zero}${i}"*)"
         new_name="${subtitles_dir}/${filename}${new_extension}"
         if [ -e "${file_to_rename}" ]; then
