@@ -65,7 +65,7 @@ class Exercise:
 
 
     def perform(self):
-        print(f'Next exercise: {self}.\n')
+        print(f'\nNext exercise: {self}.\n')
         if self.use_chrono:
             print(f'Ready? [enter]')
             input()
@@ -167,12 +167,11 @@ class Session:
 
     def run(self, perform = True):
         print(self)
-        print()
         for exercise in self.exercises:
             if perform:
                 exercise.perform()
             else:
-                print(f'exercise: {exercise}.')
+                print(f'\nexercise: {exercise}.')
             print('[i]ncrease / [d]ecrease difficulty? (<enter> to make no changes.)')
             answer = input().lower()
             if answer == 'i':
