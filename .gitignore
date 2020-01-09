@@ -2,5 +2,10 @@
 /Ruby/doc/
 /Ruby/practice/
 /shell/bak_files/
-/shell/config_files/session/geany_sessions/session.geany
 /shell/pick_line_*
+
+# Currently ignoring changes to the file
+# '/home/val/Documents/Dev/drafts-and-stuff/shell/config_files/session/geany_sessions/session.geany'
+# thanks to the command 'git update-index --assume-unchanged path/to/file'.
+# To start keeping track of this file again, use 'git update-index --no-assume-unchanged path/to/file'.
+# (Information found at https://stackoverflow.com/questions/6964297/untrack-files-from-git-temporarily/6964322#6964322 .)
