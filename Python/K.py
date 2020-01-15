@@ -43,7 +43,7 @@ class Exercise:
         '''
         result = None
         if template == 'Quick':
-            result = cls(hold_duration = 1, rest_duration = 1, repetitions = 10, hold_increment = 0, rest_increment = 0, repetitions_increment = 2, use_chrono = False, name = template)
+            result = cls(hold_duration = 1, rest_duration = 1, repetitions = 10, hold_increment = 0, rest_increment = 0, repetitions_increment = 2, use_chrono = True, name = template)
         elif template == 'Medium':
             result = cls(hold_duration = 4, rest_duration = 2, repetitions = 5, hold_increment = 0, rest_increment = 0, repetitions_increment = 1, use_chrono = True, name = template)
         elif template == 'Long':
@@ -165,7 +165,13 @@ class Session:
         return done
 
 
-    def run(self, perform = True):
+    def run(self):
+        print('Perform? [y]/n')
+        answer = input().lower()
+        if answer == 'n':
+            perform = False
+        else:
+            perform = True
         print(self)
         for exercise in self.exercises:
             if perform:
@@ -191,5 +197,4 @@ class Session:
 
 if __name__ == '__main__':
     s = Session(load_from_file = True, filename = 'K_data')
-    s.run(perform = True)
-    # s.run(perform = False)
+    s.run()
