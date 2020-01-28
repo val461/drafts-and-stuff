@@ -43,7 +43,7 @@ class Exercise:
         '''
         result = None
         if template == 'Quick':
-            result = cls(hold_duration = 1, rest_duration = 1, repetitions = 10, hold_increment = 0, rest_increment = 0, repetitions_increment = 2, use_chrono = True, name = template)
+            result = cls(hold_duration = 0.7, rest_duration = 0.5, repetitions = 10, hold_increment = 0, rest_increment = 0, repetitions_increment = 2, use_chrono = True, name = template)
         elif template == 'Medium':
             result = cls(hold_duration = 4, rest_duration = 2, repetitions = 5, hold_increment = 0, rest_increment = 0, repetitions_increment = 1, use_chrono = True, name = template)
         elif template == 'Long':
@@ -173,6 +173,7 @@ class Session:
         else:
             perform = True
         print(self)
+        modified = False
         for exercise in self.exercises:
             if perform:
                 exercise.perform()
@@ -182,18 +183,27 @@ class Session:
             answer = input().lower()
             if answer == 'i':
                 exercise.increase_difficulty()
+                modified = True
             elif answer == 'd':
                 exercise.decrease_difficulty()
+                modified = True
         print()
         print(self)
         if self.filename:
-            print('Save? [y]/n')
-            answer = input().lower()
-            if answer == 'n':
-                print('Not saving.')
+            if modified:
+                print('Save? [y]/n')
+                answer = input().lower()
+                if answer == 'n':
+                    print('Not saving.')
+                else:
+                    self.save()
             else:
-                self.save()
-
+                print('Save? y/[n]')
+                answer = input().lower()
+                if answer == 'y':
+                    self.save()
+                else:
+                    print('Not saving.')
 
 if __name__ == '__main__':
     s = Session(load_from_file = True, filename = 'K_data')
