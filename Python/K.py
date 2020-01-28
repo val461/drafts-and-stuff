@@ -165,13 +165,16 @@ class Session:
         return done
 
 
-    def run(self):
-        print('Perform? [y]/n')
-        answer = input().lower()
+    def run(self, ask = True):
+        answer = None
+        if ask:
+            print('Perform? [y]/n')
+            answer = input().lower()
         if answer == 'n':
             perform = False
         else:
             perform = True
+
         print(self)
         modified = False
         for exercise in self.exercises:
@@ -179,17 +182,19 @@ class Session:
                 exercise.perform()
             else:
                 print(f'\nexercise: {exercise}.')
-            print('[i]ncrease / [d]ecrease difficulty? (<enter> to make no changes.)')
-            answer = input().lower()
-            if answer == 'i':
-                exercise.increase_difficulty()
-                modified = True
-            elif answer == 'd':
-                exercise.decrease_difficulty()
-                modified = True
+            if ask:
+                print('[i]ncrease / [d]ecrease difficulty? (<enter> to make no changes.)')
+                answer = input().lower()
+                if answer == 'i':
+                    exercise.increase_difficulty()
+                    modified = True
+                elif answer == 'd':
+                    exercise.decrease_difficulty()
+                    modified = True
         print()
         print(self)
-        if self.filename:
+
+        if self.filename and ask:
             if modified:
                 print('Save? [y]/n')
                 answer = input().lower()
@@ -207,4 +212,4 @@ class Session:
 
 if __name__ == '__main__':
     s = Session(load_from_file = True, filename = 'K_data')
-    s.run()
+    s.run(ask = False)
