@@ -1,0 +1,7 @@
+Check that the links in folders custom and stereo point to the sound files you want.
+
+In dconf Editor, check the value of org.gnome.desktop.sound.theme-name.
+
+This value should be the name of a folder in /usr/share/sounds, for example, LinuxMint.
+
+Copy its contents to ~/.local/share/sounds/my-profile, without overriding what is already there.
