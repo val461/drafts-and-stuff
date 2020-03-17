@@ -191,24 +191,25 @@ class Session:
                 elif answer == 'd':
                     exercise.decrease_difficulty()
                     modified = True
-        print()
-        print(self)
 
-        if self.filename and ask:
-            if modified:
-                print('Save? [y]/n')
-                answer = input().lower()
-                if answer == 'n':
-                    print('Not saving.')
+        if ask:
+            print()
+            print(self)
+            if self.filename:
+                if modified:
+                    print('Save? [y]/n')
+                    answer = input().lower()
+                    if answer == 'n':
+                        print('Not saving.')
+                    else:
+                        self.save()
                 else:
-                    self.save()
-            else:
-                print('Save? y/[n]')
-                answer = input().lower()
-                if answer == 'y':
-                    self.save()
-                else:
-                    print('Not saving.')
+                    print('Save? y/[n]')
+                    answer = input().lower()
+                    if answer == 'y':
+                        self.save()
+                    else:
+                        print('Not saving.')
 
 if __name__ == '__main__':
     s = Session(load_from_file = True, filename = 'K_data')
