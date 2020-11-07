@@ -1,3 +1,12 @@
 # Assemble des fichiers pdf, jpg, png, en un seul fichier pdf.
 
 pdfjam --outfile 'output.pdf' --a4paper *
+pdfjam --outfile 'output.pdf' --a4paper --landscape *
+
+# Idem, mais la qualité est parfois bof.
+convert * output.pdf
+
+# Désassemble un pdf en fichiers jpg. Sinon : Inkscape.
+
+pdfimages -j 'input.pdf' 'page'
+pdfimages -j 'input.pdf' 'output_prefix'
