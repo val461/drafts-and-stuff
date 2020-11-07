@@ -1,0 +1,26 @@
+
+Betclic - freebets
+    placer premier pari jusqu'à 100 € dans les 30 jours suivant votre dépot
+        en chercher un à cote très proche de 1, et à marge faible
+        Votre 1er pari ne devra pas être un pari du type système (3 sur 5, 2 sur 3, etc…).
+        fait
+            f(24,11.5,1.13)
+            p1 = 0.87
+            m1 = 0.014
+    dès ton pari terminé, tu reçois le montant de ta mise en Freebets
+        en chercher à marge faible et côtes plutôt élevées
+    P(X=100*c1)=p1
+    P(X=0)=1-p1
+    P(Y=100*(c2-1))=p2
+    P(Y=0)=1-p2
+    Z=X+Y-100
+    E(Z)=E(X)+E(Y)-100=100*c1*p1+100*(c2-1)*p2-100=100*(c1*p1+(c2-1)*p2-1)
+    marge = m
+    c = (1-m) * 1/p
+    c*p = 1-m
+    E(Z)=100*(1-m1+1-m2-p2-1)=100*(1-m1-m2-p2)=100*(-m1+1-m2-(1-m2)/c2)=100*(-m1+(1-m2)*(1-1/c2))
+        Maximiser c2 ; minimiser m1 et m2.
+    E(X-100)=100*(1-m1-1)=100*(-m1)
+    E(Y)=100*(1-m2-p2)=100*(1-m2-(1-m2)/c2)=100*(1-m2)*(1-1/c2)
+    m1 = 0.014
+    E(Z)=100*(-0.014+(1-m2)*(1-1/c2))
