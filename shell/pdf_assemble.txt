@@ -1,12 +1,24 @@
 # Assemble des fichiers pdf, jpg, png, en un seul fichier pdf.
+# Ajoute parfois des marges blanches.
 
 pdfjam --outfile 'output.pdf' --a4paper *
 pdfjam --outfile 'output.pdf' --a4paper --landscape *
 
-# Idem, mais la qualité est parfois bof.
+
+# La taille est parfois grande.
+# La qualité est parfois moins élevée.
+
 convert * output.pdf
+
 
 # Désassemble un pdf en fichiers jpg. Sinon : Inkscape.
 
 pdfimages -j 'input.pdf' 'page'
 pdfimages -j 'input.pdf' 'output_prefix'
+
+
+# Tourner des images jpg sans pertes (seulement si leurs noms n'ont pas de whitespace ?).
+
+for f in *.JPG ; do
+    jpegtran -rotate 90 "$f" > "${f%.JPG}-rotated.jpg"
+done
