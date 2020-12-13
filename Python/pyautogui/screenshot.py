@@ -4,6 +4,7 @@
 
 '''
 TODO :
+Update shortcuts.
 Add a variable for output file location.
 Make use of scrot arguments.
     coordinates

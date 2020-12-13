@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# ./copy.py quantity
-# ./copy.py i_first i_last
+# ./copy_stuff.py quantity
+# ./copy_stuff.py i_first i_last
 
 # Copy elements one by one from one tab into another tab.
 
