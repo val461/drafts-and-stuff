@@ -1,25 +1,6 @@
 #!/usr/bin/env python3
 
-# ./screenshot.py - automate area screenshots
-
-'''
-TODO :
-Add a variable for output file location.
-Make use of scrot arguments.
-    coordinates
-    output file location
-Loop :
-    input
-    if ""
-        screenshot
-    elif "m"
-        set coordinates with mouse position
-    elif "f"
-        set coordinates to fullscreen
-    elif "q"
-        quit
-Update instructions.
-'''
+# ./screenshot.py - make scrot more touchpad-friendly
 
 # Instructions:
 # Put whatever you want to capture on the next wm screen.
