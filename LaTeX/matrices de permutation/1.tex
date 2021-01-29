@@ -1,0 +1,752 @@
+\documentclass[10pt,a4paper,french,landscape]{article}
+
+% français
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+
+% multicols
+\usepackage{multicol}
+\setlength{\columnseprule}{1pt}
+
+% Bibliographie
+%\usepackage[backend=biber,style=authortitle]{biblatex}
+%\usepackage{csquotes}
+%\addbibresource{bibliographie.bib}
+
+% marges
+%\usepackage[margin=1.5cm]{geometry}
+%\usepackage[a4paper,tmargin=3cm,bmargin=3cm,rmargin=2.2cm, lmargin=2.2cm]{geometry}
+\usepackage[tmargin=0.5cm,bmargin=1.5cm,rmargin=1cm, lmargin=1cm]{geometry}
+%\usepackage[a4paper,vmargin=1cm,hmargin=1cm]{geometry}
+
+% maths
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+
+% weird arrows
+\usepackage{amssymb}
+
+% multiline braces
+\usepackage{empheq}
+
+% intervalles d'entiers
+\usepackage{stmaryrd}
+% exemple : \llbracketm,n\rrbracket
+
+% contrôler la taille de tableaux
+\usepackage{tabularx}
+
+% virgule en séparateur décimal
+\mathchardef\period=\mathcode`.
+\DeclareMathSymbol{.}{\mathord}{letters}{"3B}
+
+% changer le nombre max de colonnes
+\setcounter{MaxMatrixCols}{20}
+
+% figures flottantes de texte
+%\usepackage{wrapfig}
+
+% diagrammes commutatifs
+%\usepackage{tikz-cd}
+
+% images
+%\usepackage{graphicx}
+%\graphicspath{ {./images/} }
+%\usepackage{subcaption}
+%%\usepackage{caption}
+
+%\usepackage{float} % image positioning
+
+% liens
+\usepackage[hidelinks]{hyperref} 
+\hypersetup{
+  colorlinks, % active la coloration des liens
+  allcolors=blue% toutes les couleurs précédentes d’un coup
+}
+
+% Liens de retour pour les notes de bas de page
+\usepackage[symbol=$\uparrow\;$]{footnotebackref}
+
+
+% Par exemple, au lieu de \left( et \right), qui introduisent de l'espace en trop,
+% permet d'utiliser \paren{}.
+
+\DeclarePairedDelimiter\parenlong{\lparen}{\rparen}
+\newcommand{\paren}[1]{\parenlong*{#1}}
+
+\DeclarePairedDelimiter\ceillong{\lceil}{\rceil}
+\newcommand{\ceil}[1]{\ceillong*{#1}}
+
+\DeclarePairedDelimiter\floorlong{\lfloor}{\rfloor}
+\newcommand{\floor}[1]{\floorlong*{#1}}
+
+\DeclarePairedDelimiter\bracketlong{\llbracket}{\rrbracket}
+\newcommand{\br}[1]{\bracketlong*{#1}}
+
+
+% titres de sections
+% \usepackage{titlesec}
+% \titleformat
+% {\section} % command
+% {\bfseries\Large} % format
+% {Partie \thesection} % label
+% {0em} % sep
+% {}
+% \titleformat
+% {\subsection} % command
+% {\bfseries\normalsize} % format
+% {\thesubsection} % label
+% {0em} % sep
+% {}
+%
+
+% titres de sections v2
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+
+% style de listes
+\usepackage[shortlabels]{enumitem}
+\setlist[itemize]{label=\textbullet}
+
+% style des sommes et produits
+\usepackage{letltxmacro}
+\LetLtxMacro{\oldprod}{\prod}
+\renewcommand{\prod}{\displaystyle\oldprod}
+\LetLtxMacro{\oldsum}{\sum}
+\renewcommand{\sum}{\displaystyle\oldsum}
+\LetLtxMacro{\oldbigoplus}{\bigoplus}
+\renewcommand{\bigoplus}{\displaystyle\oldbigoplus}
+\LetLtxMacro{\oldbigsqcup}{\bigsqcup}
+\renewcommand{\bigsqcup}{\displaystyle\oldbigsqcup}
+
+% espacement des paragraphes
+%\setlength{\parskip}{1em}
+
+% raccourcis
+% espaces (sinon \; ou \quad ou \qquad)
+\newcommand{\extrabigspace}{\hspace{6em}}
+\newcommand{\bigspace}{\hspace{3em}}
+\newcommand{\bgspace}{\hspace{2em}}
+\newcommand{\bl}{\textbullet\;\,}
+
+% raccourcis paramétrés
+% Cellule avec plusieurs lignes (usage dans un tabular : \mrow{ligne 1\\ligne 2\\etc.})
+\newcommand{\mrow}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}}
+
+% th, def, etc.
+%\theoremstyle{plain}
+\theoremstyle{definition}
+\newtheorem{dfn}{Définition}
+\newtheorem*{dfn*}{Définition}
+\newtheorem{thm}[dfn]{Théorème}
+\newtheorem{cor}[dfn]{Corollaire}
+\newtheorem*{cor*}{Corollaire}
+\newtheorem{prop}[dfn]{Proposition}
+\newtheorem{lm}[dfn]{Lemme}
+\newtheorem{defth}[dfn]{Définition-théorème}
+\newtheorem{defprop}[dfn]{Définition-proposition}
+\newtheorem{thdef}[dfn]{Théorème-définition}
+\newtheorem{app}[dfn]{Application}
+\newtheorem*{as}{Astuce pratique}
+\newtheorem*{att}{Attention}
+
+\theoremstyle{remark}
+\newtheorem{rmq}[dfn]{Remarque}
+\newtheorem*{rmq*}{Remarque}
+\newtheorem{ex}[dfn]{Exemple}
+
+%\newtheorem{propa}{Proposition}
+%\renewcommand{\thepropa}{\Alph{propa}}
+
+% numérotation arbitraire
+%\newtheorem{innerthm}{Théorème}
+%\newenvironment{thm}[1]
+%  {\renewcommand\theinnerthm{#1}\innerthm}
+%  {\endinnerthm}
+
+%\newtheorem{innerlm}{Lemme}
+%\newenvironment{lm}[1]
+%  {\renewcommand\theinnerlm{#1}\innerlm}
+%  {\endinnerlm}
+
+%\newtheorem{innerdfn}{Définition}
+%\newenvironment{dfn}[1]
+%  {\renewcommand\theinnerdfn{#1}\innerdfn}
+%  {\endinnerdfn}
+
+%\newtheorem{innerprop}{Proposition}
+%\newenvironment{prop}[1]
+%  {\renewcommand\theinnerprop{#1}\innerprop}
+%  {\endinnerprop}
+
+% opérateurs
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\ord}{o}
+\DeclareMathOperator{\PGCD}{PGCD}
+\DeclareMathOperator{\PPCM}{PPCM}
+\DeclareMathOperator{\St}{St}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\Z}{Z}
+\DeclareMathOperator{\C}{C}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\LL}{L}
+\DeclareMathOperator{\M}{Mat}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\D}{D}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Irr}{Irr}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\R}{R}  % polynôme réciproque
+
+% raccourcis maths
+\newcommand{\dd}{\mathrm{d}} % le d précédant la variable d'intégration
+%\newcommand{\RN}{\mathbb R^\mathbb N}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\NNs}{\mathbb N^*}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\UU}{\mathbb U}
+\newcommand{\KK}{\mathbb K}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\Sy}{\mathfrak{S}}
+\newcommand{\Al}{\mathfrak{A}}
+\newcommand{\MM}{\mathcal M}
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\F}{\FF_2}
+\newcommand{\Fn}{\FF_2^n}
+\newcommand{\Fk}{\FF_2^k}
+\newcommand{\FX}{\FF_2[X]}
+%\newcommand{\IF}{\Irr\FX}
+\newcommand{\FI}{\Irr\FX}
+
+% raccourcis maths paramétrés
+\newcommand{\Sn}[1][n]{\Sy_{#1}}
+\newcommand{\An}[1][n]{\Al_{#1}}
+\newcommand{\Zn}[1][n]{\ZZ/#1\ZZ}
+\newcommand{\Zne}[2][n]{(\Zn[#1])^{#2}}
+\newcommand{\Zns}[1][n]{\Zne[#1]{*}}
+\newcommand{\Le}[2]{\left(\dfrac{#1}{#2}\right)}
+\newcommand{\Lep}[1][a]{\Le{#1}{p}}
+%\newcommand{\Ma}[1][]{\M_{#1}}
+\newcommand{\ba}[1]{\mathcal{#1}}
+
+
+% présentation du document
+
+%\author{
+%  Valentin \textsc{Marie}
+%}
+%\title{
+%  groupes
+%}
+%\date{5 mai 2020}
+\date{}
+
+\begin{document}
+%\maketitle
+
+%\begin{abstract}
+%Étude
+%\end{abstract}
+
+%\tableofcontents
+%\newpage
+
+%\vspace{-1.9cm}
+\begin{multicols*}{2}
+%~
+%\vspace{-0.3cm}
+
+{\Large Matrices de permutation}
+
+\bigskip
+%\noindent Intro.
+%\noindent
+Soit $\KK$ un corps commutatif. Soit $n\in\NNs$.
+
+\vspace{-0.2cm}
+\section{Matrices}
+\label{sec:mat}
+
+%\noindent
+Soit $A=(a_{i,j})_{i,j}\in\MM_n(\KK)$ une matrice avec exactement un 1 sur chaque ligne et sur chaque colonne, et avec des 0 partout ailleurs.\\
+$A$ est alors appelée une \textbf{matrice de permutation}.\\
+
+(Comme le nombre de 1 dans une matrice de permutation est à la fois le nombre de lignes et le nombre de colonnes, une matrice de permutation est carrée.)\\
+
+On voit que les colonnes de $A$ forment une famille orthonormale de $\KK^n$. (Sous-entendu, pour la forme bilinéaire de $\KK^n$ qui admet la base canonique comme base orthonormée ; elle est symétrique non dégénérée ; c'est un produit scalaire si $\KK=\RR$.)\\
+
+Ces calculs sur les colonnes sont les mêmes que pour calculer $^tAA$. D'où $^tAA=I_n$.
+Ainsi, $A$ est \textbf{inversible}, et même \textbf{orthogonale}.
+
+\begin{as}
+Pour vérifier qu'une matrice $M$ est orthogonale, il suffit de calculer la partie triangulaire supérieure (ou inférieure) de $^tMM$, car le produit d'une matrice et de sa transposée est symétrique. Ceci dit, faire directement les produits entre colonnes évite d'avoir à transposer $M$.
+\end{as}
+
+\section{Permutations}
+
+%\noindent
+Soit $j\in\br{1,n}$.
+Comme $A$ a un seul 1 sur la colonne $j$, alors existe un unique $i\in\br{1,n}$ tel que $a_{i,j}=1$.
+Posons $\sigma(j)=i$.\\
+
+On vient ainsi de définir une application $\sigma\colon\br{1,n}\rightarrow\br{1,n}$.
+Comme $i$ est différent pour chaque $j$, alors $\sigma$ est injective, donc bijective, et est dans $\Sn$.
+On a $A=\paren{\delta_{i,\sigma(j)}}_{i,j\in\br{1,n}}$.\\
+$A$ est appelée la matrice de la permutation $\sigma$, on la note $M_\sigma$.
+
+\section{Déterminant}
+\label{sec:det}
+
+Comme $\Sn$ est engendré par les transpositions, alors on peut écrire $\sigma=\tau_1\dots\tau_t$ avec des transpositions $\tau_i$ (pas forcément disjointes), et alors en échangeant les colonnes de $M_\sigma$ suivant ces transpositions, on finit par permuter les colonnes de $M_\sigma$ suivant $\sigma$ ; on obtient ainsi la matrice identité (car la $j$-ème colonne de $M_\sigma$ est le $\sigma(j)$-ème vecteur de la base canonique, et on le déplace vers la position $\sigma(j)$). Ce faisant, on a multiplié le déterminant de $M_\sigma$ par $-1$ pour chacune des $t$ transpositions $\tau_i$, d'où $(-1)^t\det(M_\sigma)=\det(I_n)=1$. Or, $(-1)^t=\varepsilon(\tau_1)\dots\varepsilon(\tau_t)=\varepsilon(\tau_1\dots\tau_t)=\varepsilon(\sigma)$. D'où $\varepsilon(\sigma)\det(M_\sigma)=1$, puis $\det(M_\sigma)=\varepsilon(\sigma)$.
+
+\section{Endomorphismes}
+\label{sec:endo}
+
+\noindent
+Soit $E$ un $\KK$-ev tel que $\dim(E)=n$.\\
+Soit une base $\ba{B}=(b_i)_{i\in\br{1,n}}$ de $E$.\\
+À partir de $\sigma$, on définit $f_\sigma\in\LL(E)$ par $f_\sigma(b_j) = b_{\sigma(j)}$ pour tout $j\in\br{1,n}$.\\
+$M_\sigma$ est inversible (cf. partie \ref{sec:mat}) et $M_\sigma=\M_\ba{B}(f_\sigma)$, donc $f_\sigma$ est dans $\GL(E)$.\\
+Pour tous $\tau,\sigma\in\Sn$, on a $f_\tau(f_\sigma(b_j)) = f_\tau(b_{\sigma(j)}) = b_{\tau(\sigma(j))} = b_{(\tau\circ\sigma)(j)} = (f_{\tau\circ\sigma})(b_j)$.
+\\
+Donc $f_\tau\circ f_\sigma = f_{\tau\circ\sigma}$.\\ D'où $M_\tau M_\sigma = M_{\tau\circ\sigma}$.
+
+\section{Représentations}
+\label{sec:repr}
+
+%\noindent
+Soit $f\colon
+ \begin{array}{ccc}
+    \Sn & \longrightarrow & \GL(E) \\
+    \sigma & \longmapsto & f_{\sigma}
+ \end{array}$. Alors $f$ est un morphisme de groupes.
+Donc $f$ est une représentation de $\Sn$. En fait, comme la définition de $f_\sigma$ est $f_\sigma(b_j) = b_{\sigma(j)}$ (pour tout j), on reconnaît que $f$ est la représentation de permutation de $\Sn$ associée à l'action naturelle de $\Sn$ sur $\br{1,n}$.
+Une représentation matricielle associée à $f$ est\quad
+$\phi\colon
+ \begin{array}{ccc}
+    \Sn & \longrightarrow & \GL_n(\KK) \\
+    \sigma & \longmapsto & M_\sigma
+ \end{array}
+$ (car $M_\sigma = \M_\ba{B}(f_{\sigma})$).\bigskip
+
+%L'image de $\phi$ est l'ensemble des matrices de permutation de taille $n$, et $\phi$ est injective. Ainsi,
+La restriction de $\phi$ à son image est un \textbf{isomorphisme} de groupes entre les \textbf{permutations} (dans $\Sn$) et les \textbf{matrices de permutation} (de taille $n$ à coefficients dans $\KK$). Cet isomorphisme peut être considéré comme canonique, au sens où $\phi$ ne dépend pas du choix de la base $\ba{B}$, contrairement à $f$ qui dépend de $\ba{B}$.
+
+\section{Actions}
+
+Comme $\GL(E)$ est inclus dans le groupe symétrique $\Sy(E)$ des bijections de $E$, alors $f$ est une action de groupe de $\Sn$ sur $E$, fidèle car $f$ est 
+injective.\\
+
+Soit 
+$ \psi $ 
+l'isomorphisme d'ev entre $E$ et $\KK^n$, qui à un vecteur
+ de $E$ associe ses coordonnées en base $\ba{B}$. Alors $\tilde{f}\colon
+ \begin{array}{ccc}
+    \Sn & \longrightarrow & \GL(\KK^n) \\
+    \sigma & \longmapsto & \psi\, \circ\,  f_\sigma\, \circ\, \psi^{-1}
+ \end{array}
+$ est bien à valeurs dans $\GL(\KK^n)$, et est un morphisme de groupes, d'image incluse dans le groupe symétrique $\Sy(\KK^n)$, donc est une action de groupe de $\Sn$ sur $\KK^n$. De plus, elle est équivalente à l'action $f$ de $\Sn$ sur~$E$.\\
+
+En résumé, trois actions de $\Sn$ nous intéressent dans ce document :
+\begin{itemize}
+\item pour $j\in\br{1,n}$, on note $\sigma\cdot j = \sigma(j)$\quad (action naturelle),
+\item pour $v\in E$, on note $\sigma\cdot v = f_\sigma(v)$\quad (action $f$),
+\item pour $x\in \KK^n$, on note $\sigma\cdot x = M_\sigma\times x$\quad (action $\tilde{f}$).
+\end{itemize}
+
+\section{Diagonalisabilité}
+\label{sec:diago}
+
+On sait que les matrices d'une représentation d'un groupe fini sur un $\CC$-espace vectoriel sont diagonalisables. Donc pour $\KK=\CC$, les matrices de permutation sont diagonalisables. Mais nous n'avons pas supposé que $\KK=\CC$.
+
+Soit $\sigma\in\Sn$. Comme $\Sn$ est un groupe fini, il existe $k\in\NNs$ tel que $\sigma^{k}=\Id$ (par exemple, l'ordre $n!$ de $\Sn$, ou plus finement l'ordre de $\sigma$ ; rappelons que ce dernier peut être plus grand ou plus petit que $n$ : cf. mail du 24/01/2021 11h39 \textit{Révisons ensemble 3/32} point 2).
+
+En appliquant le morphisme $\phi$, on obtient $\paren{M_\sigma}^{k}=I_n$. Donc $X^{k}-1$ est annulateur de $M_\sigma$. D'où, le polynôme minimal $\mu_\sigma$ de $M_\sigma$ divise $X^{k}-1$, et les \textbf{valeurs propres} de $M_\sigma$ sont des \textbf{racines $k$-èmes de l'unité}.
+
+Supposons dans ce paragraphe que $\car(\KK)$ ne divise pas $k$. La dérivée de $X^{k}-1$ est $kX^{k-1}$, qui est scindée et admet 0 pour seule racine (c'est ici qu'a été utilisée l'hypothèse sur $\car(\KK)$). Or, 0 n'est pas racine de $X^k-1$. Donc $X^k-1$ et sa dérivée n'ont pas de racine commune dans la clôture algébrique de $\KK$, donc sont premiers entre eux. Ainsi, $X^k-1$ est à racines simples. En notant $\alpha_1, \ldots , \alpha_k$ les racines $k$-èmes de l'unité dans la clôture algébrique de $\KK$, alors $X^k-1$ est scindé sur $\KK(\alpha_1, \ldots , \alpha_k)$ à racines simples et annulateur de $M_\sigma$. D'où, $M_\sigma$ est diagonalisable sur $\KK(\alpha_1, \ldots , \alpha_k)$.
+
+%FIXME Dans la partie \ref{sec:cycle-non-1}, on verra que le polynôme minimal de $M_\sigma$ sur $\KK(\alpha_1, \ldots , \alpha_k)$ est en fait le PPCM des poly min. $X^k-1$ des composantes.
+\medskip
+
+Si $\car(\KK)=0$, alors est vérifiée l'hypothèse du paragraphe précédent que $\car(\KK)$ ne divise pas $k$ (puisque $k$ est non nul). En particulier, on retrouve le fait que dans $\CC$, les matrices de permutation sont diagonalisables (en utilisant le fait que $\CC$ est algébriquement clos).
+
+\section{Calcul}
+\label{sec:calcul}
+
+\noindent
+Soit $\sigma\in\Sn$. Par linéarité de $f_\sigma$, on a \quad
+$f_\sigma\paren{\sum_j \lambda_j\cdot b_j} = \sum_j \lambda_j\cdot f_\sigma\paren{b_j} = \sum_j \lambda_j\cdot b_{\sigma(j)}$.
+
+\begin{as}
+Pour calculer $M_\sigma\times
+\begin{pmatrix}
+	\lambda_1 \\
+	\vdots \\
+	\lambda_n \\
+\end{pmatrix}$, il suffit de déplacer la $j$-ème composante vers la composante $\sigma(j)$, pour tout $j$. Pour déterminer $\sigma$ à partir de $M_\sigma$ et réciproquement, il suffit de regarder à qui les vecteurs de la base canonique sont envoyés par l'application $f_\sigma$ définie en partie \ref{sec:endo}.
+\end{as}
+
+\begin{att}
+Ci-dessus, par ``déplacer la j-ème composante'', je veux dire remplacer $b_j$ par $b_{\sigma(j)}$, et non remplacer $\lambda_j$ par $\lambda_{\sigma(j)}$. C'est en effet la position du coefficient qu'on transforme suivant $\sigma$, et non l'indice du coefficient. En effet, l'indice du coefficient à une position fixée est transformé suivant $\sigma^{-1}$. C'est un peu comme visser un bouchon sur une bouteille : du point de vue de la bouteille, c'est le bouchon qui tourne et la bouteille est fixe ; du point de vue du bouchon, le bouchon est fixe et c'est la bouteille qui tourne dans l'autre sens (i.e., le mouvement est relatif au point de vue). Une façon de l'écrire :
+$\sum_j \lambda_j\, b_{\sigma(j)} = \sum_i \lambda_{\sigma^{-1}(i)}\, b_i$ (en posant $j=\sigma^{-1}(i)$).
+Autrement dit, 
+$M_\sigma\times
+\begin{pmatrix}
+	\lambda_1 \\
+	\vdots \\
+	\lambda_n \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+	\lambda_{\sigma^{-1}(1)} \\
+	\vdots \\
+	\lambda_{\sigma^{-1}(n)} \\
+\end{pmatrix}
+$. D'où l'intérêt peut-être de la convention
+anglo-saxonne, qui
+%\medskip
+%
+%\noindent
+définit la matrice de $\sigma$ comme $M_{\sigma^{-1}}$ au lieu de $M_\sigma$.
+\end{att}
+
+\begin{cor*}
+$\begin{pmatrix}
+	1 \\
+	\vdots \\
+	1\\
+\end{pmatrix}$ est vecteur propre de $M_\sigma$ pour la valeur propre 1.
+\end{cor*}
+
+\section{Cycle : valeur propre 1}
+\label{sec:cycle-1}
+
+Soient $k\in\br{2,n}$, et $\sigma=(t_1 \cdots t_k)$ un $k$-cycle de $\Sn$. D'après le corollaire de la partie \ref{sec:calcul}, $f_\sigma$ admet 1 pour valeur propre. Soit $\sum_{j=1}^n \lambda_{j}\, b_{j}$ un vecteur propre pour la valeur propre $1$. Le support d'un élément de $\Sn$ est l'ensemble de ses points non fixes dans $\br{1,n}$, d'où $\br{1,n}=\Supp(\sigma) \sqcup \Fix(\sigma)$, et $\sum_{j=1}^n \lambda_{j}\, b_{j}
+=f_\sigma\paren{\sum_{j=1}^n \lambda_{j}\, b_{j}}
+={\sum_{j=1}^n \lambda_{j}\, b_{\sigma(j)}}
+=\sum_{j\in\Supp(\sigma)}\!\lambda_{j}\, b_{\sigma(j)}\;+\sum_{j\in\Fix(\sigma)} \lambda_{j}\, b_{j}
+$.\;
+Comme $\sigma(\Fix(\sigma))=\Fix(\sigma)$, alors par bijectivité,\medskip
+
+\noindent
+$\sigma(\Supp(\sigma))=\Supp(\sigma)=\{t_1, \cdots, t_k\}$, donc l'équation se simplifie en retirant les vecteurs associés aux points fixes des deux côtés de l'égalité, donc
+\medskip
+
+$
+\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}
+%=f_\sigma\paren{\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}}
+=\sum_{j=1}^k \lambda_{t_j}\, b_{\sigma(t_j)}
+=\sum_{i=1}^k \lambda_{\sigma^{-1}(t_i)}\, b_{t_i}
+=\sum_{i=1}^k \lambda_{t_{i-1\text{ mod }k}}\, b_{t_{i}}
+$ (le changement de variable $\sigma(t_j)=t_i$ est valide car la restriction de $\sigma$ est une bijection de $\Supp(\sigma)$ dans $\Supp(\sigma)$).\medskip
+
+D'où les équations
+$\lambda_{t_{i\text{ mod }k}}=\lambda_{t_{i-1\text{ mod }k}}$ pour tout $i\in\br{1,k}$, puis
+${\lambda_{t_1}=\lambda_{t_{2}}=\ldots=\lambda_{t_k}}$. Aussi, il n'y a pas d'équations sur les $\lambda_j$ tels que $j\in\Fix(\sigma)$. Donc le \textbf{sous-espace propre} associé à la valeur propre 1 de $f_\sigma$ est de \textbf{dimension} ${1+\Card(\Fix(\sigma))}$, et il admet la \textbf{base de vecteurs propres}
+$\Bigg\{\sum_{j\in\Supp(\sigma)} b_{j}\Bigg\}\cup\Bigg\{b_i\;|\;i\in\Fix(\sigma)\Bigg\}$.
+Réciproquement, on vérifie qu'il s'agit bien de vecteurs propres de $f_\sigma$ pour la valeur propre $1$ à l'aide de l'astuce pratique de la partie \ref{sec:calcul}.
+
+%\section{Cycle : valeur propre éventuelle -1}
+%\label{sec:cycle-m1}
+%
+%Soient $k\in\br{2,n}$, et $\sigma=(t_1 \cdots t_k)$ un $k$-cycle de $\Sn$.\\
+%Supposons dans cette partie $\car(\KK)\neq 2$ (afin que $-1\neq 1$). D'après la partie \ref{sec:diago}, les valeurs propres de $f_\sigma$ sont des racines $k$-èmes de l'unité.
+%Donc si $k$ est impair, alors $-1$ n'est pas valeur propre.
+%
+%Supposons $-1$ valeur propre. Alors $k$ est pair et $\sigma$ est de signature $-1$.\\
+%Soit $\sum_{j=1}^n \lambda_{j}\, b_{j}$ un vecteur propre pour la valeur propre $-1$. Alors\\
+%$
+%-\sum_{j=1}^n \lambda_{j}\, b_{j}
+%=f_\sigma\paren{\sum_{j=1}^n \lambda_{j}\, b_{j}}
+%=\sum_{j=1}^n \lambda_{j}\, b_{\sigma(j)}
+%=\sum_{j\in\Supp(\sigma)}\!\lambda_{j}\, b_{\sigma(j)}\;+\sum_{j\in\Fix(\sigma)} \lambda_{j}\, b_{j}$ .
+%\medskip
+%
+%\noindent
+%Donc pour tout $j\in\Fix(\sigma)$, on a $-\lambda_{j}=\lambda_{j}$,
+%%\smallskip
+%%
+%%\noindent
+%donc $0=2\lambda_{j}$, et comme $\car(\KK)\neq 2$, alors $\lambda_{j}=0$ pour tout $j\in\Fix(\sigma)$.
+%%\smallskip
+%Or $\Supp(\sigma)=\{t_1, \cdots, t_k\}$, donc l'égalité ci-dessus se réécrit
+%$
+%-\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}
+%%=f_\sigma\paren{\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}}
+%=\sum_{j=1}^k \lambda_{t_j}\, b_{\sigma(t_j)}
+%=\sum_{i=1}^k \lambda_{\sigma^{-1}(t_i)}\, b_{t_i}
+%=\sum_{i=1}^k \lambda_{t_{i-1\text{ mod }k}}\, b_{t_{i}}
+%$ (le changement de variable $\sigma(t_j)=t_i$ est valide car la restriction de $\sigma$ est une bijection de $\Supp(\sigma)$ dans $\Supp(\sigma)$).\medskip
+%
+%D'où les équations
+%$-\lambda_{t_{i\text{ mod }k}}=\lambda_{t_{i-1\text{ mod }k}}$ pour tout $i\in\br{1,k}$, puis
+%${\lambda_{t_1}=-\lambda_{t_{2}}=\ldots=(-1)^{k-1}\lambda_{t_k}}$. Donc le \textbf{sous-espace propre} associé à la valeur propre $-1$ de $f_\sigma$ est de \textbf{dimension} 1.
+%%d'où $\lambda_{t_{i}}=(-1)^{i-1}\lambda_{t_1}$ pour tout $i\in\br{2,k}$.
+%En posant $\lambda_{t_1}=1$, on obtient un \textbf{vecteur directeur} de coefficients $\lambda_{t_{i}}=(-1)^{i-1}$ pour tout $i\in\br{1,k}$ et $\lambda_j=0$ pour tout point fixe $j$ de $\sigma$ dans $\br{1,n}$. Réciproquement, si $k$ est pair, alors ce vecteur est  propre pour la valeur propre $-1$ de $f_\sigma$ (d'après l'astuce pratique de la partie \ref{sec:calcul}), et $-1$ est donc bien valeur propre.
+%
+%\begin{as}
+%Si $k$ est impair, alors $-1$ n'est pas valeur propre de $\sigma$. Si $k$ est impair, alors $-1$ est valeur propre, le sous-espace propre associé à $-1$ est de dimension 1, et pour en trouver un vecteur directeur, on applique itérativement $M_\sigma$ aux vecteurs de la base canonique du support de $\sigma$, en alternant le signe.
+%\end{as}
+
+\section{Cycle : valeur propre différente de 1}
+\label{sec:cycle-non-1}
+
+Soient $k\in\br{2,n}$, $\sigma=(t_1 \cdots t_k)$ un $k$-cycle de $\Sn$. D'après la partie \ref{sec:diago}, les valeurs propres de $f_\sigma$ sont racines $k$-èmes de l'unité. Soit $u\in\KK\setminus\{1\}$ une éventuelle racine $k$-ème de l'unité. Comme $u\cdot u^{k-1}=1$, alors $u$ est inversible dans $\KK$.
+%(Attention, si $\car(\KK)=2$, alors on a aussi $u\neq -1$.)
+Supposons de plus $u$ valeur propre. Soit $\sum_{j=1}^n \lambda_{j}\, b_{j}$ un vecteur propre pour la valeur propre $u$. Alors
+$
+u\sum_{j=1}^n \lambda_{j}\, b_{j}
+=f_\sigma\paren{\sum_{j=1}^n \lambda_{j}\, b_{j}}
+=\sum_{j=1}^n \lambda_{j}\, b_{\sigma(j)}
+=\sum_{j\in\Supp(\sigma)}\!\lambda_{j}\, b_{\sigma(j)}\;+\sum_{j\in\Fix(\sigma)} \lambda_{j}\, b_{j}$ .
+\medskip
+
+\noindent
+Donc pour tout $j\in\Fix(\sigma)$, on a $u\,\lambda_{j}=\lambda_{j}$,
+%\smallskip
+%
+%\noindent
+donc $0=(1-u)\lambda_{j}$, et comme $u\neq 1$, alors $\lambda_{j}=0$ pour tout $j\in\Fix(\sigma)$.
+%\smallskip
+Or $\Supp(\sigma)=\{t_1, \cdots, t_k\}$, donc l'égalité ci-dessus se réécrit
+$
+u\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}
+%=f_\sigma\paren{\sum_{j=1}^k \lambda_{t_j}\, b_{t_j}}
+=\sum_{j=1}^k \lambda_{t_j}\, b_{\sigma(t_j)}
+=\sum_{i=1}^k \lambda_{\sigma^{-1}(t_i)}\, b_{t_i}
+=\sum_{i=1}^k \lambda_{t_{i-1\text{ mod }k}}\, b_{t_{i}}
+$ (le changement de variable $\sigma(t_j)=t_i$ est valide car la restriction de $\sigma$ est une bijection de $\Supp(\sigma)$ dans $\Supp(\sigma)$).\medskip
+
+D'où les équations
+$u\,\lambda_{t_{i\text{ mod }k}}=\lambda_{t_{i-1\text{ mod }k}}$ pour tout $i\in\br{1,k}$, puis
+${\lambda_{t_1}=u\lambda_{t_{2}}=\ldots=u^{k-1}\lambda_{t_k}}$. Donc le \textbf{sous-espace propre} associé à la valeur propre $u$ de $f_\sigma$ est de \textbf{dimension} 1.
+%d'où $\lambda_{t_{i}}=(-1)^{i-1}\lambda_{t_1}$ pour tout $i\in\br{2,k}$.
+En posant $\lambda_{t_1}=1$, on obtient un \textbf{vecteur directeur} de coefficients $\lambda_{t_{i}}=u^{1-i}$ pour tout $i\in\br{1,k}$ et $\lambda_j=0$ pour tout point fixe $j$ de $\sigma$ dans $\br{1,n}$. Réciproquement, on vérifie que ce vecteur est propre pour la valeur propre $u$ de $f_\sigma$ (d'après l'astuce pratique de la partie \ref{sec:calcul}), et $u$ est donc bien valeur propre de $f_\sigma$. Ainsi, toutes les racines $k$-èmes de l'unité dans $\KK$ sont valeurs propres de $\sigma$. Par conséquent, si $X^k-1$ est scindé sur $\KK$, c'est alors le polynôme minimal de $f_\sigma$ (d'après la partie \ref{sec:diago}). Donc $X^k-1$ est le polynôme minimal de $M_\sigma$ sur un corps de décomposition de $X^k-1$. Or, le polynôme minimal d'une matrice ne dépend pas de l'extension de corps dans laquelle on considère ses coefficients (résultat classique). Donc le \textbf{polynôme minimal} de $M_\sigma$ sur $\KK$ est $X^k-1$. Les \textbf{valeurs propres} de $f_\sigma$ sont exactement les \textbf{racines $k$-èmes de l'unité} dans $\KK$. Autrement dit, les \textbf{valeurs propres} de $f_\sigma$ sont exactement les éléments du groupe multiplicatif des inversibles de $\KK$ \textbf{dont les ordres divisent $k$}.
+\medskip
+
+%Toute valeur propre $u\in\KK$ de $f_\sigma$ vérifie $u^k=1$, donc l'ordre de $u$ dans le groupe multiplicatif des inversibles de $\KK$ divise la taille $k$ du cycle. Réciproquement, si l'ordre d'un élément $u$ du groupe multiplicatif des inversibles de $\KK$ divise $k$, alors $u^k=1$ donc $u$ est valeur propre de $f_\sigma$. Ainsi, les \textbf{valeurs propres} de $f_\sigma$ sont exactement les éléments du groupe multiplicatif des inversibles de $\KK$ dont les ordres divisent $k$.
+
+\begin{as}
+Soit $u$ une racine $k$-ème de l'unité dans $\KK\setminus\{1\}$. Le sous-espace propre associé à $u$ est de dimension 1, et pour en trouver un vecteur directeur, on applique itérativement $M_\sigma$ aux vecteurs de la base canonique du support de $\sigma$ et on note de côté le coefficient gardé pour chacun, en commençant par 1 puis en divisant à chaque fois par $u$ le coefficient restant.
+\end{as}
+
+\section{Produit de cycles disjoints}
+\label{sec:pdt}
+
+Soit $\sigma\in\Sn$. Il existe $t\in\NN$ tel que $\sigma=\sigma_1\dots\sigma_t$, où les $\sigma_i$ sont des cycles à supports disjoints différents de l'identité. (Le cas $t=0$ correspond au cas $\sigma=\Id$, grâce à la convention du produit vide.)
+
+Comme $\br{1,n}=\paren{\bigsqcup_{m=1}^t\Supp(\sigma_m)}\bigsqcup\Fix(\sigma)$, alors on peut permuter les éléments de la base $\ba{B}$, de sorte qu'on obtient une décomposition de $E$ en somme directe de sous-espaces vectoriels :
+$E=\paren{\bigoplus_{m=1}^t\Vect\paren{b_j\,|\,j\in\Supp(\sigma_m)}}\bigoplus\Vect\paren{b_i\,|\,i\in\Fix(\sigma)}$. En plus, ces sous-espaces sont stables par $f_\sigma$ ! Pour trouver les vecteurs propres associés à une valeur propre $\lambda$ de $f_\sigma$, on peut donc se ramener à la recherche de vecteurs propres pour la valeur propre $\lambda$ de la restriction de $f_\sigma$ à chaque sous-espace. En effet, en notant $v_m$ les composantes de $v\in E$ dans ces $t+1$ sous-espaces (c'est-à-dire, $v_m=p_m(v)$ où $p_m$ est la projection associée au m-ème sous-espace parallèment à la somme des autres), on a :
+${f_\sigma(v)=\lambda v}
+\iff {f_\sigma\paren{\sum_{m=1}^{t+1}v_m}=\lambda \sum_{m=1}^{t+1}v_m}
+\iff {\sum_{m=1}^{t+1}f_\sigma\paren{v_m}=\sum_{m=1}^{t+1}\lambda v_m}
+\iff {(\forall m\in\br{1;t+1})\;f_\sigma\paren{v_m}=\lambda v_m}$. (On a utilisé la linéarité de\smallskip
+
+\noindent
+$f_\sigma$, l'unicité d'écriture liée à une somme directe, et la stabilité des sous-espaces par $f_\sigma$).\medskip
+
+Une autre façon de voir qu'on peut se ramener à ce système est d'utiliser le morphisme $f$ de la partie \ref{sec:repr}. En effet, on a alors $f_\sigma=f_{\sigma_1\dots\sigma_t}=f_{\sigma_1}\circ\dots\circ f_{\sigma_t}$, et pour tout $m\in\br{1,t}$, le sous-espace $\Vect\paren{b_j\,|\,j\in\Supp(\sigma_m)}$ est inclus dans le sous-espace des points fixes de $f_{\sigma_q}$, i.e., le sous-espace propre associé à la valeur propre 1 de $f_{\sigma_q}$, pour tout $q\in\br{1,t}\setminus\{m\}$.\medskip
+
+Comme ces sous-espaces admettent pour bases des sous-bases de la base $\ba{B}$ liée à $f_\sigma$ dans la partie \ref{sec:endo}, on obtient que les matrices des restrictions de $f_\sigma$ dans ces sous-bases sont des matrices de permutation ! On peut donc appliquer les parties \ref{sec:cycle-1} et \ref{sec:cycle-non-1} sur les sous-espaces pour trouver des bases de leurs sous-espaces propres. (Pour le dernier sous-espace, pas besoin, car les $b_i$ tels que $i\in\Fix(\sigma)$ sont déjà des vecteurs propres pour la valeur propre 1.)
+Enfin, on fait les réunions de ces bases pour obtenir des bases des sous-espaces propres de $f_\sigma$.
+
+Alors, le \textbf{sous-espace propre} de $f_\sigma$ associé à 1 est de \textbf{dimension} $t+\Card(\Fix(\sigma))$.\\
+Si $u$ est une valeur propre de $f_\sigma$ différente de 1, alors le \textbf{sous-espace propre} de $f_\sigma$ associé à $u$ a pour \textbf{dimension} le nombre de cycles $\sigma_i$ dans la décomposition de $\sigma$ tels que $f_{\sigma_i}$ admet $u$ comme valeur propre, i.e. tels que la taille de $\sigma_i$ est un multiple de l'ordre multiplicatif de $u$ dans le groupe des inversibles de $\KK$.
+
+Grâce à la somme directe de sous-espaces stables, on obtient que le polynôme minimal de $f_\sigma$ est le $\PPCM$ des polynômes minimaux des $\sigma_i$. En effet, $\mu_{f_\sigma}(f_\sigma)$ est nul sur $E$, donc aussi sur chaque sous-espace, d'où $\mu_{\sigma_i}$ divise $\mu_{f_\sigma}$, puis le $\PPCM$ des $\mu_{\sigma_i}$ divise $\mu_{f_\sigma}$. Réciproquement, $(\PPCM_i(\mu_{\sigma_i}))(f_\sigma)\paren{\sum_{m=1}^{t+1}v_m}
+=\sum_{m=1}^{t+1}(\PPCM_i(\mu_{\sigma_i}))(f_\sigma|_{E_m})(v_m)
+=\sum_{m=1}^{t+1}(Q_m\,\mu_{\sigma_m})(f_{\sigma_m})(v_m)
+={\sum_{m=1}^{t+1}(Q_m(f_{\sigma_m})\circ\mu_{\sigma_m}(f_{\sigma_m}))(v_m)}
+={\sum_{m=1}^{t+1}(Q_m(f_{\sigma_m})\circ 0)(v_m)}
+=0
+$ pour certains polynômes $Q_m\in\KK[X]$. Donc le $\PPCM$ des $\mu_{\sigma_i}$ est annulateur de $f_\sigma$, puis est divisible par $\mu_{f_\sigma}$, d'où l'égalité. Donc d'après la partie \ref{sec:cycle-non-1}, le \textbf{polynôme minimal} de $f_\sigma$ est le $\PPCM$ des $X^{k_i}-1$, où les $k_i$ sont les tailles des cycles $\sigma_i$.
+
+\begin{as}
+En résumé, pour trouver des vecteurs propres de $f_\sigma$, il suffit à peu près d'appliquer la conclusion de la partie $\ref{sec:cycle-1}$ et l'astuce pratique de la partie $\ref{sec:cycle-non-1}$ aux éléments de la décomposition en cycles disjoints de $\sigma$, et de compléter avec les vecteurs de la base canonique associés aux points fixes de $\sigma$.
+\end{as}
+
+\section{Somme directe de sous-représentations}
+
+Soient $\sigma\in\Sn$ et $t\in\NN$ tels que $\sigma=\sigma_1\dots\sigma_t$, où les $\sigma_i$ sont des cycles à supports disjoints différents de l'identité. Soit $G$ le sous-groupe de $\Sn$ engendré par les $\sigma_i$. Alors la restriction $f|_G$ du morphisme $f$ de la partie \ref{sec:repr} est encore un morphisme, donc encore une représentation. On vérifie que les sous-espaces de la partie \ref{sec:pdt} sont stables par les $f_{\sigma_i}$, donc par tous les $f_g$ avec $g\in G$. Ce sont donc des sous-représentations de $f|_G$. Ainsi, la partie \ref{sec:pdt} donne une décomposition de $E$ en somme directe de sous-représentations de $G$. Ça semble refléter le fait que $G$ est isomorphe au produit direct $\prod_{i=1}^t\langle\sigma_i\rangle$.
+
+\section{Exercice}
+
+On suppose enfin que $\KK=\CC$. D'après le théorème de Maschke, la représentation régulière de $\Sn[3]$ est somme directe de représentations irréductibles. Ses matrices peuvent ainsi se réduire simultanément sous forme diagonale par blocs, où chaque bloc est une représentation irréductible de $\Sn[3]$.\\
+
+%Comme il s'agit d'une représentation régulière, on sait aussi que ces représentations irréductibles apparaissent un nombre de fois égal à leurs dimensions. Or $\Sn[3]$ a deux représentations irréductibles de dimension 1, et une de dimension 2. Donc il va y avoir deux blocs de taille 1, et deux blocs de taille 2.
+
+Si l'on souhaite déterminer une base de réduction explicite, il est utile de d'abord chercher des vecteurs propres des matrices de la représentation. Cette activité permet de se familiariser par la pratique avec les matrices de permutation.\\
+
+Comme $(1\; 2)$ et $(1\; 2\; 3)$ engendrent $\Sn[3]$ et que la représentation étudiée est un morphisme défini sur $\Sn[3]$, il suffirait de travailler sur les matrices de $L_{(1\; 2)}$ et $L_{(1\; 2\; 3)}$, où $L$ est la représentation régulière de $\Sn[3]$ associée à la base $\ba{D}=(d_{\Id},d_{(1\; 2)},d_{(2\; 3)},d_{(1\; 3)},d_{(1\; 2\; 3)},d_{(1\; 3\; 2)})$. (L'ordre des vecteurs de cette base influe sur les coefficients des matrices.) Mais à des fins d'illustration, prenons aussi la matrice de $L_{(2\; 3)}$.
+\medskip
+
+\begin{tabular}{ |c|c|c| }
+ \hline
+ $\M_\ba{D}(L_{(1\; 2)})$ & $\M_\ba{D}(L_{(1\; 2\; 3)})$ & $\M_\ba{D}(L_{(2\; 3)})$ \\ 
+ \hline
+ $\begin{pmatrix}
+ 0 & 1 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0
+\end{pmatrix}$ & $\begin{pmatrix}
+ 0 & 0 & 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0
+\end{pmatrix}$ & $\begin{pmatrix}
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 \\
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0
+\end{pmatrix}$ \\ 
+ \hline
+\end{tabular}
+
+
+\begin{enumerate}
+ 
+\item Vérifier que ces trois matrices sont des matrices de permutation.
+
+\item Déterminer les permutations dont elles sont les matrices. (Attention, elles ne sont pas dans $\Sn[3]$, mais dans un autre groupe symétrique !) Les écrire comme produits de cycles à supports disjoints.
+
+\item Donner la matrice $M_{(1\;3\;2\;4)}$ de la permutation $(1\;3\;2\;4)\in\Sn[6]$.
+
+\item Donner des bases de vecteurs propres de ces quatre matrices. Conseil : pour une difficulté croissante, chercher d'abord les vecteurs propres de chaque matrice pour la valeur propre 1, puis les vecteurs propres éventuels de chaque matrice pour la valeur propre éventuelle -1, et ainsi de suite pour les éventuelles autres valeurs propres.
+\end{enumerate}
+
+\section{Correction}
+
+\begin{enumerate}
+
+\item Ces trois matrices ont exactement un 1 sur chaque ligne et chaque colonne, et des 0 partout ailleurs, donc ce sont bien des matrices de permutation d'après la partie~\ref{sec:mat}. C'est normal car ce sont des matrices de la représentation régulière, qui est une représentation de permutation.
+
+\item Il s'agit de trouver les antécédents de ces matrices par $\phi$ (section \ref{sec:repr}), donc dans $\Sn[6]$.
+
+En appliquant l'astuce pratique de la partie \ref{sec:calcul}, on obtient :
+
+$\M_\ba{D}(L_{(1\; 2)})$ est la matrice de la permutation $(1 2)(3 5)(4 6)\in\Sn[6]$,\\
+$\M_\ba{D}(L_{(2\; 3)})$ est la matrice de la permutation $(1 3)(2 6)(4 5)\in\Sn[6]$,\\
+$\M_\ba{D}(L_{(1\; 2\; 3)})$ est la matrice de la permutation $(1 5 6)(2 4 3)\in\Sn[6]$.
+
+En fait, on pouvait aussi déterminer le type de ces permutations (nombres et tailles de leurs cycles disjoints) en raisonnant abstraitement, comme suit.
+De façon intéressante, on dispose ici de deux morphismes ($L$ et $\phi$) à valeurs dans un même groupe (les matrices de permutation de taille 6). On peut en profiter et essayer de faire jouer ensemble ces deux morphismes, pour voir si ça fait des étincelles. En plus, ils sont tous deux injectifs (car $L$ est une représentation régulière : cf. mail du 24/01/2021 16h11 \textit{Révisons ensemble 3/32} point 3).\smallskip
+
+Comme un morphisme de groupes injectif préserve l'ordre, alors pour tout $\sigma\in\Sn[3]$, on a $\ord(\sigma)=\ord(L_\sigma)=\ord(\phi^{-1}(L_\sigma))$. Donc $\phi^{-1}(L_{(1\; 2)})$ est d'ordre 2 et $\phi^{-1}(L_{(1\; 2\; 3)})$ est d'ordre 3 (dans $\Sn[6]$). Comme l'ordre d'un élément du groupe symétrique est le PPCM des ordres des cycles disjoints de sa décomposition, on en déduit que les ordres des cycles disjoints dans les décompositions respectives de $\phi^{-1}(L_{(1\; 2)})$ et $\phi^{-1}(L_{(1\; 2\; 3)})$ divisent respectivement 2 et 3, donc sont égaux à respectivement 2 et 3. Ainsi, $\phi^{-1}(L_{(1\; 2)})$ se décompose en transpositions disjointes et $\phi^{-1}(L_{(1\; 2\; 3)})$ se décompose en 3-cycles disjoints.
+\smallskip
+
+Comme il s'agit de matrices non triviales d'une représentation régulière, les coefficients 1 de ces matrices ne sont pas sur la diagonale. Donc les permutations dans $\Sn[6]$ associées à ces matrices n'ont pas de point fixe : leur support est ``plein'', je veux dire, c'est $\br{1,6}$. Donc $\phi^{-1}(L_{(1\; 2)})$ se décompose en trois transpositions disjointes et $\phi^{-1}(L_{(1\; 2\; 3)})$ en deux 3-cycles disjoints. C'est cohérent avec nos résultats.\medskip
+
+\item En appliquant l'astuce pratique de la partie \ref{sec:calcul}, on obtient\\
+$M_{(1\;3\;2\;4)}=
+\begin{pmatrix}
+ 0 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 \\
+ 1 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}$.
+
+
+\item On applique l'astuce pratique de la partie \ref{sec:pdt}.
+
+\begin{tabular}{ |c|c| }
+ \hline
+ $\M_\ba{D}(L_{(1\; 2\; 3)})$
+ & 1 : $\begin{pmatrix}
+ 1 \\0 \\0 \\0 \\1 \\1
+\end{pmatrix}\begin{pmatrix}
+ 0 \\1 \\1 \\1 \\0 \\0
+\end{pmatrix}$
+, $j$ : $\begin{pmatrix}
+ 1 \\0 \\0 \\0 \\j^2 \\j
+\end{pmatrix}\begin{pmatrix}
+ 0 \\1 \\j \\j^2 \\0 \\0
+\end{pmatrix}$
+, $j^2$ : $\begin{pmatrix}
+ 1 \\0 \\0 \\0 \\j \\j^2
+\end{pmatrix}\begin{pmatrix}
+ 0 \\1 \\j^2 \\j \\0 \\0
+\end{pmatrix}$ \\
+ \hline
+ $M_{(1\;3\;2\;4)}$
+ & 1:$\begin{pmatrix}
+ 1 \\1 \\1 \\1 \\0 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\0 \\1 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\0 \\0 \\1
+\end{pmatrix}$
+, $-1$:$\begin{pmatrix}
+ 1 \\1 \\-1 \\-1 \\0 \\0
+\end{pmatrix}$
+, $i$:$\begin{pmatrix}
+ 1 \\-1 \\-i \\i \\0 \\0
+\end{pmatrix}$
+, $-i$:$\begin{pmatrix}
+ 1 \\-1 \\i \\-i \\0 \\0
+\end{pmatrix}$\\
+ \hline
+ $\M_\ba{D}(L_{(1\; 2)})$ & 1:$\begin{pmatrix}
+ 1 \\1 \\0 \\0 \\0 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\1 \\0 \\1
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\1 \\0 \\1 \\0
+\end{pmatrix}$, -1:$\begin{pmatrix}
+ 1 \\-1 \\0 \\0 \\0 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\1 \\0 \\-1
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\1 \\0 \\-1 \\0
+\end{pmatrix}$ \\ 
+\hline
+ $\M_\ba{D}(L_{(2\; 3)})$ & 1:$\begin{pmatrix}
+ 1 \\0 \\1 \\0 \\0 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\1 \\0 \\0 \\0 \\1
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\1 \\1 \\0
+\end{pmatrix}$, -1:$\begin{pmatrix}
+ 1 \\0 \\-1 \\0 \\0 \\0
+\end{pmatrix}\begin{pmatrix}
+ 0 \\1 \\0 \\0 \\0 \\-1
+\end{pmatrix}\begin{pmatrix}
+ 0 \\0 \\0 \\1 \\-1 \\0
+\end{pmatrix}$ \\
+ \hline
+\end{tabular}
+
+\end{enumerate}
+
+\end{multicols*}
+
+%\newpage
+
+%%\clearpage
+
+% Bibliographie
+%\nocite{*}  % afficher même les références non citées
+%\printbibliography
+
+\end{document}
