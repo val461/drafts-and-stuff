@@ -1,24 +1,104 @@
-# Assemble des fichiers pdf, jpg, png, en un seul fichier pdf.
+## Tourne et compresse des images jpg et en fait un pdf.
+
+mkdir -v rotated
+for f in *.JPG ; do
+    jpegtran -rotate 90 "$f" > "rotated/${f%.JPG}.jpg"
+done
+cd rotated
+mkdir -v compressed
+for f in *.jpg ; do
+    convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "compressed/${f}"
+done
+convert compressed/*.jpg compressed/output.pdf
+
+
+## Assemble des fichiers pdf, jpg, png, en un seul fichier pdf.
+
+# La taille est parfois grande.
+convert * output.pdf
+
+
 # Ajoute parfois des marges blanches.
 
 pdfjam --outfile 'output.pdf' --a4paper *
 pdfjam --outfile 'output.pdf' --a4paper --landscape *
 
 
-# La taille est parfois grande.
-# La qualité est parfois moins élevée.
 
-convert * output.pdf
-
-
-# Désassemble un pdf en fichiers jpg. Sinon : Inkscape.
+## Extrait les images d'un pdf en fichiers jpg. Sinon : Inkscape.
 
 pdfimages -j 'input.pdf' 'page'
 pdfimages -j 'input.pdf' 'output_prefix'
 
 
-# Tourner des images jpg sans pertes (seulement si leurs noms n'ont pas de whitespace ?).
+## Tourner des images jpg sans pertes (seulement si leurs noms n'ont pas de whitespace ?).
 
+# Vers dossier './rotated'
+
+mkdir -v rotated
 for f in *.JPG ; do
-    jpegtran -rotate 90 "$f" > "${f%.JPG}-rotated.jpg"
+    jpegtran -rotate 90 "$f" > "rotated/${f%.JPG}.jpg"
 done
+
+
+## Compresser des images jpg et en faire un pdf
+
+mkdir -v compressed
+for f in *.jpg ; do
+    convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "compressed/${f}"
+done
+convert compressed/*.jpg compressed/output.pdf
+
+
+## Change les dimensions d'images jpg (mais parfois baisse de qualité)
+
+# %
+
+p='33%'
+mkdir -v resized
+for f in *.jpg ; do
+    convert "${f}" -resize "${p}" "resized/${f}"
+done
+
+# w*h
+
+# taille maximale (préserve les ratios originaux des images)
+w=1700
+h=2400
+mkdir -v resized
+for f in *.jpg ; do
+    convert "${f}" -resize "${w}"x"${h}" "resized/${f}"
+done
+
+# spécifier seulement largeur
+
+w=1700
+mkdir -v resized
+for f in *.jpg ; do
+    convert "${f}" -resize "${w}" "resized/${f}"
+done
+
+# spécifier seulement hauteur
+
+h=2400
+mkdir -v resized
+for f in *.jpg ; do
+    convert "${f}" -resize x"${h}" "resized/${f}"
+done
+
+
+## Compresser et changer la taille d'images jpg et en faire un pdf
+
+w=1700
+mkdir -v result
+for f in *.jpg ; do
+    convert -resize "${w}" -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "result/${f}"
+done
+convert result/*.jpg result/result.pdf
+
+p='33%'
+mkdir -v result
+for f in *.jpg ; do
+    convert -resize "${p}" -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "result/${f}"
+done
+convert result/*.jpg result/result.pdf
