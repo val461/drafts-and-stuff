@@ -2,11 +2,11 @@
 
 mkdir -v rotated
 for f in *.JPG ; do
-    jpegtran -rotate 90 "$f" > "rotated/${f%.JPG}.jpg"
+    jpegtran -rotate 90 "$f" > "rotated/${f}.jpg"
 done
 cd rotated
 mkdir -v compressed
-for f in *.jpg ; do
+for f in *.JPG ; do
     convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "compressed/${f}"
 done
 convert compressed/*.jpg compressed/output.pdf
