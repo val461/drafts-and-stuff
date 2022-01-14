@@ -41,7 +41,7 @@ printf '%7s+[enter]: %s\n'                  \
         'number'    'new slowness'          \
         '[+]'       'go upwards'            \
         '[-]'       'go downwards'          \
-        'r'         'refresh the rate'      \
+        'r'         'refresh the number'    \
         'nothing'   'change luminosity'
 echo
 
@@ -63,7 +63,7 @@ _printDirection()
 }
 
 slowness=3
-op='+'
+op='-'
 
 max="$(cat "${file_max}")"
 echo "max brightness: ${max}"

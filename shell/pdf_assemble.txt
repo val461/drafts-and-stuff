@@ -16,6 +16,15 @@ convert compressed/*.jpg compressed/output.pdf
 ## Compresser des images jpg et en faire un pdf
 
 mkdir -v compressed
+for f in *.jpg ; do
+    convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "compressed/${f}"
+done
+convert compressed/*.jpg compressed/output.pdf
+
+
+## Compresser des images JPG et en faire un pdf
+
+mkdir -v compressed
 for f in *.JPG ; do
     convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% "${f}" "compressed/${f%.JPG}.jpg"
 done
