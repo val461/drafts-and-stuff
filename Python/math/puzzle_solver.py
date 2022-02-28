@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 go = False
-precubes = set()
+precubes = [set()]
 
 # TO DO
 # pieces_restantes = [
@@ -30,11 +30,7 @@ def compose(*f_s):
 
 def emplacements_libres(precube): # TO TEST
     emplacements_pris = {(x,y,z) for (x,y,z,p) in precube}
-    for x in range(3):
-        for y in range(3):
-            for z in range(3):
-                if (x,y,z) not in emplacements_pris:
-                    yield (x,y,z)
+    return {(x,y,z) for x in range(3) for y in range(3) for z in range(3) if (x,y,z) not in emplacements_pris}
 
 def R1(bloc):
     return bloc
@@ -60,26 +56,31 @@ def positions(piece):
         for rotation_h in rotations_h:
             yield({rotation_h(rotation_v(bloc)) for bloc in piece})
 
-def fits(piece, emplacement, precube):
-    # centre d'une pièce : 1er bloc de sa liste
+def placer(piece, centre_voulu):
+    p = piece[0][3]
+    centre_actuel = piece[0][0:3]
+    l_coords = [[(centre_voulu[k] - centre_actuel[k] + bloc[k]) for k in range(2)] for bloc in piece]
+    return {[(centre_voulu - centre_actuel)]+[bloc[3]] for bloc in piece}
+        
+
+def fits(piece, places_libres):
+    # check cube boundaries 
+    # check collisions 
     # TO DO
     
 
 if go:
     while pieces_restantes and precubes:
+        print(len(precubes),'précube(s).')
         piece = pieces_restantes.pop()
-        piece_placee = False
         new_precubes = []
         for precube in precubes:
-            for emplacement in emplacements_libres(precube):
-                for position in positions(piece):
-                    if fits(piece, emplacement, precube):
-                        precube |= piece
-                        new_precubes.append(precube)
-                        piece_placee = True
-                        break
-                if piece_placee:
-                    break
+            places_libres = emplacements_libres(precube)
+            for emplacement in places_libres:
+                for piece_positionnee in positions(piece):
+                    piece_placee = placer(piece_positionnee, emplacement)
+                    if fits(piece_placee, places_libres):
+                        new_precubes.append(union(precube, piece_placee))
         precubes = new_precubes
 
     print(len(precubes),'solution(s).')
