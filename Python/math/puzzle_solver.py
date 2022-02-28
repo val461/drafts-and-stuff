@@ -5,15 +5,30 @@ precubes = set()
 
 # TO DO
 # pieces_restantes = [
-# [(x,y,z,0),
+# {(x,y,z,0),
  # (x,y,z,0),
-# ],
-# [(x,y,z,1),
+# },
+# {(x,y,z,1),
  # (x,y,z,1),
-# ]
+# }
 # ]
 
 # centre d'une pièce : 1er bloc de sa liste
+
+def iterer(f,n):
+    def f_new(x):
+        for k in range(n):
+            x = f(x)
+        return x
+    return f_new
+
+def compose(*f_s):
+    def f_new(x):
+        f_s.reverse()
+        for f in f_s:
+            x = f(x)
+        return x
+    return f_new
 
 def emplacements_libres(precube): # TO TEST
     emplacements_pris = {(x,y,z) for (x,y,z,p) in precube}
@@ -34,25 +49,20 @@ def Rzy(bloc):
     (x,y,z,p) = bloc
     return (x,z,-y,p)
 
-def iterer(f,n):
-    def f_new(x):
-        for k in range(n):
-            x = f(x)
-        return x
-    return f_new
-
 Ryx = iterer(Rxy,3)
-Rzy = iterer(Rzy,3)
-Rv_ypym = iterer(Rzy,2)
+Ryz = iterer(Rzy,3)
 
-rotations_v = [R1,Rzy,iterer(Rzy,2),iterer(Rzy,3),,] # TO DO
+# TO CHECK : Rzx=RyxRzyRxy
+rotations_v = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy)]
 rotations_h = [R1,Rxy,iterer(Rxy,2),Ryx]
 
 def positions(piece):
-    # TO CHECK : Rzx=RyxRzyRxy
     for rotation_v in rotations_v:
         for rotation_h in rotations_h:
             yield(rotation_v(rotation_h(piece))) # TO FIX
+
+def fits(piece, precube):
+    # TO DO
 
 if go:
     while pieces_restantes and precubes:
