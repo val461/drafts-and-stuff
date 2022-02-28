@@ -13,8 +13,6 @@ precubes = set()
 # }
 # ]
 
-# centre d'une pièce : 1er bloc de sa liste
-
 def iterer(f,n):
     def f_new(x):
         for k in range(n):
@@ -57,12 +55,15 @@ rotations_v = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy
 rotations_h = [R1,Rxy,iterer(Rxy,2),Ryx]
 
 def positions(piece):
+    # optimisable en factorisant les rotations_v hors de la boucle des rotations_h
     for rotation_v in rotations_v:
         for rotation_h in rotations_h:
-            yield(rotation_v(rotation_h(piece))) # TO FIX
+            yield({rotation_h(rotation_v(bloc)) for bloc in piece})
 
-def fits(piece, precube):
+def fits(piece, emplacement, precube):
+    # centre d'une pièce : 1er bloc de sa liste
     # TO DO
+    
 
 if go:
     while pieces_restantes and precubes:
@@ -72,7 +73,7 @@ if go:
         for precube in precubes:
             for emplacement in emplacements_libres(precube):
                 for position in positions(piece):
-                    if fits(piece, precube):
+                    if fits(piece, emplacement, precube):
                         precube |= piece
                         new_precubes.append(precube)
                         piece_placee = True
