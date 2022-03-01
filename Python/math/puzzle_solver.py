@@ -5,6 +5,7 @@ precubes = [set()]
 
 # TO DO
 # parseur pour construire pieces_restantes à partir de strings de directions : NSOEHB
+#  utiliser dictionnaire[direction]=vecteur
 # pieces_restantes = [
 # {(x,y,z,0),
  # (x,y,z,0),
@@ -26,10 +27,10 @@ def iterer(f,n):
         return x
     return f_new
 
-def compose(*f_s):
+def compose(*fs):
     def f_new(x):
-        f_s.reverse()
-        for f in f_s:
+        fs.reverse()
+        for f in fs:
             x = f(x)
         return x
     return f_new
@@ -79,7 +80,7 @@ def contingent(piece, places_prises):
             if c < 0 or c > 2:
                 return False
     # check collisions
-    return bool(intersection(coords(piece), places_prises))
+    return not intersection(coords(piece), places_prises)
 
 if go:
     while pieces_restantes and precubes:
