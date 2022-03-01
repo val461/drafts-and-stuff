@@ -4,6 +4,7 @@ go = False
 precubes = [set()]
 
 # TO DO
+# parseur pour construire pieces_restantes à partir de strings de directions : NSOEHB
 # pieces_restantes = [
 # {(x,y,z,0),
  # (x,y,z,0),
