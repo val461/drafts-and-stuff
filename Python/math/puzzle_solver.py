@@ -1,23 +1,13 @@
 #!/usr/bin/env python3
 
 go = False
-precubes = [set()]
-
-# TO DO
-# parseur pour construire pieces_restantes à partir de strings de directions : NSOEHB
-#  utiliser dictionnaire[direction]=vecteur
-# pieces_restantes = [
-# {(x,y,z,0),
- # (x,y,z,0),
-# },
-# {(x,y,z,1),
- # (x,y,z,1),
-# }
-# ]
+# TODO : strings de directions : LRUDFB
+pieces_seeds = ['']
 
 # TO DO
 #   tester parties
 #   tester le tout
+#   check that Rzx=RyxRzyRxy
 #   afficher une solution sur un graphique 3D coloré par pièces.
 
 def iterer(f,n):
@@ -35,6 +25,17 @@ def compose(*fs):
         return x
     return f_new
 
+def add_tuples(U, V):
+    return tuple(u + v for (u, v) in zip(U, V))
+
+directions = dict(L=(-1,0,0,0), R=(1,0,0,0), B=(0,-1,0,0), F=(0,1,0,0), D=(0,0,-1,0), U=(0,0,1,0))
+def nouvelle_piece(seed, p):
+    # seed peut passer plusieurs fois par le même bloc
+    piece = {(0,0,0,p)}
+    for direction in seed:
+        piece.add(add_tuples(piece[-1], directions[direction]))
+    return piece
+
 def coords(L):
     return {(x,y,z) for (x,y,z,p) in L}
 
@@ -43,6 +44,7 @@ def emplacements(precube, places_prises = None):
         places_prises = coords(precube)
     places_libres = {(x,y,z) for x in range(3) for y in range(3) for z in range(3) if (x,y,z) not in places_prises}
     return places_prises, places_libres
+
 
 def R1(bloc):
     return bloc
@@ -58,7 +60,6 @@ def Rzy(bloc):
 Ryx = iterer(Rxy,3)
 Ryz = iterer(Rzy,3)
 
-# TO CHECK : Rzx=RyxRzyRxy
 rotations_v = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy)]
 rotations_h = [R1,Rxy,iterer(Rxy,2),Ryx]
 
@@ -67,6 +68,7 @@ def positions(piece):
     for rotation_v in rotations_v:
         for rotation_h in rotations_h:
             yield({rotation_h(rotation_v(bloc)) for bloc in piece})
+
 
 def placer(piece, centre_voulu):
     p = piece[0][3]
@@ -83,6 +85,8 @@ def contingent(piece, places_prises):
     return not intersection(coords(piece), places_prises)
 
 if go:
+    pieces_restantes = map(nouvelle_piece, pieces_seeds)
+    precubes = [set()]
     while pieces_restantes and precubes:
         print(len(precubes),'précube(s).')
         piece = pieces_restantes.pop()
