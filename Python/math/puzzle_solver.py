@@ -31,9 +31,11 @@ def add_tuples(U, V):
 directions = dict(L=(-1,0,0,0), R=(1,0,0,0), B=(0,-1,0,0), F=(0,1,0,0), D=(0,0,-1,0), U=(0,0,1,0))
 def nouvelle_piece(seed, p):
     # seed peut passer plusieurs fois par le même bloc
-    piece = {(0,0,0,p)}
+    bloc = (0,0,0,p)
+    piece = {bloc}
     for direction in seed:
-        piece.add(add_tuples(piece[-1], directions[direction]))
+        bloc = add_tuples(bloc, directions[direction])
+        piece.add(bloc)
     return piece
 
 def coords(L):
