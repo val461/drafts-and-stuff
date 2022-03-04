@@ -3,13 +3,16 @@
 # go = False
 go = True
 pieces_seeds = ['BRU','FRU','RFF','LFUDF','DRBB','BDRB']
+# optimisable en mettant les 3 pièces de volume 5 avant les 3 pièces de volume 4 dans pieces_seeds
 
 # TO DO
 #   tester parties
 #   check that Rzx=RyxRzyRxy
 #   afficher une solution sur un graphique 3D coloré par pièces.
 
-# 1st successful run: took a few minutes. Output:
+# 1st successful run: took a few minutes.
+# Input: pieces_seeds = ['BRU','FRU','RFF','LFUDF','DRBB','BDRB']
+# Output:
 # 1 précube(s).
 # 96 précube(s).
 # 3168 précube(s).
@@ -104,6 +107,7 @@ if go:
         new_precubes = []
         for precube in precubes:
             places_prises, places_libres = emplacements(precube)
+            # optimisable en n'appliquant pas positions() pour la 1ère pièce (grâce aux symétries du cube)
             for piece_positionnee in positions(piece):
                 for emplacement in places_libres:
                     piece_placee = placer(piece_positionnee, emplacement)
