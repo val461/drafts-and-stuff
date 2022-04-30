@@ -1,0 +1,1401 @@
+action libre et transitive de Sn sur les n-uplets injectifs de [[1;n]] ?
+        induit bijection entre Sn et les n-uplets injectifs de [[1;n]] ?
+
+coloration d'échiquier via parcours horizontal/vertical une case à la fois en alternant la couleur à chaque déplacement
+    Formaliser.
+        suite u de triplets (x,y,c) avec x la colonne (1 à 8), y la rangée (1 à 8), c la couleur (0 ou 1)
+        vérifiant la condition
+            parcours horizontal/vertical une case à la fois en alternant la couleur à chaque déplacement
+    Fonction couleurs(x, y) = Gamma(3)(inter(Im(u), {x}*{y}*{0;1}))
+        avec Gamma(3) la projection sur la 3-ème composante
+    Prouver que si on repasse plusieurs fois par la même case, on y met la même couleur à chaque fois.
+        I.e., a-t-on Card(couleurs(x, y)) <= 1 pour tout (x, y) ?
+    Plus généralement, que se passe-t-il si on autorise n couleurs avec n >= 2 ?
+    Que se passe-t-il si on change la règle des déplacements autorisés ?
+
+retrouver Al-Kashi ?
+    problème 1
+    connu
+        les longueurs de deux côtés, et l'angle entre eux
+    à trouver
+        la longueur du troisième côté
+    ébauche de réponse
+        voir les deux côtés comme des vecteurs
+            comment déterminer les coordonnées de ces deux vecteurs ?
+        les ajouter
+        regarder la norme du vecteur obtenu
+    problème 2
+        Peut-on partir d'un autre angle ?
+
+forme linéaire induite par norme ? sa norme est > 1 ? que vaut sa norme ?
+    lien avec la norme 1 ?
+
+lien entre norme subordonnée quelconque et rayon spectral ?
+
+voir matrices infinies comme applications linéaires ?
+    définir produit de matrices infinies via composition d'applications linéaires ?
+
+sup_n phi(n)/n
+    phi fonction d'Euler
+    généralisation
+        comparaison entre f et g
+            sup_(a,b) h(f(a),g(b))
+            où h est une "fonction de comparaison", i.e.,
+                une fonction à valeurs réelles telle que pour tout x, h(x,.) est décroissante et h(.,x) est croissante
+                l'ensemble de départ est ainsi un produit cartésien de deux ensembles, chacun muni d'un ordre
+                peut-on définir un ordre sur l'un de ces deux ensembles en posant qu'une certaine fonction est une fonction de comparaison ?
+
+longueur d'une trajectoire ne dépend pas du sens de parcours
+longueur de l'arc entre deux points d'un cercle peut dépendre de l'arc choisi (au plus 2 choix possibles)
+    sauf si les deux points et le centre du cercle sont alignés (deux points égaux ou diamétralement opposés)
+
+L'implication est un préordre sur un ensemble de propositions logiques.
+    l'application "valeur de vérité" semble être un morphisme de relations de l'implication logique vers l'ordre usuel de la partie {0;1} de N.
+    Le préordre de l'implication induit un ordre (partiel) en quotientant par l'équivalence logique.
+    Autrement dit, on applique le "1er th d'isomorphisme ensembliste" pour l'application "valeur de vérité". Il induit une bijection entre le quotient et {0;1},
+    qui permet de munir le quotient de l'ordre de {0;1}.
+    La projection canonique est-elle un morphisme de relations entre l'implication et l'ordre du quotient, i.e., cette application est-elle croissante ?
+
+exporter une relation d'ordre via une application
+    relation d'ordre induite sur l'ensemble de départ par une injection à valeurs dans un ensemble ordonné
+    relation d'ordre induite sur l'ensemble d'arrivée par une bijection dont l'ensemble de départ est ordonné
+
+une relation d'ordre r sur un ensemble E, "compatible" avec une partition P de E, induit une relation d'ordre R sur la partition P.
+    définition
+        pour toutes classes X,Y, (XRY ssi (existe x dans X et y dans Y tq xry)).
+    conséquences
+        R réflexive.
+            pour toute classe X, existe x dans X ; alors xrx, donc XRX.
+        La projection canonique p de E vers P est un morphisme de relations de r vers R.
+        Pour toute relation Q sur P, p est un morphisme de relations de (E,r) vers (P,Q) ssi R est incluse dans Q.
+            Si p est un morphisme de relations de (E,r) vers (P,Q) :
+                Pour toutes classes X,Y (tq XRY), existent x dans X et y dans Y (tq xry) ; alors p(x)Qp(y), or p(x)=X et p(y)=Y, donc XQY.
+            Si R est incluse dans Q :
+                Pour tous x, y dans E tq xry, on a p(x)Rp(Y), donc p(x)Qp(Y).
+                Donc p est un morphisme de relations de (E,r) vers (P,Q).
+    essai 1 (raté, trivial)
+        définition
+            P et r compatibles ssi (pour toutes classes X,Y, pour tous x et x' dans X, pour tous y et y' dans Y, (xry ssi x'ry')).
+        conséquences
+            Supposons P et r compatibles.
+            pour toutes classes X,Y, (XRY ssi (pour tous x dans X et y dans Y, xry)).
+            pour toute classe X, existe x dans X ; alors xrx, donc pour tout x' dans X, xrx' et x'rx, donc x=x', donc X est un singleton.
+            Donc les classes sont des singletons, et P est la relation d'égalité.
+    essai 2 (fonctionne, car on raffine la notion de compatibilité de l'essai 1)
+        définition
+            P et r compatibles ssi (pour toutes classes distinctes X,Y, pour tous x et x' dans X, pour tous y et y' dans Y, (xry ssi x'ry')).
+        conséquences
+            Supposons P et r compatibles.
+            pour toutes classes distinctes X,Y,
+                XRY ssi (pour tous x dans X et y dans Y, xry).
+                non(XRY) ssi (existent x dans X et y dans Y, tq non(xry)).
+            pour toutes classes X,Y,Z (tq XRY et YRZ), existent x dans X, y et y' dans Y, z dans Z, tq xry et y'rz.
+                Si X!=Y :
+                    Par compatibilité de P et r, comme xry, alors xry'. Or, y'rz, donc xrz, donc XRZ.
+                Sinon :
+                    X=Y, donc y' est dans X. Or, y'rz, d'où XRZ (par définition de R).
+            Donc R transitive.
+            pour toutes classes X et Y (tq XRY et X!=Y), existent x dans X, y dans Y, tq xry.
+                Comme X et Y sont disjointes, alors x!=y. Or xry, donc par antisymétrie de r, on a non(yrx).
+                Par compatibilité de P et r, on obtient non(YRX).
+            D'où, par contraposée, pour toutes classes X et Y (tq XRY et YRX), X=Y.
+            Donc R antisymétrique.
+            Donc R relation d'ordre.
+            Or, la projection canonique p de E vers P est un morphisme de relations de r vers R.
+            Donc la projection canonique p de (E,r) vers (P,R) est croissante.
+        questions
+            R est-elle la seule relation d'ordre sur P rendant p croissante de (E,r) vers P ?
+                Analyse
+                    Soit Q une relation d'ordre sur P rendant p croissante de (E,r) vers (P,Q).
+                    On a vu plus haut qu'alors R est incluse dans Q.
+                Synthèse
+                    Pour toute relation Q antisymétrique contenant P strictement :
+                        Q est réflexive.
+                        La clôture transitive de Q n'est pas forcément antisymétrique !
+                    Je pense que dans certains cas (ou tous ?), R n'est pas la seule.
+            Peut-on rendre p croissante de (E,r) vers P si P et r ne sont pas compatibles ?
+
+générateur de graphiques Sage
+    explorer visuellement l'action de Z/nZ sur lui-même par translation
+        via des polygones réguliers (pas forcément convexes) inscrits dans un cercle
+            grâce à l'exponentielle complexe
+
+t cos(1/t)
+    dérivable en 0 ? pas C1 ?
+
+entropie dans les magmas
+    entropie liée à la translation
+        définitions
+            Une entropie d'un magma M est une application E de M vers un ensemble ordonné O,
+                telle que E(xy) >= max(E(x),E(y)) pour tous x, y dans M.
+            g est une suite d'éléments du magma
+            u_0 est un élément du magma
+            u_(n+1) = g_n * u_n
+            v(n,u_0,g) = E(u_n)
+        propriétés
+            v est croissante en n pour tous u_0, g.
+            quelques détails et remarques
+                /home/val/Documents/Vie pratique/formations/cours/univ/M2_MF/agrégation/révisions collectives/corrigés/26.3 - Valentin
+            dans les magmas unifères
+                l'entropie atteint un minimum en le neutre
+            dans les magmas avec élément absorbant
+                l'entropie atteint un maximum en l'élément absorbant
+            dans les semi-groupes
+                E(x_1 ... x_n) >= E(x_i) pour tout i, pour tout n entier positif non nul, pour tous x_1, ..., x_n dans le semi-groupe.
+                    raisonnement par itérations (récurrence ?)
+            si pour tout x dans le magma, la multiplication par x est surjective,
+                alors l'entropie est constante.
+                En particulier, dans un groupe, l'entropie est constante.
+                    L'hypothèse signifie que l'action par translation est transitive.
+        l'entropie est constante sur chaque "plateforme"
+            définitions
+                relation binaire R sur M
+                    yRz ssi (existe x dans M tel que xy=z).
+                relation binaire S sur M
+                    ySz ssi (yRz et zRy).
+                Pour tout y de M, on appelle trajectoire de y l'ensemble des z de M tels que yRz.
+                    (L'ensemble des produits xy avec les x dans M.)
+                Pour tout y de M, on appelle sillage de y l'ensemble des z de M tels que zRy.
+                    (Éléments ayant y dans leur trajectoire.)
+                Pour tout y de M, on appelle plateforme de y l'ensemble des z de M tels que ySz.
+                    (Intersection de la trajectoire et du sillage de y.)
+            Pour tout y de M,
+                la plateforme de y est incluse dans la trajectoire de y.
+                Pour tout z dans la plateforme de y, il existe x, t tels que xy=z et tz=y.
+                    Alors E(z)=E(y).
+            S est incluse dans R.
+            S est symétrique.
+            dans un semi-groupe
+                R est transitive.
+            dans un magma unifère
+                R est réflexive.
+                S est réflexive.
+            Le sillage d'un élément absorbant est le magma tout entier.
+            La plateforme et la trajectoire d'un élément absorbant sont réduites à lui-même.
+            La plateforme d'un neutre est l'ensemble des éléments inversibles à gauche.
+                La trajectoire d'un neutre est le magma tout entier.
+                Le sillage d'un neutre est l'ensemble des éléments inversibles à gauche.
+        exemples
+            sur l'ensemble des parties d'un certain ensemble
+                union n'est a priori pas un groupe
+                    on peut prendre E = cardinal
+                différence symétrique est un groupe
+                    le cardinal peut a priori augmenter ou diminuer
+        propriétés
+            si E est à valeurs réelles positives ou nulles, et si E(ab) >= E(a)+E(b), alors E(ab) >= max(E(a),E(b)).
+            exemples
+                sur l'ensemble des polynômes non nuls à coefficients dans un a.c.u.i. A
+                    on peut prendre E = degré ou E = valuation d'un irréductible de A[X], car alors E(ab)=E(a)+E(b)
+                        mais pour les fractions rationnelles, le produit peut faire diminuer le degré ou la valuation.
+        représentation d'un magma par un graphe pour visualiser trajectoires et plateformes
+            entropie : axe vertical orienté vers le haut
+                élément absorbant placé en haut
+                élément neutre placé en bas
+                Flèche d'un élément vers un autre indique que le second est dans la trajectoire du premier.
+                    Graphe de R !
+                Quand deux éléments sont liés par des flèches dans les deux sens, on les met à la même altitude.
+                    Graphe de S
+            généraliser aux graphes orientés
+                trajectoires, plateformes, entropie
+                    trajectoire d'un sommet
+                        sommets atteignables à partir de ce sommet
+                    plateforme d'un sommet
+                        sommets atteignables à partir de ce sommet et à partir desquels ce sommet est atteignable
+                    entropie d'un sommet
+                        complémentaire de la trajectoire de ce sommet (dans l'ensemble des sommets du graphe)
+                            si on parle de l'inclusion (si on préfère travailler avec des nombres, on peut regarder son cardinal à la place, si l'ensemble des sommets est fini)
+            trajectoire d'une plateforme ?
+                lien avec les trajectoires de ses éléments ?
+            équation dont les solutions sont des (classes d'isomorphies de) magmas ?
+                formulée via la donnée d'un graphe ?
+                exemple
+                    magma ayant exactement trois plateformes et une trajectoire ?
+        La fonction plateforme est-elle une entropie ?
+            Si oui, est-elle "la plus fine possible" ?
+        La fonction trajectoire est-elle une entropie ?
+            Si oui, est-elle "la plus fine possible" ?
+        rendre définition plus restrictive ?
+            exiger une hausse stricte "quand on sort d'une plateforme" ?
+                E(yx) > E(x) quand non(yxRx) ?
+                E(y)=E(x) si xSy ?
+        rendre définition plus large ?
+            E(xy) >= E(y) ?
+                pour parler des magmas non commutatifs
+        morphismes
+            morphisme de magmas
+                Soit f un morphisme de magmas entre deux magmas M et N munis respectivement d'entropies E et F.
+                F(f(xy))=F(f(x)f(y))>=max(F(f(x)),F(f(y))) pour tous x, y de M.
+            "morphisme de magmas entropiques"
+                Soit f un morphisme de magmas entre deux magmas M et N munis respectivement d'entropies E et F, tel que F(f(z))>=E(z) pour tout z de M.
+                On dit que f est un morphisme de magmas entropiques.
+                Alors F(f(xy))>=E(xy)>=max(E(x),E(y)).
+                Posons f bijectif.
+                    Alors F(t)>=E(f^-1(t)) pour tout t de N.
+                    Posons f^-1 morphisme de magmas entropiques.
+                        Alors F(t)=E(f^-1(t)) pour tout t de N.
+                        Donc F(f(z))=E(z) pour tout z de M.
+        étendre concepts de trajectoire, sillage, plateforme
+            d'une partie ?
+            à gauche, à droite ?
+                ci-dessus, on a fait à gauche.
+            rendre R un peu plus symétrique ?
+                yTz ssi (existe x dans M tel que (xy=z ou yx=z)).
+                nouvelle version de S
+                    yUz ssi (yTz et zTy).
+                T et U semblent avoir les mêmes propriétés que R et S (réflexivité ou symétrie ou transitivité selon les cas).
+                trajectoire, sillage, plateforme se redéfinissent en termes de T et U comme avec R et S.
+                Le sillage d'un neutre est l'ensemble des éléments inversibles à gauche ou inversibles à droite.
+        se passe-t-il quelque chose pour les éléments simplifiables non inversibles ? i.e., est-ce qu'ils laissent l'entropie inchangée ?
+        un monoïde complétable en un groupe a-t-il ses entropies constantes ?
+        un monoïde ayant un élément non simplifiable admet-il une entropie non constante ?
+        nilpotents d'un semi-groupe avec élément absorbant
+            l'opposé de l'indice de nilpotence est-il une entropie ?
+    entropie pour les actions de magmas
+        pour action à gauche
+            E(s.x)>=E(x) avec s dans un magma agissant sur un ensemble ayant x pour élément
+        idem pour action à droite
+        "entropie bilatère", à la fois pour le magma et l'ensemble sujet !
+            E(s.x)>=max(E(s),E(x))
+
+graphe
+    Les graphes orientés simples sont les relations binaires sur un ensemble.
+
+système récurrent d'ordre infini
+    ordre aleph_0
+        u indexée par Z à valeurs dans A
+        f à valeurs dans A, définie en toute suite à valeurs dans A définie sur un sous-intervalle de Z majoré non minoré 
+        u vérifie u_n=f( (u_j)_(j<n) )  pour tout n dans Z
+    ordre 2^(aleph_0)
+        définition
+            u définie sur R à valeurs dans A
+            existe f à valeurs dans A, définie en toute application à valeurs dans A définie sur un intervalle de R de la forme ]m, t[ avec m<t dans R.
+            a fonction de R à valeurs dans R union {-infini}, telle que a(t)<t pour tout t dans R
+            u vérifie u(t) = f(restriction de u à l'intervalle ]-infini, t[)
+                pour tout t dans R
+        exemple
+            u fonction continue à gauche en tout point
+            u(t)=(limite en t quand x<t de u(x))
+
+"systèmes dynamiques discrets" dans Z/nZ
+    suite récurrente d'ordre 1 induite par l'action par translation itérée d'un élémént fixé a, à partir d'une valeur initiale u_0
+    trajectoires dessinées dans un cercle (ou un polygone régulier à n sommets, sommets représentant les éléments de Z/nZ)
+        trajectoires étranges et symétriques
+        taille de l'orbite = ordre de a
+
+vecteur d'un C-e.v.
+    essayer d'illustrer via coordonnées sphériques
+        direction, norme, sens
+        illustration pas tout à fait adéquate
+            car peut représenter pareillement deux vecteurs non colinéaires !
+    marche mieux dans le plan, avec des cercles ayant leurs centres en l'origine traversés par une même droite
+
+une application uniformément continue sur deux ouverts est-elle uniformément continue sur leur réunion ?
+
+groupe Z/nZ
+    la permutation donnée par les n-1 éléments non nuls parcourus à l'envers est-elle toujours un automorphisme de Z/nZ ?
+        oui (multiplication par -1, qui est premier avec n)
+    Aut(Z/nZ) correspond-il aux symétries d'un polygone régulier à n côtés ? groupe diédral ?
+
+Aut(...Aut(Aut(G))...) (où G groupe)
+    suite stationnaire à isomorphisme près ?
+    périodique à partir d'un rang à isomorphisme près ?
+    G=Sn
+        si n>=3 et n!=6
+            suite constante à isom. près, tous les termes sont isom. à Sn.
+
+morphisme de groupes à valeurs dans un groupe abélien
+    le sous-groupe dérivé du groupe de départ est inclus dans le noyau.
+
+existence et unicité d'un prolongement en un morphisme d'une application définie sur une partie génératrice
+    motivation
+        Dans plusieurs cas généraux (morphisme de groupe, application multilinéaire), l'unicité de ce prolongement semble évidente.
+        L'existence en revanche n'est pas évidente.
+        En d'autres termes, fixer l'image des générateurs suffit à pouvoir trouver des valeurs pour toutes les images, mais pas forcément de façon cohérente.
+            remarque
+                Une application linéaire est un morphisme de groupe, mais une famille génératrice d'un espace vectoriel n'est en général pas une partie génératrice du groupe additif. Donc le cas des applications linéaires n'est pas inclus dans le cas des morphismes de groupes, traiter les morphismes de groupes ne suffit pas.
+    morphisme partant d'un groupe de type fini
+        uniquement déterminé par l'image des k générateurs ?
+            En effet, en général, il ne faut pas choisir les images n'importe comment.
+                Par exemple, l'ordre de chaque image doit diviser l'ordre de l'antécédent.
+                    Donc l'ordre de chaque image doit diviser le pgcd de l'ordre de l'antécédent et de l'ordre du groupe d'arrivée.
+                        Donc si l'ordre de l'antécédent et l'ordre du groupe d'arrivée sont premiers entre eux, alors l'image est neutre.
+                    Donc l'ordre de chaque image doit diviser le pgcd de l'ordre du groupe de départ et de l'ordre du groupe d'arrivée.
+                        si l'ordre du groupe de départ et l'ordre du groupe d'arrivée sont premiers entre eux
+                            le morphisme est trivial.
+                            Les applications f ayant le même ensemble de départ et le même ensemble d'arrivée, mais distinctes du morphisme trivial, ne sont pas morphismes de groupes.
+                                Donc existent x, y dans le groupe de départ, tels que f(xy)!=f(x)f(y).
+            cas k = 1 :
+                il faut et il suffit de fixer l'image d'un générateur à un élément d'ordre divisant l'ordre de l'antécédent.
+                    preuve
+                        En notant g ce générateur, on lui choisit une image h vérifiant l'hypothèse.
+                        On peut alors vérifier que la relation {(g^k, h^k) | k dans Z} est univaluée et totale, i.e., c'est le graphe d'une application f bien définie par f(g^k)=h^k. On vérifie que c'est un morphisme de groupes.
+                    En particulier, si les groupes de départ et d'arrivée sont de même cardinal fini
+                        alors (par le théorème de Lagrange),
+                            on peut fixer l'image d'un générateur à n'importe quel élément du groupe d'arrivée.
+            cas isomorphisme
+                L'ordre de chaque image doit être égale à l'ordre de chaque antécédent.
+                Les groupes doivent être de même cardinal.
+                cas k = 1 :
+                    Groupe monogène donc fini ou dénombrable (et le groupe d'arrivée doit être de même cardinal).
+                    cas automorphisme
+                        Il suffit de fixer l'image d'un certain générateur comme égale à un certain générateur.
+            cas où le groupe de départ est abélien
+                cas où le groupe de départ est abélien fini
+                    décomposition canonique du groupe de départ
+                        choisir famille génératrice
+                            dont chaque élément a une seule composante non neutre dans le produit direct
+                                tels que deux éléments n'ont pas la même composante non neutre
+                        choisir pour chaque élément de cette famille une image telle que
+                            l'ordre de l'image divisant l'ordre de l'antécédent
+                            ces images commutent entre elles.
+                        Grâce à la divisibilité des ordres et aux composantes neutres des élts de la famille génératrice,
+                            on peut vérifier qu'on obtient une application bien définie f(a^i...c^k)=f(a)^i...f(c)^k.
+                        Grâce à la commutativité des images, on peut vérifier que f est un morphisme de groupes.
+                cas où le groupe de départ est abélien libre
+                    ...
+    application linéaire
+        entièrement déterminée par l'image des éléments d'une base ?
+            oui.
+                preuve
+                    l'existence et l'unicité de l'écriture d'un vecteur dans une base permettent de formuler une application bien définie. On vérifie facilement qu'elle est linéaire.
+        conditions intéressantes de cohérence pour le cas d'une famille génératrice liée ?
+    application bilinéaire
+        entièrement déterminée par l'image des éléments d'une base ?
+            oui d'après L. Poulain
+            preuve ?
+                l'existence et l'unicité de l'écriture d'un vecteur dans une base permettent de formuler une application bien définie.
+                ...
+    application multilinéaire
+        entièrement déterminée par l'image des éléments d'une base ?
+            preuve ?
+                l'existence et l'unicité de l'écriture d'un vecteur dans une base permettent de formuler une application bien définie.
+                ...
+
+diagrammes commutatifs
+    isométrie et normes
+    fonction paire et opposé
+    fonction impaire et opposé
+    actions de groupe équivalentes
+
+L'application combinaison linéaire, de K^n * E^n vers E, avec E un K-e.v., est-elle un produit tensoriel entre les familles de scalaires de K et les familles de vecteurs de E ?
+
+diagrammes commutatifs
+    application linéaire f composée avec application combinaison linéaire C
+        égale
+            C composée avec l'application qui à un couple famille de scalaires et famille de vecteurs associe le couple la même famille de scalaires et map(f)(famille de vecteurs).
+    endomorphisme d'algèbre unitaire commute avec fonctions polynomiales de cette algèbre
+    morphisme d'algèbres unitaires commute avec polynômes si on identifie polynômes et fonctions polynomiales de ces deux algèbres
+    application linéaire commute avec les polynômes en plusieurs indéterminées de degré 1 sans terme constant si on les identifie à des fonctions polynomiales de ces deux espaces vectoriels
+    morphisme de groupes abéliens est application linéaire entre Z-modules
+    complémentaires, adhérences, intérieurs
+
+montrer le théorème de Fubini pour la mesure de comptage dans le cas fini, sans avoir recours à la théorie de l'intégration, si possible juste avec des notions "ensemblistes".
+    i.e., montrer que la somme d'une application définie sur le produit cartésien de deux ensembles est égale à la double somme des applications définies sur chacun de ces deux ensembles, pour ainsi dire.
+
+dans un groupe, si ab=ba, avec a et b d'ordres finis, et ab!=e, est-il possible que l'ordre de ab diffère du ppcm des ordres de a et b ?
+existe-t-il un groupe ayant des éléments a, b tq ab=ba, ab!=e, (ab)^k=e, avec 1 < k < ppcm(o(a),o(b)) <= infini ?
+    pas le groupe ]0,+infini[, car la racine k-ème est un endomorphisme de ce groupe.
+Les deux problèmes précédents sont-ils équivalents ?
+
+nilpotents d'un semi-groupe avec élément absorbant
+    peut-on exprimer l'indice de nilpotence d'un produit de nilpotents qui commutent en termes de leurs indices de nilpotence ?
+        pour simplifier, on peut chercher dans des cas concrets.
+            par exemple
+                multiplication dans Z/nZ avec n ni nul ni premier (car n nul ou premier ssi Z/nZ est intègre)
+                multiplication dans M_n(K) avec n>1
+
+montrer que deux certains cycles du groupe symétrique sont inverses l'un de l'autre, en les représentant comme +1 et -1 dans Z/nZ (visualiser dans U_n)
+    action par translation de Z/nZ (libre, donc fidèle), donc morphisme (injectif) f de Z/nZ sur S(Z/nZ), et f(1)^-1=f(-1); or f(1) et f(-1) sont des n-cycles.
+
+"l'application" qui à un groupe associe son dual est-elle vraiment un morphisme pour le produit direct modulo l'isomorphie ?
+    On sait déjà que le dual du pdt est isomorphe au pdt des duaux, ce qui suggère un "morphisme".
+    Mais peut-on vraiment introduire une telle notion de "morphisme" ?
+
+Z[w] avec w = e^(2i*pi/n)
+    Existe-t-il des réels non entiers dans Z[w] ?
+        rationnels ?
+        irrationnels ?
+    n = 8
+        Z[w] contient un réel irrationnel !
+            Z[w] contient sqrt(2)
+                w+w^7 = w+w^-1 = 2*Re(w) = 2*cos(pi/4) = sqrt(2)
+    pour dév 2 groupes finis [Terras]
+        les entiers sont-ils les seuls rationnels de Z[w] ?
+            Oui d'après E. Pedon
+                Un élément de Z[w] est un entier algébrique (une solution d'une équation polynomiale à coefficients entiers), et les seuls entiers algébriques rationnels sont les entiers : c'est un exercice facile résultant du lemme de Gauss. 
+                (En termes savants, cela revient à dire que Z est un anneau intégralement clos.)
+    Z[w] semble représenter un réseau
+        Z[w] semble être un sous-Z-module de C
+            engendré par la famille de vecteurs constituée des n racines n-èmes de l'unité dans C.
+        random walk
+            "autonome"
+                loi de probabilité qui dépend du "lieu"
+            programmer
+
+loi de probabilité "autonome" (cf. Z[w] ci-haut)
+    loi de probabilité qui dépend du "lieu"
+
+groupes "fractals"
+    Z
+        Z est isomorphe à ses sous-groupes (les nZ avec n entier), qui sont donc isomorphes à leurs propres sous-groupes, etc..
+            "on plonge dans un groupe plus petit encore et encore."
+    S(E)
+        S(E) isomorphe à un ss-gpe de S(S(E)).
+            "on plonge dans un groupe plus grand encore et encore."
+    GL et S
+        Soient K, J deux corps commutatifs.
+        GL_n(K)~GL(K^n) ss-groupe de S(K^n).
+        S_n isomorphe à ss-gpe de GL_n(J).
+            (matrices de permutation)
+        si K et J finis :
+            GL_n(K) isomorphe à ss-gpe de S_{|K|^n}, qui est isomorphe à un ss-gpe de GL_{|K|^n}(K), etc.
+                "on plonge dans un groupe plus grand encore et encore."
+
+automorphismes du groupe de Klein
+    rq
+        On pourrait sans doute rédiger de façon plus élégante que ci-dessous en notant G={1,2,3,4}, avec 4 le neutre de G, et en considérant le stabilisateur de 4 pour l'action naturelle de S_4 sur [[1,4]] (i.e., l'action correspondant à l'endomorphisme de gpes Id de S_4), puis en utilisant que ce stabilisateur est isomorphe à S_3, et qu'on a même un isomorphisme explicite simple : la restriction à [[1, 3]]. Ce serait plus élégant au sens où on éviterait de prendre à part l'élément neutre dans plusieurs étapes de la preuve.
+    preuve
+        Soit G un groupe d'ordre 4 non cyclique.
+        Notons G={e,x1,x2,x3}, avec e le neutre de G.
+        Par le th de Lagrange, les éléments non neutres sont d'ordre 2 ou 4.
+        Or G non cyclique.
+        Donc les élts non neutres sont d'ordre 2.
+        Soient i, j, k tq {i, j, k} = {1, 2, 3}.
+        lemme
+            énoncé
+                xi*xj = xk.
+                xi*xi = e.
+                xi*e=e*xi=xi.
+            preuve
+                Comme xi et xj sont non neutres, alors xi*xj n'appartient pas à {xi, xj}.
+                Comme xi est d'ordre 2, alors xi^-1 = xi != xj, donc xi*xj != e.
+                D'où xi*xj = xk.
+        Soit s dans S_3.
+        Soit fs:G->G définie par fs(e)=e, fs(xt)=xst pour tout t dans [[1, 3]].
+        Alors fs bij.
+        D'après le lemme :
+            fs(e*e)=fs(e)=e=fs(e)fs(e)
+            fs(xi*xi)=fs(e)=e=xsi*xsi=fs(xi)fs(xi)
+            fs(xi*xj)=fs(xk)=xsk=xsi*xsj=fs(xi)fs(xj)
+        Donc fs est un morphisme de gpes.
+        Donc fs est un automorphisme du groupe G.
+        Donc l'application f qui à s de S_3 associe fs est à valeurs dans Aut(G).
+        Réciproquement, les automorphismes de G sont de la forme fs (pour diverses permutations s dans S_3).
+        Donc l'application f est surjective, et les automorphismes de G sont exactement les applications fs avec s dans S_3.
+        Si s!=u sont dans S_3:
+            Existe a tq s(a)!=u(a). Comme x est injective, alors fs(xa)=xsa!=xua=fu(xa), donc fs!=fu.
+        Donc f est injective. Donc f est bijective.
+        Soient s, u dans S_3.
+        ((fs)o(fu))(xi)=(fs)((fu)(xi))=(fs)((xui))=(fs)((xui))=xs(ui)=x(su)i=f(su)(xi)
+        ((fs)o(fu))(e)=fs(e)=e=f(su)(e).
+        Ainsi, (fs)o(fu) = f(su). Donc f est un morphisme de gpes.
+        Ainsi, f est un isom. de gpes entre S_3 et Aut(G).
+
+groupe (Z/nZ)* pour n différent de 0, de 1, et non premier
+    cyclique ou pas ?
+
+"adjoint" d'un automorphisme de groupe pour un isomorphisme de groupes fixé
+
+La fonction inverse sur le plan complexe projectif est-elle en un sens une symétrie centrale de la sphère de Riemann ?
+
+dans groupe
+    être conjugués signifie être "adjoints" pour un certain élément
+
+un groupe abélien libre est-il le quotient d'un groupe libre par une relation "minimale" permettant la commutativité de tous les éléments ?
+
+sup, inf, min, max
+    si A partie majorée non vide de R, alors sup A = min(majorants de A).
+    si A partie minorée non vide de R, alors inf A = max(minorants de A).
+
+H ss-gpe distingué d'un gpe G.
+    G/H groupe, la surjection canonique p est un morphisme de G dans G/H.
+        On peut définir un produit sur G/H par xH * yH := (xy)H pour tous x, y dans G.
+            Cette application est bien définie.
+                Pour tous h et k dans H, (xhyk)H = (xy)H.
+                    xhyk est dans (xy)H.
+                        xhyk est dans xHyH.
+                        xHyH = (xy)H.
+                            xHyH = x(Hy)H = x(yH)H = (xy)(HH) = (xy)H.
+                                Hy = yH.
+                                    H est un ss-gpe distingué de G.
+    Produit direct (G/H) x H isomorphe à G ?
+        Cas H sev de G ev.
+            oui il me semble.
+        Cas G abélien ?
+            pas forcément.
+                exemple de O. Fleury
+                    G=Z/4Z et H=2Z/4Z. On a G/H isomorphe à Z/2Z, de même que H est isomorphe à Z/2Z. Mais G n'est pas isomorphe à Z/2ZxZ/2Z.
+
+Un ss-gpe d'indice 2 est distingué.
+    Soit H un ss-gpe d'indice 2 d'un gpe G.
+    Les classes à gauche et à droite forment deux partitions de G.
+    Ces deux partitions ont chacune deux éléments : H et son complémentaire dans G.
+    Soit x un élément du complémentaire de H dans G.
+    Alors ce complémentaire est la classe de x, à gauche et à droite, d'où xH = Hx.
+    Et pour tout h dans H, on a hH = H = Hh.
+    D'où, pour tout g dans G, gH = Hg.
+
+une application K-bilinéaire peut-elle être K-linéaire pour le produit direct ?
+    Si K != F_2 : non (homogénéité ne fonctionne pas).
+    Si K = F_2 : homogénéité fonctionne. Tester additivité.
+        
+action de groupe induit bijection entre groupe et ensemble sujet
+    groupe quotient induit relation d'équivalence sur ensemble sujet ?
+        exemple
+            GL agit sur les bases
+            Is distingué dans GL ou pas ?
+
+courbe fermée du plan induit une partition en composantes connexes du plan privé de la courbe
+    lien avec image réciproque de l'indice d'un point par rapport à une courbe ?
+
+visualiser géométriquement vecteur propre d'une rotation du plan
+
+bijection bi-lipschitzienne
+    conditions sur les constantes de Lipschitz ?
+        par exemple, si une bijection est contractante, alors sa réciproque n'est pas contractante.
+
+inverse à gauche d'une application linéaire injective est-il linéaire ?
+    oui ?
+inverse à droite d'une application linéaire surjective est-il linéaire ?
+    pas forcément ?
+
+généraliser inf et sup des parties de R aux parties d'un evn ?
+    "borne directionnelle" ou "suivant un ensemble de vecteurs"
+    point d'accumulation
+
+Soient a,m,n,x dans un corps avec n != 1 et (a+(n-1)x)/n = m.
+    Alors x = (m*n-a)/(n-1).
+    Interprétation :
+        À partir d'un isobarycentre m d'une famille F de cardinal n entier supérieur ou égal à 2,
+        et à partir d'un point a de F,
+        on obtient l'isobarycentre x de F\{a}.
+
+"pour tout" et "pour chaque"
+    Il faut distinguer "pour tout" et "pour chaque" quand on quantifie sur des ensembles infinis et qu'on parle de calculabilité en temps fini pour un calculateur doté d'une puissance de calcul finie. Il semble que dans ce genre de cas, le "pour chaque" convient, mais pas le "pour tout".
+
+nombres infinis
+    Soit b un entier naturel supérieur ou égal à 2.
+    On voit les réels positifs comme des suites indexées par Z correspondant à leurs développements en base b.
+    On étend l'ensemble des réels positifs en le considérant comme partie de l'ensemble B des suites indexées par Z à valeurs dans [[0,b-1]].
+        Ainsi, on dispose maintenant de "réels" positifs infinis.
+    Pour les munir d'opérations, construisons-les différemment.
+        Prenons l'ensemble A des suites indexées par Z à valeurs dans N (i.e., applications de Z dans N).
+        Un réel positif peut correspondre à plusieurs éléments de A, i.e., avoir plusieurs écritures en base b si on s'autorise des coefficients dans N au lieu de dans [[0,b-1]].
+        Essayons d'introduire une relation d'équivalence R sur A dont chaque classe contiendrait exactement les "développements en base b" d'un "nombre" de B.
+        Pour cela, essayons d'introduire une relation "intermédiaire" T sur A.
+            Disons que deux "développements en base b" d'un "nombre" de B sont en relation pour T ssi [on peut passer de l'un à l'autre en retirant ub à un coefficient et en ajoutant u au coefficient suivant, pour un certain u dans {-1,1}].
+        Disons que deux "développements en base b" d'un "nombre" de B sont en relation pour R ssi on peut passer de l'un à l'autre via en un nombre fini de "développements en base b" consécutivement en relation pour T.
+        La relation T est-elle une relation d'équivalence ?
+            Non ?
+                R est-elle la clôture transitive de T ?
+
+éléments "intimement liés" dans un groupe
+    Soit G un groupe.
+    Soit I l'ensemble des intersections de deux parties H et C, pour tout sous-groupe H de G et pour toute classe de conjugaison C de G.
+    L'idée est de chercher des éléments de G qui sont "intimement liés", en raffinant la notion de classe de conjugaison.
+    Autrement dit, on cherche des éléments qui non seulement sont conjugués, mais en plus de ça sont unis par un sous-groupe qui les distingue du reste des éléments de leur classe de conjugaison.
+
+loi multiplicative d'un K-ev restreinte à K^*
+    action de groupe
+    orbites
+        lien avec construction du groupe linéaire projectif ?
+
+"régularisation" d'un monoïde ayant des éléments non réguliers
+    ax=b=ay avec x!=y.
+    un monoïde ayant des éléments non réguliers peut-il se quotienter en un monoïde dont les éléments sont réguliers ?
+        "augmenter l'entropie"
+        identifier x et y ?
+    un monoïde ayant des éléments non réguliers peut-il être vu comme quotient d'un monoïde dont les éléments sont réguliers ?
+        "baisser l'entropie"
+        distinguer ax et ay ?
+        tout monoïde est-il quotient d'un monoïde libre ?
+
+semi-groupe libre ?
+
+fonction f définie à un polynôme dans A[X] associe sa fonction polynomiale (avec A un a.c.u.)
+    appliquer le "1er th d'isom ensembliste" à f : quotienter A[X] en identifiant les polynômes ayant même fonction polynomiale.
+    On obtient une bijection \bar{f} entre l'ensemble quotient et l'ensemble des fonctions polynomiales de A.
+    Ainsi, on voit A[X] comme une version d'entropie plus faible de l'ensemble des fonctions polynomiales de A.
+
+programmer visualisation de certains anneaux finis par des grilles colorées
+    multiplication dans Z/nZ
+    addition et multiplication dans Z/n_1Z x ... x Z/n_dZ
+    Existe-t-il n non premier et p premier tels que Z/nZ soit un F_p-espace vectoriel ?
+    F_{p^q}
+        addition (comme dans (Z/pZ)^q)
+        multiplication (en tant que corps)
+        inversion
+        multiplication du produit direct (Z/pZ)^q
+
+Cayley
+    L'action par translation d'un gpe G donne un morphisme injectif de G vers un sous-groupe H de S(G) (le groupe symétrique sur G).
+    Les éléments non neutres de H sont des permutations de G dont le support est "plein", i.e., égal à G. (L'élément neutre de H est de support vide.)
+    Il n'y a pas de 1-cycle dans leurs décompositions en cycles à supports disjoints.
+    Exemple :
+        Si G a 3 éléments, alors les éléments non neutres de H sont les 3-cycles dans S_3.
+        Si G a 4 éléments, alors les éléments non neutres de H sont des 4-cycles ou des bitranspositions dans S_4.
+
+Z/nZ est un module sur quels anneaux ?
+    Z : oui car groupe abélien
+    Z/kZ : pour quelles valeurs de k ?
+        oui pour k = 0
+        k|n ?
+        n|k ?
+
+inverser une matrice P
+    à l'aide d'une forme bilinéaire ? (ne semble pas viable en général)
+        algorithme partiel
+            Soit E un K-e.v. de dimension finie n > 0. Nos matrices seront prises dans M_n(K).
+            Soit P une matrice inversible.
+            Soient B, D deux bases de E telles que P = Mat_{B,D}(Id) (i.e., la matrice de passage exprimant les éléments de D en termes d'éléments de B).
+            Alors P^-1 est la matrice de passage exprimant les éléments de B en termes d'éléments de D.
+            Soit f la forme K-bilinéaire sur E pour laquelle D est orthonormale.
+                Il suffit de prendre la forme K-bilinéaire sur E dont la matrice dans la base D est l'identité.
+            Pour exprimer les éléments de B en termes d'éléments de D, il suffit alors de regarder les produits scalaires entre éléments de B et de D.
+        problème
+            Comme on ignore les coordonnées en base D de la base B, il semble difficile de calculer ces produits scalaires.
+            Comme on connaît les coordonnées en base B des bases B et D, on peut vouloir la matrice de f en base B. Mais l'obtenir semble difficile sans connaître P^-1.
+            On voudrait ainsi une base F dans laquelle on saurait facilement exprimer la matrice de f et les coordonnées des éléments de B et de D.
+            Dans un cas concret, si on dispose d'un F qui convient, l'algorithme fonctionne.
+            Le problème est de déterminer un F qui convient.
+            Pour exprimer la matrice de f en base F, on souhaite connaître Mat_{D,F}(Id).
+            Pour exprimer les coordonnées des éléments de D en base F, on souhaite connaître Mat_{F,D}(Id).
+            Pour exprimer les coordonnées des éléments de B en base F, on souhaite connaître Mat_{F,B}(Id).
+    à l'aide du bidual
+        P = Mat_{B,D}(Id)
+        P^-1 = Mat_{B,D}(Id)^-1 = Mat_{D,B}(Id) = ^{t}Mat_{B^*,D^*}(Id)
+        rqs
+            1
+                P^-1 = ^{t}com(P)/det(P)
+                Mat_{B^*,D^*}(Id) = ^{t}P^-1 = com(P)/det(P)
+            2
+                Mat_{B^*,D^*}(Id) = ^{t}Mat_{B,D}(Id)^-1
+                Mat_{B^{**},D^{**}}(Id) = Mat_{B,D}(Id)
+                    Mat_{B^{**},D^{**}}(Id) = ^{t}Mat_{B^*,D^*}(Id)^-1 = ^{t}(^{t}Mat_{B,D}(Id)^-1)^-1 = Mat_{B,D}(Id)
+        problème
+            Comment trouver Mat_{B^*,D^*}(Id) à partir de Mat_{B,D}(Id) ?
+        essayer sur un cas concret
+
+nombres autodescriptifs dans le sens inverse
+    semble plus pertinent car correspond aux exposants de 10
+    rq
+        Ne peut pas se terminer par 0. (Ça voudrait dire qu'il n'y aurait pas de zéros dans le nombre : contradiction.)
+    exemples
+        pas 1
+        pas 11
+        pas 21
+        0121 convient... c'est 1210 à l'envers ! Est-il vraiment utile de considérer le sens inverse de la définition usuelle ?
+
+norme subordonnée semble généraliser l'inégalité de Cauchy-Schwartz
+
+prédicats
+    Un "prédicat" est une fonction qui à un n-uplet de chaînes de caractères associe une chaîne de caractères.
+    La "fonction prédicative" associée à un prédicat est la fonction qui à un n-uplet de chaînes de caractères associe la valeur de vérité de l'image de ce n-uplet par ce prédicat.
+    Analogie avec polynômes et fonctions polynomiales.
+
+topologie
+    (X,T) espace topologique
+    Soit F l'ensemble des fermés de (X,T).
+    adhérence, intérieur, complémentaire, comme applications
+        adhérence
+            application Adh de P(X) dans F
+            image réciproque de l'adhérence, restreinte aux singletons de P(F), identifiés aux éléments de F
+                application Adh^-1 de F dans P(X)
+            "équation topologique"
+                déterminer Adh^-1(A) pour un A dans F.
+    Soient D l'ensemble des parties denses de X, et I l'ensemble des parties de X d'intérieur vide.
+        La restriction de l'application complémentaire est-elle une involution entre D et I ?
+        D a-t-il des éléments minimaux ?
+        I a-t-il des éléments maximaux ?
+        exemples concrets
+            déterminer I pour R^n, avec n dans {1,2,3}.
+
+ensembles ordonnés
+    Soit F un ensemble ordonné.
+        Si F admet un minimum, c'est son unique élément minimal.
+        Si F admet un maximum, c'est son unique élément maximal.
+    famille d'ensembles ordonnée par l'inclusion sans élément minimal ou sans élément maximal
+        Soit a dans un e.v.n. E de dimension non nulle.
+        Soit F la famille des boules non vides de E de centre a. Ainsi, F = {B(a,r)|r>0}.
+        Alors F est sans élément minimal et sans élément maximal.
+        E est la borne supérieure de F.
+        {a} est la borne inférieure de F.
+
+théorie de la démonstration, mathématiques et informatique
+    motivation
+        Certains résultats ont des preuves analogues et très similaires ; on souhaite exprimer qu'une certaine preuve fonctionnant dans un certain contexte fonctionne essentiellement aussi dans un autre contexte. D'ordinaire, la différence de contextes rend techniquement incorrect de dire que la même preuve fonctionne. On souhaite alors pouvoir raisonner de façon suffisamment générale pour ne plus avoir ce problème. Comme les deux preuves en questions diffèrent par leur sens précis plutôt que par leur syntaxe, il est alors naturel de penser à introduire des outils mathématiques permettant de manipuler des preuves comme du texte. Il s'avère que l'informatique est déjà bien familière de telles notions (réflexivité, manipulation de chaînes de caractères), et les mathématiques peuvent alors s'inspirer des contributions de l'informatique.
+    Un "texte" est une chaîne de caractères.
+    Un "sens mathématique" est une vision de la pensée.
+    Une "preuve" est la donnée d'un texte adéquat et d'un "sens mathématique" de ce texte.
+    importer des idées de l'informatique
+        Fonctions de manipulation de chaînes de caractères.
+            Extraction d'une sous-chaîne à partir d'une chaîne et des indices de début et de fin de la sous-chaîne.
+            Concaténation.
+            Substitution.
+        Réflexivité / copier-coller.
+            "Fonction de transcription" qui retourne le texte d'une preuve.
+            "Fonction d'interprétation" qui transforme un texte adéquat en une preuve.
+            Idée de type de preuve.
+                Extraire une sous-chaîne du texte d'une preuve existante.
+                Transformer la sous-chaîne astucieusement si besoin.
+                Concaténer un préfixe et un suffixe à la sous-chaîne si besoin.
+                Interpréter le texte obtenu comme une nouvelle preuve.
+        Orienté objet.
+            Dictionnaire (en Python).
+                Application (en mathématiques) dont le domaine est l'ensemble des clés du dictionnaire.
+                Relation binaire "univaluée".
+            La notion informatique d'objet semble essentiellement la même que la notion de dictionnaire.
+                Les différences entre ces deux notions semblent essentiellement syntaxiques.
+
+métamathématiques
+    trois opérations primordiales
+        Les mathématiques semblent étudier l'information portée par des axiomes décrivant des objets.
+        Cette étude est menée en travaillant sur cette information, semble-t-il via les trois "opérations" suivantes : duplication, transformation, combinaison.
+        Ces trois opérations s'entendent dans un sens très large : elles peuvent s'appliquer à des propositions logiques, à des ensembles, à des vecteurs, etc.
+        Ici, "duplication" s'entend au sens large, et inclut les cas d'un nombre quelconque de copies (éventuellement infini, pas forcément deux).
+        L'opération "duplication" semble en quelque sorte un inverse à droite de "combinaison" pour la composition.
+        Ainsi, intuitivement parlant, "duplication" semble injective et non surjective, et "combinaison" semble surjective et non injective.
+        "transformation" semble surjective et non injective.
+        Remarquons que "combinaison" et "duplication" semblent des cas particuliers de l'opération "transformation".
+        Exemple fondamental : la notion de "combinaison linéaire".
+            Première interprétation :
+                On duplique la notion de vecteur pour disposer d'une famille finie de vecteurs.
+                On transforme les éléments de cette famille en les multipliant chacun par un scalaire.
+                On combine les éléments de la famille obtenue en les sommant.
+            Interprétation alternative :
+                On duplique la notion de scalaire pour disposer d'une famille finie de scalaires.
+                On duplique la notion de vecteur pour disposer d'une famille de vecteurs de même cardinal que cette famille de scalaires.
+                On combine ces deux familles obtenue en les multipliant point par point.
+                On combine les éléments de la famille obtenue en les sommant.
+            Que deux interprétations soient ici possibles semble à première vue suggérer que cette théorie n'est pas viable, mais est peut être sinon juste une instance du phénomène fréquent en mathématiques selon lequel une même chose peut s'exprimer de diverses façons.
+        Cette théorie est pour l'instant très vague, mais promet d'être merveilleuse si on peut la formaliser décemment.
+    quantifier l'information mathématique
+        D'un point de vue absolu, une "assertion mathématique" contient une infinité d'information.
+        Mais relativement à un système d'axiomes choisi, on peut envisager de quantifier l'information contenue dans une "assertion mathématique".
+        Fixons un "langage mathématique formel" : des règles de syntaxe, de grammaire, de logique.
+        Dans ce qui suit, on appelle "assertion" toute phrase correctement formulée dans ce langage.
+        Choisissons un système d'axiomes, i.e., un ensemble d'assertions dont on suppose que la valeur de vérité est 1 ("vrai").
+        Si l'assertion est
+            contingente dans le système d'axiomes,
+                sa quantité d'information est strictement positive.
+            tautologique dans le système d'axiomes,
+                sa quantité d'information est nulle.
+            contradictoire le système d'axiomes,
+                sa quantité d'information semble être moins l'infini.
+        On veut aussi que la quantité d'information de deux assertions logiquement équivalentes soit la même.
+            Autrement dit, la relation d'équivalence logique doit être incluse dans la relation d'équivalence induite sur l'ensemble des assertions par la fonction quantité d'information.
+        Ceci posé, on peut envisager diverses quantifications de l'information, car on a laissé des choix possibles pour les assertions contingentes. Pour le moment, on appelle "mesure d'information" toute quantification fonctionnant comme ci-dessus.
+        exemples de mesures d'information
+            1
+                La quantité d'information d'une assertion contingente est le minimum des longueurs (nombres de symboles) des assertions qui lui sont logiquement équivalentes. L'ensemble de ces longueurs admet une borne inférieure finie, car ledit ensemble est non vide (il admet la longueur de l'assertion dont on veut quantifier l'information) et minoré (par zéro). Cette borne inférieure finie est un minimum, car l'ensemble dont on parle est un ensemble d'entiers.
+                Cette mesure d'information est croissante de l'ensemble des assertions vers l'ensemble des réels, en munissant l'ensemble des assertions du préordre induit par la fonction qui à chaque assertion associe sa longueur.
+            2
+                On peut envisager dans l'exemple 1 des assertions dont la longueur n'est pas un entier naturel. Par exemple, pour parler d'assertions de longueur infinie, on peut envisager d'exprimer la longueur d'une assertion comme le cardinal du multi-ensemble des symboles de cette assertion. Ça permettrait en particulier de distinguer assertions de taille dénombrable et assertions de taille indénombrable.
+                Sans doute plus finement, on peut vouloir parler d'assertions de longueur hyperréelle.
+            3
+                À chaque symbole, on associe un poids. La quantité d'information d'une assertion contingente est la borne inférieure des longueurs (somme des poids des symboles comptés avec multiplicité) des assertions qui lui sont logiquement équivalentes. Cette borne inférieure est finie car l'ensemble dont on parle est encore minoré non vide (détails dans l'exemple 1), mais elle n'est a priori pas forcément un minimum de cet ensemble. En effet, il peut facilement y avoir une infinité d'assertions équivalentes, même classiquement : par exemple, la proposition "x=2" est équivalente aux propositions
+                    "x=2 et 1*1=1",
+                    "x=2 et 1*1=1 et 2*2=4", 
+                    "x=2 et 1*1=1 et 2*2=4 et 3*3=9",
+                    "x=2 et 1*1=1 et 2*2=4 et 3*3=9 et 4*4=16",
+                    etc.,
+                donc est bien équivalente à une infinité de propositions.
+
+topologie
+    homéomorphisme
+        Une application est continue ssi elle envoie des points suffisamment proches à des points arbitrairement proches.
+        La bijection réciproque d'une bijection f est continue ssi les images par f suffisamment proches ont leurs antécédents arbitrairement proches.
+    quotient
+        R/Z et [0;1] sont-ils non homéomorphes ?
+            1 est loin de 0 dans [0;1], mais proche de (même égal à) 0 dans R/Z ?
+        Le quotient fait-il "perdre de l'information", comme en algèbre ?
+            D'après Wikipédia:Topologie_quotient :
+                le quotient du segment [–1;1] par ses deux extrémités est un cercle ;
+                le quotient du disque fermé par le cercle qui le borde est la sphère.
+            Dans ces deux exemples, le quotient semble faire augmenter la "dimension" !
+                Fait-il alors ici "augmenter l'information", un peu comme R^{n+1} est un "sur-espace vectoriel" de R^n ?
+            Perte d'information ?
+                On ne sait plus si on est au bord ?
+                Dans [0;1], peut-on distinguer topologiquement {0;1} et ]0;1[ ?
+                    Oui pour la topologie de la droite réelle : {0;1} est le bord de [0;1], i.e. son adhérence privée de son intérieur.
+                    Mais peut-on encore faire une distinction entre {0;1} et ]0;1[, dans la topologie induite sur [0;1] ?
+        quotients itérés
+            Dans R, identifier les éléments d'un certain segment [a1;b1] (i.e., quotienter R par la relation d'équivalence dont l'une des classes d'équivalence est [a1;b1] et dont les autres classes sont des singletons).
+            On appelle R1 la "nouvelle version" de R ainsi obtenue.
+            Recommencer avec R1 pour obtenir R2 en identifiant dans R1 les éléments d'un segment [a2;b2] de R disjoint de [a1;b1].
+                Ou même pas forcément disjoint de [a1;b1]...
+            Et ainsi de suite pour R3, R4, etc.
+    séparation
+        On dit qu'un couple d'éléments d'un espace topologique est "séparé" ssi les deux éléments du couple admettent des voisinages disjoints.
+            Les éléments des couples séparés sont distincts. (Un couple dont les deux éléments sont égaux n'est pas séparé.)
+            Un espace topologique est séparé ssi ses couples d'éléments distincts sont séparés.
+            (0;1) est séparé dans [0;1] mais pas dans R/Z ?
+            Les applications injectives ouvertes préservent la séparation des couples.
+                C'est en particulier vrai des homéomorphismes.
+            relation binaire
+                Soit R une relation binaire définie sur un espace topologique telle que deux points sont en relation pour R ssi ils sont non séparés.
+                    i.e., ssi tout voisinage de l'un rencontre tout voisinage de l'autre.
+                R est-elle une relation d'équivalence ?
+                    R est réflexive, symétrique.
+                    R est-elle transitive ?
+                R permet-elle de construire des notions analogues à la connexité et aux composantes connexes ?
+    intersection infinie d'ouverts
+        Soit une suite décroissante d'ouverts non vides d'un espace topologique, telle que pour tout entier naturel n non nul, l'intersection des n premiers termes de la suite est non vide. Est-il possible que l'intersection de tous les termes de la suite soit vide ?
+            Remarquons qu'on parle ici d'intersection finie ou dénombrable pour simplifier, mais peut-être que parler d'intersections indénombrables serait utile.
+            dans R ?
+                suite d'intervalles ouverts bornés ]a_n ; b_n[ ?
+                    a croissante et b décroissante ? Non.
+                        a majorée par b_0 donc converge vers une limite A et b minorée par a_0 donc converge vers une limite B.
+                        Aussi, A<=B.
+                        intersection non vide car égale à [A ; B].
+            dans Q ? Oui.
+                Pour tout entier naturel n non nul, soit A_n l'intersection de Q et de ] \sqrt{2} - (1/n) ; \sqrt{2} + (1/n) [.
+                A_n est alors un ouvert de Q pour la topologie induite de R sur Q.
+                L'intersection de tous les A_n est vide.
+            L'argument ci-dessus pour Q semble généralisable pour montrer que non-complétude impliquerait existence d'une intersection vide "non triviale" d'ouverts.
+            A-t-on la réciproque ?
+            Supposons disposer d'une intersection d'ouverts A_n vide "non triviale" (au sens précisé ci-haut) dans un espace métrique E.
+                Pour tout k, soit B_k l'intersection des k premiers A_n.
+                Soit une suite u telle que pour tout k, u_k est dans B_k.
+                u est-elle de Cauchy ?
+                Si oui, est-elle non convergente dans E ?
+    complétude
+        la complétude d'un espace topologique métrisable dépend-il du choix de la métrique de cet espace topologique ?
+            l'ensemble des suites de Cauchy d'un espace topologique métrisable dépend-il du choix de la métrique de cet espace topologique ?
+            la convergence d'une suite dans un espace topologique métrisable est-elle équivalente à sa convergence pour toute métrique de cet espace topologique ?
+    densité
+        retirer une partie finie d'une partie dense la laisse-t-elle dense ?
+            oui dans un espace métrique
+                voir ma copie de sujet AP99 je crois
+            dans un espace topologique ?
+    continuité
+        une fonction continue en un point est-elle continue en un certain voisinage de ce point ?
+            non
+                Hauchecorne, Les contre-exemples en mathematiques, chapitre 8.3
+
+algèbre linéaire
+    addition interne et multiplication externe induites sur l'ensemble F des sev d'un K-ev E
+        propriétés ?
+            addition
+                tous les éléments de F sont idempotents, et F a un neutre,
+                    donc les éléments non neutres de F sont non réguliers.
+                    Donc, si |F|>1,
+                        alors F non groupe.
+                F monoîde
+            multiplication
+                action triviale du groupe K^*
+                distributive par rapport à l'addition
+    multiplication externe induite par L(E) sur un K-e.v. E
+        fait de E un L(E)-module ?
+            idem pour un ss-anneau unitaire A de L(E) ?
+                si A corps commutatif
+                    fait de E un A-e.v. ?
+                        ? dimension finie
+                        ? base canonique
+                    exemple
+                        A = K[f] tq le poly min. de f est irréd. dans K[X]
+                            cf. /home/val/Documents/Vie pratique/formations/cours/univ/M2_MF/agrégation/révisions collectives/corrigés/28 - Valentin.pdf
+    dimension finie
+        systèmes linéaires
+            déterminant
+                Une forme multilinéaire alternée est antisymétrique.
+                Si le corps des scalaires est de caractéristique différente de 2, une forme multilinéaire antisymétrique est alternée.
+                En caractéristique 2, le fait que le déterminant est alterné est-il un axiome ? Sinon, comment se montre-t-il ?
+            on sait exprimer un noyau comme une image d'application linéaire injective, mais comment exprimer une image d'application linéaire comme un noyau ?
+                motivation
+                    Pour vérifier qu'un élément est dans un noyau, il suffit de faire un produit matrice-vecteur.
+                    Pour vérifier qu'un élément est dans le sev engendré par une famille libre de vecteurs non génératrice (i.e., qu'il est dans une image d'application linéaire), il suffit de regarder si étendre la famille avec cet élément la rend liée, donc regarder si la famille étendue a un mineur non nul d'ordre maximal : ça demande des extractions de sous-matrices carrées et des calculs de déterminants.
+                    Ainsi, il est habituellement plus facile de tester l'appartenance à un noyau qu'à un sev engendré par une famille de vecteurs.
+                    Par ailleurs, quand on veut déterminer l'intersection de sev, il me semble plus naturel de déterminer l'intersection de noyaux d'applications linéaires, que l'intersection de sev engendrés par des familles de vecteurs, mais c'est peut-être juste parce que je n'ai pas beaucoup pratiqué.
+                remarque
+                    On généralise (seulement en dimension finie) le fait que tout hyperplan d'un ev E est noyau d'une forme linéaire de E.
+                    Soit E un ev de dimension finie p.
+                    Tout sev F de dimension k de E est noyau d'une app. lin. f définie sur E de rang p-k.
+                    Les algorithmes 1 et 2 ci-dessous permettent de répondre à la question suivante : à partir d'une base C de F exprimée dans une base B de E, comment obtenir une application f qui convient ?
+                algorithme 1
+                    Soit A de taille p,n une matrice dont les colonnes expriment en base B une famille génératrice de F.
+                    Y est dans Im(A)
+                    ssi existe X tq AX=Y
+                    ssi existe X tq AX=IY (IY=Y)
+                    ssi existe X tq PAX=PIY (pivot de Gauss sur les lignes de A répété sur I donne une matrice P de taille p,p inversible telle que PA est suffisamment échelonnée : le coefficient non nul le plus à gauche de chaque ligne est le seul coefficient non nul de sa colonne)
+                    ssi existe X tq PAX=PY (PI=P)
+                    ssi 0=QY (tronquer les lignes de P correspondant aux lignes non nulles de PA pour obtenir Q de taille (p-rg(A)),p).
+                    Alors Im(A)=Ker(Q).
+                algorithme 2
+                    Une base de F se complète en une base D de E. Pour ce faire, on prend une famille génératrice G de E, et on complète F avec un élément de G hors de Vect(F), puis on recommence avec la nouvelle famille obtenue, jusqu'à obtenir une famille de cardinal la dimension de E : c'est une famille libre maximale, donc une base de E.
+                    On définit ensuite une application linéaire f de noyau F définie sur E : choisir 0 comme image des éléments de la base de F, et une famille libre comme image des éléments restants de la base D. (Il faut donc que l'espace d'arrivée soit au moins de dimension dim(E)-dim(F).) On obtient ensuite la matrice de f dans cette nouvelle base D pour l'espace de départ (et une base arbitraire pour l'espace d'arrivée), ce qui est embêtant si l'on souhaite plutôt travailler en base B : il faut alors multiplier cette matrice à droite par la matrice de passage P dont les colonnes donnent les éléments de B exprimés en base D ; comme c'est P^-1 qu'on connaît, il faut inverser P^-1. Plus efficacement, on fait un pivot de Gauss sur les colonnes de P^-1, et on le reproduit sur la matrice de f (ça correspond à multiplier à droite par des matrices inversibles dont le produit est P).
+                    rg(f)=dim(E)-dim(Ker(f))=dim(E)-dim(F).
+                    Si on a choisi pour f un espace d'arrivée de dimension strictement supérieure à dim(E)-dim(F), il y a des lignes superflues dans la matrice obtenue pour f. On peut alors retirer certaines lignes jusqu'à ce que la matrice ait dim(E)-dim(F) lignes, en faisant attention à ce que les lignes retirées soient dans le sev engendré par les lignes restantes de la matrice.
+                remarques
+                    Il faudrait vérifier en pratique quelle méthode va mieux.
+                    J'ai testé les deux sans encombre sur un exemple simpliste.
+                    Il faudrait que je teste un exemple plus fastidieux.
+                    L'algorithme 2 semble préférable quand produire la base D est facile, et surtout si on n'a pas besoin d'obtenir la matrice finale avec la base B pour l'espace de départ. Sinon, l'algorithme 1 semble préférable.
+            rang et mineurs
+                Soit M une matrice rectangulaire de rang r. Soit k >= 1.
+                Si tous les mineurs d'ordre k de M sont nuls, alors r < k.
+                    On sait que le rang d'une matrice est le plus grand ordre de ses mineurs non nuls. Mais ça ne suffit pas pour montrer la proposition, il faut creuser un peu.
+        nouvelle notation pour les matrices de passage
+            M_B(D) = Mat_{B,D}(Id)
+                (matrice dont les colonnes donnent les coordonnées en base B des éléments de D)
+            généralisation aux matrices rectangulaires
+                M_B(D) = matrice dont les colonnes donnent les coordonnées en base B des éléments de D
+                    où
+                        D est une famille (pas forcément une base) incluse dans le sev engendré par B
+                        B est une famille libre
+    dimension infinie
+        "récurrence descendante"
+            Il existe une suite infinie strictement décroissante de sous-espaces vectoriels.
+                Soit X un ensemble infini.
+                Existe une injection f de N dans X.
+                Soit K un corps.
+                Soit E le K-ev des applications de X dans K.
+                Soit E_0 le sev de E engendré par les indicatrices des singletons de X.
+                Pour tout n dans N, soit E_{n+1} le sev de E engendré par les indicatrices des singletons de X \ f([[0 ; n]]).
+                Alors (E_n)_n est une suite infinie strictement décroissante de sous-espaces vectoriels.
+                remarque
+                    L'intersection des E_n est le sev de E engendré par les indicatrices des singletons de X \ f(N).
+                        L'intersection des E_n est un sev I de E.
+                        Soit J le sev de E engendré par les indicatrices des singletons de X \ f(N).
+                        Alors J est inclus dans I. Et I est inclus dans J. Donc I=J.
+    inverses
+        les inverses à gauche d'une application linéaire injective f sont-ils linéaires ?
+            Leur restriction à Im(f) est linéaire.
+            en dimension finie
+                Les matrices de f admettent des inverses à gauche. (Par un argument de rang et de sous-matrice carrée inversible.)
+                Donc f admet un inverse à gauche linéaire.
+                    (L'inverse à gauche d'une matrice de f est une matrice, donc représente un inverse à gauche linéaire de f.)
+        les inverses à droite f d'une application linéaire surjective g sont-ils linéaires ?
+            f(ax+y)-(af(x)+f(y)) est dans Ker(g).
+            en dimension finie
+                Les matrices de g admettent des inverses à droite. (Par un argument de rang et de sous-matrice carrée inversible.)
+                Donc g admet un inverse à droite linéaire.
+                    (L'inverse à droite d'une matrice de g est une matrice, donc représente un inverse à droite linéaire de g.)
+    endomorphismes
+        notions "à conjugaison près"
+            exemples
+                diagonalisable
+                dilatation
+                transvection
+            remarque
+                La notion de matrice diagonalisable est plus large que la notion de matrice diagonale, tout comme la notion de matrice d'une dilatation est plus large que la notion de matrice de dilatation. D'où la non-équivalence entre être engendré par les dilatations et être engendré par les matrices de dilatation.
+            généralisation à une autre relation d'équivalence que "être conjugués"
+                réunion des classes d'équivalence de certains représentants
+                    exemple
+                        L'ensemble des matrices diagonalisables est la réunion des classes d'équivalence des matrices diagonales pour la relation "être conjugués".
+        u |-> ^t u
+            est-ce une application linéaire de L(E,F) vers L(F^*,E^*) ?
+                bijective ?
+                    bijection réciproque ?
+        projecteurs en dimension finie
+            la trace est le rang
+                X^2-X=X(X-1) annulateur scindé à racines simples
+                donc diagonalisable et valeurs propres 0 et 1
+        cyclique
+            est diagonalisable ssi trigonalisable et ses valeurs propres sont de multiplicité 1
+
+algèbre
+    groupes
+        groupe libre et traitement de texte
+            Un monoïde libre correspond à la concaténation de chaînes de caractères : taper du texte dans un logiciel de traitement de texte.
+            Un groupe libre permet en plus de retirer des caractères déjà tapés, en tapant leurs inverses.
+            Ainsi, un groupe libre s'apparente à un logiciel de traitement de texte.
+            Un groupe non libre semble plus subtil : un élément d'un groupe non libre correspond à certaines chaînes de caractères différentes.
+        groupe symétrique
+            Soit n dans N^* tel que S_n admet un élément x d'ordre o > n.
+                Alors n >= 5.
+                o est le PPCM d'une partition de l'entier n.
+                    x a pour ordre le PPCM des cycles de sa décomposition en cycles à supports disjoints.
+        représentations
+            lien entre fidélité d'une action et fidélité de sa représentation par permutations
+    anneaux
+        polynômes
+            dans K[X] avec K corps
+                Soient n, k dans N^*.
+                    X^n-1 divise X^(nk)-1.
+                        Les racines de X^n-1 dans la clôture algébrique de K sont racines de X^(nk)-1.
+                            Si x est dans la clôture algébrique de K et x^n=1, alors (x^n)^k=1.
+                        X^n-1 est à racines simples.
+                            Premier avec sa dérivée.
+                Si P est sans facteurs multiples dans K[X], peut-il avoir un facteur multiple dans L[X] avec L extension de corps de K ?
+                Le PPCM dépend-il de l'extension de corps considérée ?
+            D = A[X_1,...,X_n] avec A anneau
+                l'évaluation d'un élément de D en des éléments d'une A-algèbre qui ne commutent pas n'est pas une simple substitution contrairement au cas commutatif.
+                    Les indéterminées commutent.
+                    Pour évaluer, il faut d'abord mettre les indéterminées dans un ordre "standard" avant de faire la substitution.
+        Un a.c.u. est un corps ssi il a exactement deux idéaux.
+            Si A est un a.c.u avec exactement deux idéaux :
+                Les idéaux de A sont A, et l'idéal réduit au neutre additif de A.
+                Donc pour tout élément x de A distinct du neutre additif, l'idéal <x> (l'idéal de A engendré par x) est distinct de l'idéal réduit au neutre additif, donc est l'idéal A. Donc <x> contient le neutre multiplicatif de A. Or <x> = xA. Donc x est inversible (car la multiplication de A est commutative).
+        Pourquoi le quotient d'un a.c.u. A par un idéal maximal I est-il un corps ?
+            Les idéaux de A/I sont les J/I avec J idéal de A contenant I.
+            Comme I est maximal, alors A n'a que deux idéaux contenant I, ce sont I et A.
+            Donc les idéaux de A/I sont A/I et I/I. Et ils sont distincts.
+            Donc A/I a exactement deux idéaux.
+            Donc A/I est un corps.
+        Z/nZ admet l'identité pour unique automorphisme d'anneau unitaire.
+            Soit f un automorphisme d'anneau unitaire de Z/nZ.
+            Alors f(1)=1 par définition,
+            donc f(k)=f(k*1)=k*f(1)=k*1=k pour tout k.
+                (car f est un morphisme de groupes additifs)
+        Tout anneau unitaire dont le groupe additif est monogène est-il isomorphe à Z/nZ ?
+            k, l deux entiers
+            g générateur du groupe additif
+            x, y dans l'anneau
+            xy=(kg)(lg)=(kl)g^2
+    entiers
+        équations diophantiennes
+            2.6x+3.3y+5=16.8
+            2.6x+3.3y=11.8
+            26x+33y=118
+            33y=2(59-13x)
+            z=y/2
+            13x+33z=59
+            z<=1
+            13 ne divise pas 59 donc z!=0.
+            D'où z=1, donc x=2 et y=2.
+
+géométrie
+    L'ensemble des parties de R^2 contient intuitivement tous les dessins bidimensionnels noirs sur fond blanc possibles.
+    L'ensemble des parties de la boule unité de R^2 contient intuitivement tous les dessins bornés bidimensionnels noirs sur fond blanc possibles.
+    L'ensemble des unions d'images d'applications continues de [0;1] vers la boule unité de R^2 contient intuitivement tous les dessins continus bornés bidimensionnels noirs sur fond blanc possibles.
+    Ces ensembles semblent immensément riches, non par leurs propriétés mathématiques mais par la diversité de leurs éléments.
+    Il semble falloir distinguer deux types de richesses d'un ensemble, qui semblent négativement corrélées : la richesse des propriétés de cet ensemble, et la diversité des éléments de cet ensemble.
+
+pourcentages
+    https://www.desmos.com/calculator/jg1t89xzwt
+        0<=p1<1
+        p2 = 1/(1-p1)-1 = (1+p1-1)/(1-p1) = p1/(1-p1)
+        p2 > p1
+            p2-p1 = 1/(1-p1)-1-p1
+                = (1+(p1+1)(p1-1))/(1-p1)
+                = p1^2/(1-p1)
+                > 0
+            p2=p1(1 + p1/(1-p1))
+
+probabilités
+    indépendance
+        La notion intuitive d'indépendance de deux évènements semble plus large que la notion formelle.
+    écart-type
+        Inégalité de Tchebichev, appliquée à \epsilon = n \sigma avec n un entier strictement positif.
+            P(|X-E(X)| > n \sigma) <= 1 / n^2
+                pour n = 1 : trivial
+                pour n = 2 : P(...) <= 1/4
+                pour n = 3 : P(...) <= 1/9
+            A-t-on des meilleures majorations pour des lois particulières de variables aléatoires ?
+
+catégories
+    représenter par un graphe orienté l'associativité de la composition des flèches
+        /home/val/Documents/Texts/own/Maths/associativité.png
+
+géométrie
+    Soit f : [0;2[ -> [0;2]\{1} l'application
+        définie par
+            f(x) = x, si x<1
+            f(x) = 3-x, si x>=1.
+    Alors f est une bijection, à valeurs dans le plan complexe C.
+    Soit g : [-1;1] -> C l'application définie par g(x)=1+ix.
+    Alors l'union des images de f et g donne une figure géométrique du plan complexe : une croix (de "point de croisement" 1+0i).
+    Pourtant, les "courbes paramétrées" f et g ne se rencontrent pas, même pas en 1+0i.
+
+modélisation
+    économie
+        simulation 1
+            programme
+                class Agent
+                    attributes
+                        ID
+                        ultimate_wishes
+                        intermediate_wishes
+                            # only wished as means to make transactions to fulfill ultimate wishes
+                        merchandise
+                society
+                    list of items of Agent objects
+                function solve
+                    Try to output a list of transactions that would maximize the fulfillment of society.
+                    ? use existing techniques
+                        graph theory
+                        AI
+                        automated theorem proving
+                function to measure the fulfillment of society
+                    example: number of fulfilled ultimate wishes
+            ? existence, unicité d'une solution optimale, étant donné la liste society
+            ? créer des puzzles sur papier ou jeu vidéo
+                Le joueur doit maximiser ou minimiser la satisfaction de la société ou de certains agents, en choisissant des transactions.
+        simulation 2
+            version plus sophistiquée
+                Agents avec capacité de mettre en place des "projets d'entreprise", dont la réussite est modélisée par une variable aléatoire avec une certaine loi de probabilité.
+                    ? quelle loi de probabilité choisir
+
+evn de dimension finie
+    ? l'équivalence des normes induit-elle des inégalités sur les produits scalaires
+        ? via identité de polarisation
+
+chercher lien
+    entre
+        orthogonal de l'intersection est la somme des orthogonaux
+        somme d'idéaux de Z est l'idéal engendré par le PGCD
+
+processus de recherche d'un de ses propres points fixes
+    système dynamique, suite des itérés d'une application
+    objet qui subit des transformations, qui passe par différents états
+    exemples de types d'objets ainsi transformables
+        ligne polygonale
+        graphe
+    sous-type de tels processus
+        processus dont les points fixes possèdent une certaine symétrie
+            expérience
+                sélectionner un point fixe
+                le modifier légèrement, de sorte à rompre sa symétrie
+                on obtient un point non fixe (car non symétrique)
+                regarder comment le processus transforme ce point non fixe
+                va-t-il atteindre à nouveau un point fixe ?
+                    non ?
+                    oui ?
+                        après un nombre fini d'étapes ?
+                        après une infinité d'étapes ?
+                            ce point fixe asymptotique est-il beaucoup plus compliqué que le point fixe de départ ?
+                                Autrement dit, rétablir la symétrie via le processus nécessite-t-il l'introduction d'une infinité de détails ?
+                                    Est-ce le principe de la genèse du cosmos ?
+                                        Big Bang ?
+                analogie
+                    symétrie
+                        équilibre
+                    asymétrie
+                        déséquilibre
+                    recherche de point fixe
+                        rétablissement de l'équilibre
+
+produit tensoriel
+    ? lien avec théorème de la base téléscopique
+
+morphisme et commutativité
+    La notion de morphisme semble liée à celle de commutativité.
+        Un morphisme de A vers B, dit que travailler dans A puis passer dans B, c'est un peu comme passer dans B puis travailler dans B.
+            On change l'ordre : (travail dans espace, changement d'espace) \equiv (changement d'espace, travail dans espace).
+
+notation alternative pour parenthèses / accolades / crochets / etc.
+    relier les paires de symboles par au-dessous ou par au-dessus, pour mieux distinguer lesquels vont ensemble.
+        essayer de minimiser les croisements entre ces nouveaux traits
+            peut-on toujours éviter les croisements ?
+                sinon, sous quelles conditions le peut-on ?
+                    ? lien avec notion de graphe planaire
+
+le langage naturel semble globalement incohérent, mais suffisamment cohérent localement pour être utile à la communication
+    formaliser
+        intensité de cohérence
+        zones de cohérence
+
+type très général de problèmes
+    étant donné une "racine",
+        en existe-t-il des extensions cohérentes ?
+            si non, on parle de "racine incohérente"
+                cohérence locale ?
+            si oui, lesquelles ?
+        Escher : extensions incohérentes localement cohérentes !
+
+géométrie affine du plan
+    ? conjuguer une rotation par une translation revient-il à changer son centre via cette translation
+        application : mon implémentation de Tetris
+
+Entropie dans un système de propositions : mesure son incohérence "actuelle". Plus il est "difficile" de déduire une contradiction, plus il est "cohérent". Difficulté de déduction d'une proposition : nombre de niveaux de déduction pour obtenir cette proposition. Cohérence locale. Actions sur ce système : déduction du niveau suivant de propositions, le rendre plus cohérent (nettoyage), le rendre moins cohérent (corruption), ajout/modification/suppression d'une proposition.
+Notion de boucles : quand une proposition admet plusieurs démonstrations. (En symbolisant la situation par un graphe, une démonstration est comme un chemin d'un état initial du système vers un nouvel état, et j'utilise ici le mot boucles pour suggèrer l'existence de multiples chemins entre ces deux états, c'est-à-dire de multiples démonstrations d'une même proposition.) Les boucles semblent établir que le système a une certaine cohérence. Essayer de construire des boucles semble permettre de tester la cohérence du système.
+
+Surjection continue de R_+ ou R vers une sphère de R^3 ? Permettrait de se repérer sur Terre via une seule coordonnée GPS au lieu de deux ?
+
+les mathématiques sont-elles l'exploitation de la variabilité de la simplicité de l'information sous des transformations ?
+    une façon de simplifier de l'information est de retirer astucieusement de l'information (appliquer des transformations non injectives)
+    une autre façon de simplifier de l'information est de transformer injectivement mais astucieusement l'information
+        je trouve spectaculaire que la simplicité n'est pas invariante par ces transformations,
+            et encore plus spectaculaire que cette variabilité soit exploitable au point qu'elle semble donner naissance à la discipline appelée mathématiques.
+
+1er théorème d'isomorphisme
+    ensembliste
+        énoncé
+            factorisation d'une application quelconque en une surjection, une bijection, une injection
+        version spéciale pour groupes
+            énoncé
+                factorisation d'un morphisme f d'un groupe G vers un groupe H en un morphisme surjectif, un isomorphisme, un morphisme injectif
+                    bijection
+                        donnée explicitement par le 1er théorème d'isomorphisme classique (ou par une démonstration de lui)
+                    surjection
+                        projection du groupe G vers G/Ker(f)
+                    injection
+                        identité de Im(f) vers H
+            corollaire
+                énumération des morphismes d'un groupe G vers un groupe H
+                    si on connaît les isomorphismes entre les quotients de G et les sous-groupes de H
+                        il suffit de les composer par la surjection et l'injection canoniques
+            remarque
+                Cela nous apprend qu'un morphisme d'un groupe G vers un groupe H, c'est essentiellement reconnaître un sous-groupe de H comme un quotient de G.
+
+involution induit action de Z/2Z d'après Ronan Terpereau
+    ensemble X
+    involution f sur X
+        f est un élément d'ordre 2 du groupe symétrique S(X)
+    action de groupe de Z/2Z sur X
+        \bar{t}\cdot x = f^t(x)
+    ? généralisation aux bijections d'ordre quelconque
+        ordre fini
+            ? n > 2
+            ? n < 2
+        ? ordre infini
+
+structure de Aut(G) muni de deux lois, où G groupe abélien
+    lois de Aut(G)
+        composition
+        produit point par point
+            ? stable
+                Soient a, b dans Aut(G).
+                Alors ab est un morphisme de G vers G.
+                    cf. généralisation plus bas.
+                ? ab injectif
+                    ça dépend des cas
+                        si (ab)(x)=e
+                            a(x)b(x)=e
+                            a(x)=b(x)^-1
+                            si les éléments G sont d'ordres 2 ou 1
+                                a(x)=b(x)
+                                si a=b
+                                    a(x)=a(x) : la condition (ab)(x)=e est vide.
+                                    Donc pour tout y dans G, (aa)(y)=e.
+                                    si G non trivial
+                                        Il existe y non neutre dans G.
+                                        D'où aa est non injectif.
+                    si a=b
+                        si a est d'ordre 2
+                            Id=aa est injectif
+                            exemple
+                                G=C^*
+                                a=z\mapsto\bar{z}
+                                aa=Id est injectif
+                ? ab surjectif
+    généralisation
+        structure de l'ensemble des morphismes (de groupes) de G vers H (avec G et H deux groupes) muni du produit point par point
+            stabilité
+                oui si les morphismes de G vers H ont pour image des groupe abéliens
+                    en particulier
+                        oui si H abélien
+                    (ab)(xy)=a(xy)b(xy)=a(x)a(y)b(x)b(y)=a(x)b(x)a(y)b(y)=(ab)(x)(ab)(y)
+                non s'il existe un morphisme f de G vers H tel que Im(f) est non abélien.
+                    Soient deux éléments f(z) et f(w) tels que f(z)f(w)!=f(w)f(z).
+                    (ff)(wz)=f(w)f(z)f(w)f(z)
+                    (ff)(w)(ff)(z)=f(w)f(w)f(z)f(z)
+                    f(z)f(w)!=f(w)f(z) donc f(w)f(w)f(z)f(z)!=f(w)f(z)f(w)f(z).
+                    Donc (ff)(wz)!=(ff)(w)(ff)(z).
+                    Donc ff non morphisme de G vers H.
+            si stabilité
+                ? H abélien
+                    oui s'il existe un morphisme surjectif de G vers H.
+                        Soient a, b morphismes surjectifs de G vers H (a et b pas forcément distincts).
+                        a(x)a(y)b(x)b(y)=a(xy)b(xy)=(ab)(xy)=(ab)(x)(ab)(y)=a(x)b(x)a(y)b(y)
+                        donc
+                        a(y)b(x)=b(x)a(y).
+                        Or a et b surjectifs,
+                        donc H abélien.
+                    L'existence d'un morphisme surjectif de G vers H équivaut à ce que H soit isomorphe à un quotient de G.
+                        sens direct
+                            1er théorème d'isomorphisme
+                        sens réciproque
+                            composer à gauche l'isomorphisme par la surjection canonique de G vers le quotient
+                    ? s'il n'existe pas de morphisme surjectif de G vers H
+            élément neutre
+                oui
+                    cf. généralisation plus bas.
+            associativité
+                oui
+                    cf. généralisation plus bas.
+            inversibilité
+                oui si l'application inversion de H vers H est un morphisme
+                    en particulier
+                        oui si H est abélien
+                ? si l'application inversion de H vers H n'est pas un morphisme
+            cas particulier
+                Les groupes abéliens finis sont auto-duaux.
+                    H=C^*.
+                    G abélien fini.
+                    G est fini, donc ses éléments sont d'ordre fini, donc les morphismes de G vers C^* sont à valeurs dans l'ensemble T des complexes de module 1 (plus précisément, dans l'ensemble U des racines k-èmes de l'unité où k varie dans N).
+                    (On peut donc poser H=T ou H=U au lieu de H=C^*.)
+                    Par le théorème de structure des groupes abéliens finis et la compatibilité de la dualité avec le produit cartésien, on peut se ramener au cas où G est cyclique.
+                    Supposons donc G cyclique. Soit n l'ordre de G, soit g un générateur de G.
+                    L'évaluation en g est un isomorphisme entre l'ensemble des morphismes de G vers H et le groupe U_n des racines n-èmes de l'unité.
+                        bien à valeurs dans U_n
+                            car la finitude de l'ordre d'un élément est préservée par un morphisme
+                        injectif
+                            par définition de générateur et par la propriété de morphisme
+                        surjectif
+                            car on peut trouver un antécédent explicite de chaque élément de U_n
+                                (on vérifie à la main que cet antécédent est bien défini et est un morphisme)
+                        morphisme
+                            par définition du produit de l'ensemble des morphismes de G vers H
+                    U_n est isomorphe à G.
+                        Car ces deux groupes sont monogènes et de même ordre.
+                    D'où, G est isomorphe à l'ensemble des morphismes de G vers H.
+                    Pour H=U, on obtient que G est auto-dual.
+                    Si on exige de plus la continuité des morphismes dans la définition du dual, alors en supposant G muni de la topologie discrète, la condition de continuité est triviale. La topologie discrète semble appropriée ici car G est fini.
+        généralisation
+            structure de l'ensemble des applications de G vers H (avec G et H deux groupes) muni du produit point par point
+                élément neutre
+                    oui
+                associativité
+                    oui
+                inversibilité
+                    oui (pour inverser un élément, le composer à gauche par l'application inversion de H vers H)
+                    
+Deux groupes peuvent-ils être chacun isomorphes à un quotient de l'autre par un sous-groupe non trivial ?
+    Pour des raisons de cardinalité, non pour des groupes finis.
+        (Quotienter par un sous-groupe non trivial abaisse strictement le cardinal d'un groupe fini. D'où les deux groupes seraient chacun de cardinal strictement inférieur à l'autre : contradiction.)
+    ? pour des groupes infinis
+        ? un groupe peut-il être isomorphe à son quotient par un sous-groupe non trivial
+
+Les sous-groupes distingués de Z sont-ils seulement les nZ avec n entier ?
+    oui
+        Z abélien, donc tous ses sous-groupes sont distingués.
+        Soit H sous-groupe non trivial de Z.
+            H contient un élément n non nul de valeur absolue minimale.
+            stabilité de H entraîne que nZ est inclus dans H.
+            division euclidienne par n et minimalité de |n| entraînent que H est inclus dans nZ.
+
+isomorphisme d'un groupe monogène vers un quotient de Z (par un sous-groupe éventuellement trivial)
+    semble être un "logarithme" !
+
+espace miroir
+    Dans le monde physique, regarder dans des miroirs évoque un espace tridimensionnel alternatif, appelons-le "espace miroir". Cet espace miroir semble d'autant plus spectaculaire lorsque des miroirs se font face. Il semble intéressant de mener une étude mathématique de l'espace miroir. Est-il cohérent ? Peut-on le rendre plus compréhensible, par exemple via des méthodes géométriques ou fractales ? Ou en mettant au point une simulation numérique, permettant de visualiser les parties de l'espace miroir qui ne sont pas visibles dans le monde physique à cause d'un angle de vue inadéquat ? Un début de solution semble présent dans le jeu vidéo Portal.
+
+argument diagonal de Cantor
+    Il n'y a pas de surjection de N vers [0;1[.
+        En effet, soit une application f de N vers [0;1[.
+        On peut alors construire un élément x de [0;1[ qui n'est pas dans Im(f).
+            Il suffit de choisir, pour tout n dans N^*, la n-ème décimale de x différente de la n-ème décimale de f(n).
+                (Et différente de 0 et 9, afin d'éviter les soucis de nombres admettant plusieurs développements décimaux.)
+        Alors f n'est pas surjective.
+    A fortiori, il n'y a pas de surjection de N vers R.
+
+Q_+ can be identified to a subset of N^2 (unsimplifiable fractions).
+    Can we evaluate the ratio of the size of Q_+ to the size of N^2 ?
+
+symétries topologiques
+    exemple motivateur
+        pour retourner un tshirt, on peut le faire passer à travers n'importe lequel de ses quatre trous, car ils sont symétriques d'un point de vue topologique : le choix du trou n'est pas important.
+
+endormophisme nilpotent d'un espace vectoriel
+    en l'appliquant de façon itérée, l'endomorphisme "détruit de l'information" à chaque itération, "jusqu'à ce qu'il n'y ait plus d'information".
+        dans une base adéquate B, sa matrice est triangulaire stricte.
+        chaque élément de B est transformé par l'endomorphisme de sorte à perdre un ou plusieurs coefficients non nuls (dans son écriture en base B).
+            en particulier, le premier élément de B est transformé par l'endomorphisme en l'élément neutre.
+        on considère ici que l'information contenue dans un vecteur se mesure au nombre de ses coefficients non nuls (dans son écriture en base B).
+        
+automate cellulaire + couleurs + algorithme génétique
+    pour générer des peintures dynamiques
+    règle
+        à chaque itération, chaque cellule fait une seule action parmi
+            muter : faire subir à sa couleur une variation d'intensité aléatoire
+            croiser : sélectionner aléatoirement un sous-ensemble de ses voisines, puis faire subir à sa couleur une variation correspondant à un barycentre des voisines dans le sous-ensemble, barycentre dont les poids sont aléatoires
+    on peut jouer sur divers paramètres
+        la tendance à croiser plutôt qu'à muter
+        dans les croisements
+            fixer la taille des sous-ensembles de voisines
+            fixer les poids des barycentres de voisines
+    éventuellement, on donne à chaque cellule ses propres paramètres (une "personnalité")
+        éventuellement, ces paramètres eux-mêmes peuvent varier au fil des itérations, de façon déterministe ou aléatoire
+            éventuellement, via une influence de l'utilisateur (par exemple, cliquer sur une cellule ou taper une touche du clavier)
