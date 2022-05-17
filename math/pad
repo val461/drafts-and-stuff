@@ -1384,7 +1384,8 @@ endormophisme nilpotent d'un espace vectoriel
         chaque élément de B est transformé par l'endomorphisme de sorte à perdre un ou plusieurs coefficients non nuls (dans son écriture en base B).
             en particulier, le premier élément de B est transformé par l'endomorphisme en l'élément neutre.
         on considère ici que l'information contenue dans un vecteur se mesure au nombre de ses coefficients non nuls (dans son écriture en base B).
-        
+
+2022-04-30
 automate cellulaire + couleurs + algorithme génétique
     pour générer des peintures dynamiques
     règle
@@ -1399,3 +1400,14 @@ automate cellulaire + couleurs + algorithme génétique
     éventuellement, on donne à chaque cellule ses propres paramètres (une "personnalité")
         éventuellement, ces paramètres eux-mêmes peuvent varier au fil des itérations, de façon déterministe ou aléatoire
             éventuellement, via une influence de l'utilisateur (par exemple, cliquer sur une cellule ou taper une touche du clavier)
+
+quotient
+    espace vectoriel
+        Intuitivement, l'espace vectoriel quotient de E par F s'identifie à un sous-espace supplémentaire G de F dans E. La surjection canonique de E vers E/F s'identifie à la projection de E vers G par rapport à F. Autrement dit, on néglige les éléments de F.
+    groupe
+        L'idée de groupe quotient est similaire, et fonctionne même dans certains cas non abéliens grâce à la notion de sous-groupe distingué. Un sous-groupe est distingué si en identifiant ses éléments les uns aux autres, il "commute" avec les éléments du groupe ambiant. Ça semble une condition importante pour pouvoir l'identifier au neutre du groupe ambiant, qui neutre commute avec tous les éléments. Et cette identification d'un sous-groupe distingué au neutre du groupe ambiant, est précisément la notion de groupe quotient. Identifier des éléments au neutre, ça veut dire les négliger. Ainsi, le quotient du groupe ambiant par un sous-groupe permet de regarder le groupe ambiant en négligeant ce sous-groupe.
+    1er théorème d'isomorphisme
+        pour groupes ou espaces vectoriels
+            En appliquant un morphisme f (de groupes ou d'espaces vectoriels), on néglige les éléments du noyau de f. Il semble donc naturel que s'identifient image de f et quotient par le noyau de f.
+        pour espaces vectoriels
+            Ce théorème explique le théorème du rang : l'image d'une application linéaire f s'identifie à un supplémentaire du noyau de f, d'où la formule sur les dimensions de l'image et du noyau.
