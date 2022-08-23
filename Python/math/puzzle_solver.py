@@ -24,6 +24,7 @@ pieces_seeds = ['BRU','FRU','RFF','LFUDF','DRBB','BDRB']
 
 
 def iterer(f,n):
+    # pourrait être codé à partir de compose() de façon plus élégante ?
     def f_new(x):
         for k in range(n):
             x = f(x)
@@ -78,7 +79,7 @@ rotations_v = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy
 rotations_h = [R1,Rxy,iterer(Rxy,2),Ryx]
 
 def positions(piece):
-    # optimisable en factorisant les rotations_v hors de la boucle des rotations_h
+    # optimisable en factorisant rotation_v(bloc) hors de la boucle des rotations_h
     for rotation_v in rotations_v:
         for rotation_h in rotations_h:
             yield([rotation_h(rotation_v(bloc)) for bloc in piece])
