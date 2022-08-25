@@ -1,0 +1,43 @@
+L'algorithme est de type force brute et breadth-first search : il essaie pour ainsi dire "en parallèle" les séquences de pièces à placer, en éliminant au fur et à mesure les tentatives qui s'avèrent erronées. Ça consomme donc beaucoup de mémoire, contrairement à si j'avais utilisé une approche depth-first search en explorant les séquences l'une après l'autre, ce qui demanderait de faire souvent marche arrière dans les séquences.
+
+L'algo repose sur des boucles imbriquées. Pour chaque pièce, je considère chacun des 3*3*3=27 emplacements possibles pour le bloc de référence de la pièce. J'élimine les cas où un bloc de la pièce dépasse de la zone des 27 emplacements, et les cas où la pièce est en collision avec les pièces déjà placées. Et tout ça, je le fais pour chaque inclination possible de la pièce.
+
+Pour trouver comment parcourir les inclinations possibles d'une pièce, j'ai dénombré quelles isométries directes préservent un cube. (Pas les isométries indirectes, car c'est dur de faire subir une réflexion aux vraies pièces.) Pour ça, je regarde des façons de tourner un cube : d'abord je choisis quelle face mettre en bas (6 possibilités), puis quelle face mettre à gauche (4 possibilités), d'où 6*4=24 possibilités. Les 4 possibilités du second choix (quelle face mettre à gauche sans changer la face du bas) correspondent à 4 rotations, disons d'axe vertical. Les 6 possibilités du premier choix (quelle face mettre en bas) sont engendrées par deux rotations d'axes horizontaux perpendiculaires l’un à l'autre.
+
+J'ai introduit une façon de noter des rotations : par exemple, Ryz désigne la rotation où (la partie positive de) l'axe y se met à la place de (la partie positive de) l'axe z, et l'axe x reste inchangé. L'ordre des lettres est important : Rzy est l'inverse de Ryz.
+
+Pour éviter d'avoir à écrire 6+4=10 matrices de rotation en Python, j'ai exprimé ces 10 rotations à partir de 2 rotations d'un quart de tour : une d'axe vertical et une d'axe horizontal. En visualisant l'effet de composer des rotations sur un dé ou sur une base de R^3 (par exemple trois doigts de la main), on voit que conjuguer cette rotation d'axe horizontal par cette rotation d'axe vertical “déforme" cette rotation d'axe horizontal en faisant pivoter d'un quart de tour son axe horizontal. On a maintenant bien les deux rotations d’axes horizontaux perpendiculaires correspondant engendrant les 6 rotations du premier choix.
+
+En combinant une rotation du premier choix et une rotation du second choix, on obtient n’importe laquelle des 24 isométries directes voulues. Il paraît que certaines sont des rotations d’angle 2 pi / 3, mais je ne sais pas comment visualiser ça. Elles auraient pour axes les grandes diagonales du cube.
+
+Extraits choisis du code :
+
+# dans la boucle principale
+            places_prises, places_libres = emplacements(precube)
+            for piece_inclinee in inclinations(piece):
+                for emplacement in places_libres:
+                    piece_placee = placer(piece_inclinee, emplacement)
+                    if compatible(piece_placee, places_prises):
+                        new_precubes.append(precube + piece_placee)
+
+# dans compatible(), pour tester les collisions
+    return not places_prises.intersection(coords(piece))
+
+# pour définir les 6+4 rotations sur un bloc d’une pièce
+
+def R1(bloc):
+    return bloc
+
+def Rxy(bloc):
+    (x,y,z,p) = bloc
+    return (-y,x,z,p)
+
+def Rzy(bloc):
+    (x,y,z,p) = bloc
+    return (x,z,-y,p)
+
+Ryx = iterer(Rxy,3)
+Ryz = iterer(Rzy,3)
+
+rotations_h = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy)]
+rotations_v = [R1,Rxy,iterer(Rxy,2),Ryx]
