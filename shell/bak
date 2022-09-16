@@ -5,7 +5,8 @@
 cd ~/'bin/bak_files/to_archive' || exit "${?}"
 #cd ~/'Documents' || exit "${?}"
 
-nemo '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
+echo '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
+#nemo '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
 zip -r -FS --quiet '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/stuff.zip' *
 #zip -r -FS --quiet '../stuff.zip' *
 #zip -r -FS '../stuff.zip' *
