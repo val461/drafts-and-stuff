@@ -20,16 +20,7 @@ pieces_seeds = ['BRU','FRU','RFF','LFUDF','DRBB','BDRB']
 # 133056 précube(s).
 # 94848 précube(s).
 # 1152 solution(s).
-# [[1, 2, 0, 0], [0, 2, 0, 0], [0, 1, 0, 0], [0, 1, 1, 0], [1, 2, 1, 1], [2, 2, 1, 1], [2, 2, 0, 1], [2, 1, 0, 1], [0, 2, 1, 2], [0, 2, 2, 2], [0, 1, 2, 2], [0, 0, 2, 2], [0, 0, 1, 3], [0, 0, 0, 3], [1, 0, 0, 3], [1, 1, 0, 3], [1, 0, 0, 3], [2, 0, 0, 3], [1, 0, 1, 4], [1, 0, 2, 4], [2, 0, 2, 4], [2, 1, 2, 4], [2, 2, 2, 4], [1, 2, 2, 5], [1, 1, 2, 5], [1, 1, 1, 5], [2, 1, 1, 5], [2, 0, 1, 5]]
-
-
-def iterer(f,n):
-    # pourrait être codé à partir de compose() de façon plus élégante ?
-    def f_new(x):
-        for k in range(n):
-            x = f(x)
-        return x
-    return f_new
+# [[0, 1, 0, 0], [0, 1, 1, 0], [1, 2, 0, 0], [0, 2, 0, 0], [1, 2, 1, 1], [2, 2, 1, 1], [2, 1, 0, 1], [2, 2, 0, 1], [0, 2, 1, 2], [0, 1, 2, 2], [0, 2, 2, 2], [0, 0, 2, 2], [1, 0, 0, 3], [0, 0, 1, 3], [2, 0, 0, 3], [1, 1, 0, 3], [0, 0, 0, 3], [1, 0, 1, 4], [2, 1, 2, 4], [2, 2, 2, 4], [2, 0, 2, 4], [1, 0, 2, 4], [1, 2, 2, 5], [1, 1, 2, 5], [2, 0, 1, 5], [2, 1, 1, 5], [1, 1, 1, 5]]
 
 def compose(*fs):
     lfs = list(fs)
@@ -40,16 +31,20 @@ def compose(*fs):
         return x
     return f_new
 
+def iterer(f,n):
+    return compose(*[f for k in range(n)])
+
 def add_tuples(U, V):
     return tuple(u + v for (u, v) in zip(U, V))
 
 directions = dict(L=(-1,0,0,0), R=(1,0,0,0), B=(0,-1,0,0), F=(0,1,0,0), D=(0,0,-1,0), U=(0,0,1,0))
 def nouvelle_piece(seed, p):
     # seed peut passer plusieurs fois par le même bloc
-    piece = [(0,0,0,p)]
+    blocs = [(0,0,0,p)]
     for direction in seed:
-        piece.append(add_tuples(piece[-1], directions[direction]))
-    return list(set(piece))
+        blocs.append(add_tuples(blocs[-1], directions[direction]))
+    # retirer les doublons.
+    return list(set(blocs))
 
 def coords(L):
     return {(x,y,z) for (x,y,z,p) in L}
@@ -75,22 +70,21 @@ def Rzy(bloc):
 Ryx = iterer(Rxy,3)
 Ryz = iterer(Rzy,3)
 
-rotations_v = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy)]
-rotations_h = [R1,Rxy,iterer(Rxy,2),Ryx]
+rotations_h = [R1,Rzy,iterer(Rzy,2),Ryz,compose(Ryx,Rzy,Rxy),compose(Ryx,Ryz,Rxy)]
+rotations_v = [R1,Rxy,iterer(Rxy,2),Ryx]
 
-def positions(piece):
-    # optimisable en factorisant rotation_v(bloc) hors de la boucle des rotations_h
-    for rotation_v in rotations_v:
-        for rotation_h in rotations_h:
-            yield([rotation_h(rotation_v(bloc)) for bloc in piece])
-
+def inclinations(piece):
+    # optimisable en factorisant rotation_h(bloc) hors de la boucle des rotations_v
+    for rotation_h in rotations_h:
+        for rotation_v in rotations_v:
+            yield([rotation_v(rotation_h(bloc)) for bloc in piece])
 
 def placer(piece, centre_voulu):
     p = piece[0][3]
     centre_actuel = piece[0][0:3]
     return [[(centre_voulu[k] - centre_actuel[k] + bloc[k]) for k in range(3)] + [p] for bloc in piece]
 
-def contingent(piece, places_prises):
+def compatible(piece, places_prises):
     # check cube boundaries
     for bloc in piece:
         for c in bloc[0:3]:
@@ -108,11 +102,11 @@ if go:
         new_precubes = []
         for precube in precubes:
             places_prises, places_libres = emplacements(precube)
-            # optimisable en n'appliquant pas positions() pour la 1ère pièce (grâce aux symétries du cube)
-            for piece_positionnee in positions(piece):
+            # optimisable en n'appliquant pas inclinations() pour la 1ère pièce (grâce aux symétries du cube)
+            for piece_inclinee in inclinations(piece):
                 for emplacement in places_libres:
-                    piece_placee = placer(piece_positionnee, emplacement)
-                    if contingent(piece_placee, places_prises):
+                    piece_placee = placer(piece_inclinee, emplacement)
+                    if compatible(piece_placee, places_prises):
                         new_precubes.append(precube + piece_placee)
         precubes = new_precubes
     print(len(precubes),'solution(s).')
