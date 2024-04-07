@@ -2,7 +2,7 @@
 	email = fornost461@users.noreply.github.com
 	name = fornost
 [credential]
-	helper = cache
+	helper = store
 [alias]
 	co = checkout
 	br = branch
