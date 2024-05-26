@@ -1,0 +1,3 @@
+clean up YouTube transcript
+    enable multi-line matching before
+    [0-9]:[0-9][0-9]\n

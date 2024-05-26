@@ -123,6 +123,8 @@ for f in *.jpg ; do
 done
 convert result/*.jpg result/result.pdf
 
+# alt
+
 p='33%'
 mkdir -v result
 for f in *.jpg ; do
