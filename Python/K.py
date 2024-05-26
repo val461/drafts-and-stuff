@@ -213,4 +213,5 @@ class Session:
 
 if __name__ == '__main__':
     s = Session(load_from_file = True, filename = 'K_data')
-    s.run(ask = False)
+    s.run()
+    # s.run(ask = False)
