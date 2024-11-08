@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # sudo ./luminosity [n]
 # show or change the screen’s brightness
@@ -63,7 +63,7 @@ _printDirection()
 }
 
 slowness=3
-op='-'
+op='-1'
 
 max="$(cat "${file_max}")"
 echo "max brightness: ${max}"
@@ -71,14 +71,14 @@ echo "max brightness: ${max}"
 while true
 do
     _actualizeBrightness
-    let "modifier = ${brightness} / ${slowness}"
+    modifier=$((brightness / slowness))
     [ "${modifier}" -ge 1 ] || modifier=1
     printf  'current slowness: %s ' "${slowness}"
     _printDirection
     read ans
     case "${ans}" in
         '')
-            let "new=brightness ${op} ${modifier}"
+            new=$((brightness + op * modifier))
             if [ "${new}" -lt 1 ]; then
                 echo "error: brightness (${new}) must be positive." >&2
                 new=1
@@ -89,13 +89,13 @@ do
             _setBrightness "${new}"
             ;;
         x|X|q|Q) break ;;
-        +*) op='+' ; _printDirection ; continue ;;
-        -*) op='-' ; _printDirection ; continue ;;
+        +*) op='1' ; _printDirection ; continue ;;
+        -*) op='-1' ; _printDirection ; continue ;;
         r|R) _actualizeBrightness ; continue ;;
         *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
         *)
             # is a number
-            [ "${ans}" -ge 1 ] && let "slowness=${ans}"
+            [ "${ans}" -ge 1 ] && slowness="${ans}"
             printf 'slowness: %s ' "${slowness}"
             _printDirection
             continue
