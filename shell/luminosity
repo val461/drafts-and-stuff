@@ -62,7 +62,7 @@ _printDirection()
     esac
 }
 
-slowness=3
+slowness=5
 op='-'
 
 max="$(cat "${file_max}")"
