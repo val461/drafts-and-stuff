@@ -5,9 +5,9 @@
 cd ~/'bin/bak_files/to_archive' || exit "${?}"
 #cd ~/'Documents' || exit "${?}"
 
-#echo '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
-nemo '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
-zip -r -FS --quiet '/run/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/stuff.zip' *
+#echo '/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
+nemo '/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/'
+zip -r -FS --quiet --encrypt '/media/val/4a504020-a92d-425f-bf53-97cc34907056/BAK2/stuff2.zip' *
 #zip -r -FS --quiet '../stuff.zip' *
 #zip -r -FS '../stuff.zip' *
 #zip -r -FS --quiet ~/'bin/bak_files/stuff.zip' './Texts/own' './Vie pratique'
