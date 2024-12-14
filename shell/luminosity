@@ -92,7 +92,7 @@ do
         +*) op='+' ; _printDirection ; continue ;;
         -*) op='-' ; _printDirection ; continue ;;
         r|R) _actualizeBrightness ; continue ;;
-        *[!0-9]*) echo 'invalid input, try again' >&2 ; continue ;;
+        *[!0-9]*) echo 'invalid input' >&2 ; continue ;;
         *)
             # is a number
             [ "${ans}" -ge 1 ] && let "slowness=${ans}"
