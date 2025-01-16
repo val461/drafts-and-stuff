@@ -1,3 +1,5 @@
+Published at https://github.com/shoes/shoes3/wiki/git-better .
+
 ## Prerequisites
 Create a free GitHub account. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on your computer and [configure it](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
 

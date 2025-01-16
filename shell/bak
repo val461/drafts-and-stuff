@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Don't you use deja-dup?"
+exit
+
 #~ echo Running.
 
 cd ~/'bin/bak_files/to_archive' || exit "${?}"
