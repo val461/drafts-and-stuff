@@ -1,0 +1,1 @@
+Exercise(hold_duration = 12, rest_duration = 6, repetitions = 10, hold_increment = 0, rest_increment = 0, repetitions_increment = 1, use_chrono = True, name = 'Medium') # 3/jour.
