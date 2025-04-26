@@ -8,7 +8,9 @@ J'ai introduit une façon de noter des rotations : par exemple, Ryz désigne la 
 
 Pour éviter d'avoir à écrire 6+4=10 matrices de rotation en Python, j'ai exprimé ces 10 rotations à partir de 2 rotations d'un quart de tour : une d'axe vertical et une d'axe horizontal. En visualisant l'effet de composer des rotations sur un dé ou sur une base de R^3 (par exemple trois doigts de la main), on voit que conjuguer cette rotation d'axe horizontal par cette rotation d'axe vertical “déforme" cette rotation d'axe horizontal en faisant pivoter d'un quart de tour son axe horizontal. On a maintenant bien les deux rotations d’axes horizontaux perpendiculaires correspondant engendrant les 6 rotations du premier choix.
 
-En combinant une rotation du premier choix et une rotation du second choix, on obtient n’importe laquelle des 24 isométries directes voulues. Il paraît que certaines sont des rotations d’angle 2 pi / 3, mais je ne sais pas comment visualiser ça. Elles auraient pour axes les grandes diagonales du cube.
+En combinant une rotation du premier choix et une rotation du second choix, on obtient n’importe laquelle des 24 isométries directes voulues.
+
+Certaines sont des rotations d’angle 2 pi / 3 ! Celles-ci ont pour axes les grandes diagonales du cube. Chaque rotation de ce type est d'un tiers de tour car elle permute les 3 faces qui touchent un coin dont est issu la diagonale qu'est l'axe de rotation. Pour visualiser ceci : tenir un cube par les deux coins touchant une diagonale, et le faire pivoter autour de la diagonale.
 
 Extraits choisis du code :
 
