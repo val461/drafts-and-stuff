@@ -1,0 +1,161 @@
+Pop!_OS 22.04 jammy (x86-64)
+Install .NET SDK
+https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install?tabs=dotnet10&pivots=os-linux-ubuntu-2204
+
+  val@pop-os:~$ sudo add-apt-repository ppa:dotnet/backports
+  PPA publishes dbgsym, you may need to include 'main/debug' component
+  Repository: 'deb https://ppa.launchpadcontent.net/dotnet/backports/ubuntu/ jammy main'
+  Description:
+  The backports archive provides source-built .NET packages in cases where a version of .NET is not available in the archive for an Ubuntu release.
+
+  Currently available Ubuntu releases and .NET backports:
+
+  Ubuntu 26.04 LTS (Resolute Raccoon)
+  ├── .NET 8.0 (End of Life on November 10th, 2026) [amd64 arm64]
+  └── .NET 9.0 (End of Life on November 10th, 2026) [amd64 arm64 s390x ppc64el]
+
+  Ubuntu 24.04 LTS (Noble Numbat)
+  ├── .NET 6.0 (End of Life on November 12th, 2024) [amd64 arm64]
+  ├── .NET 7.0 (End of Life on May 14th, 2024)      [amd64 arm64]
+  └── .NET 9.0 (End of Life on November 10th, 2026) [amd64 arm64 s390x ppc64el]
+
+  Ubuntu 22.04 LTS (Jammy Jellyfish)
+  ├── .NET 9.0 (End of Life on November 10th, 2026) [amd64 arm64 s390x ppc64el]
+  └── .NET 10.0 (End of Life on November 14th, 2028) [amd64 arm64 s390x ppc64el]
+
+  Canonical provides best-effort support for packages contained in this archive, which is limited to the upstream lifespan or the support period of the particular Ubuntu version. See the upstream support policy [1] for more information about the upstream support lifespan of .NET releases or the Ubuntu Releases Wiki entry [2] for more information about the support period of any Ubuntu version.
+
+  [1] https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core
+  [2] https://wiki.ubuntu.com/Releases
+  More info: https://launchpad.net/~dotnet/+archive/ubuntu/backports
+  Adding repository.
+  Press [ENTER] to continue or Ctrl-c to cancel.
+  Adding deb entry to /etc/apt/sources.list.d/dotnet-ubuntu-backports-jammy.list
+  Adding disabled deb-src entry to /etc/apt/sources.list.d/dotnet-ubuntu-backports-jammy.list
+  Adding key to /etc/apt/trusted.gpg.d/dotnet-ubuntu-backports.gpg with fingerprint 45A3F127159BE9E5017811C62125B164E8E5D3FA
+  Hit:1 https://packages.microsoft.com/repos/code stable InRelease
+  Hit:2 https://repo.protonvpn.com/debian stable InRelease
+  Get:3 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy InRelease [24.3 kB]
+  Hit:4 http://apt.pop-os.org/proprietary jammy InRelease
+  Hit:5 http://apt.pop-os.org/release jammy InRelease
+  Get:6 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 Packages [4,824 B]
+  Get:7 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main Translation-en [2,140 B]
+  Hit:8 http://apt.pop-os.org/ubuntu jammy InRelease
+  Hit:9 http://apt.pop-os.org/ubuntu jammy-security InRelease
+  Hit:10 http://apt.pop-os.org/ubuntu jammy-updates InRelease
+  Hit:11 http://apt.pop-os.org/ubuntu jammy-backports InRelease
+  Fetched 31.3 kB in 2s (20.3 kB/s)
+  Reading package lists... Done
+  val@pop-os:~$ sudo apt-get update && \
+    sudo apt-get install -y dotnet-sdk-10.0
+  Hit:1 https://repo.protonvpn.com/debian stable InRelease
+  Hit:2 https://packages.microsoft.com/repos/code stable InRelease
+  Hit:3 http://apt.pop-os.org/proprietary jammy InRelease
+  Hit:4 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy InRelease
+  Hit:5 http://apt.pop-os.org/release jammy InRelease
+  Hit:6 http://apt.pop-os.org/ubuntu jammy InRelease
+  Hit:7 http://apt.pop-os.org/ubuntu jammy-security InRelease
+  Hit:8 http://apt.pop-os.org/ubuntu jammy-updates InRelease
+  Hit:9 http://apt.pop-os.org/ubuntu jammy-backports InRelease
+  Reading package lists... Done
+  Reading package lists... Done
+  Building dependency tree... Done
+  Reading state information... Done
+  The following additional packages will be installed:
+    aspnetcore-runtime-10.0 aspnetcore-targeting-pack-10.0 dotnet-apphost-pack-10.0 dotnet-host-10.0 dotnet-hostfxr-10.0 dotnet-runtime-10.0 dotnet-sdk-aot-10.0 dotnet-targeting-pack-10.0
+    dotnet-templates-10.0 liblttng-ust-common1 liblttng-ust-ctl5 liblttng-ust1
+  Suggested packages:
+    aspnetcore-runtime-dbg-10.0 dotnet-runtime-dbg-10.0 dotnet-sdk-dbg-10.0
+  The following NEW packages will be installed:
+    aspnetcore-runtime-10.0 aspnetcore-targeting-pack-10.0 dotnet-apphost-pack-10.0 dotnet-host-10.0 dotnet-hostfxr-10.0 dotnet-runtime-10.0 dotnet-sdk-10.0 dotnet-sdk-aot-10.0 dotnet-targeting-pack-10.0
+    dotnet-templates-10.0 liblttng-ust-common1 liblttng-ust-ctl5 liblttng-ust1
+  0 upgraded, 13 newly installed, 0 to remove and 0 not upgraded.
+  Need to get 165 MB of archives.
+  After this operation, 620 MB of additional disk space will be used.
+  Get:1 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-host-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [200 kB]
+  Get:2 http://apt.pop-os.org/ubuntu jammy/main amd64 liblttng-ust-common1 amd64 2.13.1-1ubuntu1 [27.1 kB]
+  Get:3 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-hostfxr-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [154 kB]
+  Get:4 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-runtime-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [25.9 MB]
+  Get:5 http://apt.pop-os.org/ubuntu jammy/main amd64 liblttng-ust-ctl5 amd64 2.13.1-1ubuntu1 [77.9 kB]
+  Get:6 http://apt.pop-os.org/ubuntu jammy/main amd64 liblttng-ust1 amd64 2.13.1-1ubuntu1 [190 kB]
+  Get:7 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 aspnetcore-runtime-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [8,587 kB]
+  Get:8 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 aspnetcore-targeting-pack-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [3,556 kB]
+  Get:9 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-apphost-pack-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [3,679 kB]
+  Get:10 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-targeting-pack-10.0 amd64 10.0.1-0ubuntu1~22.04.1~ppa2 [3,229 kB]
+  Get:11 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-templates-10.0 amd64 10.0.101-0ubuntu1~22.04.1~ppa2 [2,925 kB]
+  Get:12 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-sdk-10.0 amd64 10.0.101-0ubuntu1~22.04.1~ppa2 [100 MB]
+  Get:13 https://ppa.launchpadcontent.net/dotnet/backports/ubuntu jammy/main amd64 dotnet-sdk-aot-10.0 amd64 10.0.101-0ubuntu1~22.04.1~ppa2 [15.9 MB]
+  Fetched 165 MB in 45s (3,643 kB/s)
+  Selecting previously unselected package dotnet-host-10.0.
+  (Reading database ... 404964 files and directories currently installed.)
+  Preparing to unpack .../00-dotnet-host-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-host-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-hostfxr-10.0.
+  Preparing to unpack .../01-dotnet-hostfxr-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-hostfxr-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package liblttng-ust-common1:amd64.
+  Preparing to unpack .../02-liblttng-ust-common1_2.13.1-1ubuntu1_amd64.deb ...
+  Unpacking liblttng-ust-common1:amd64 (2.13.1-1ubuntu1) ...
+  Selecting previously unselected package liblttng-ust-ctl5:amd64.
+  Preparing to unpack .../03-liblttng-ust-ctl5_2.13.1-1ubuntu1_amd64.deb ...
+  Unpacking liblttng-ust-ctl5:amd64 (2.13.1-1ubuntu1) ...
+  Selecting previously unselected package liblttng-ust1:amd64.
+  Preparing to unpack .../04-liblttng-ust1_2.13.1-1ubuntu1_amd64.deb ...
+  Unpacking liblttng-ust1:amd64 (2.13.1-1ubuntu1) ...
+  Selecting previously unselected package dotnet-runtime-10.0.
+  Preparing to unpack .../05-dotnet-runtime-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-runtime-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package aspnetcore-runtime-10.0.
+  Preparing to unpack .../06-aspnetcore-runtime-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking aspnetcore-runtime-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package aspnetcore-targeting-pack-10.0.
+  Preparing to unpack .../07-aspnetcore-targeting-pack-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking aspnetcore-targeting-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-apphost-pack-10.0.
+  Preparing to unpack .../08-dotnet-apphost-pack-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-apphost-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-targeting-pack-10.0.
+  Preparing to unpack .../09-dotnet-targeting-pack-10.0_10.0.1-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-targeting-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-templates-10.0.
+  Preparing to unpack .../10-dotnet-templates-10.0_10.0.101-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-templates-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-sdk-10.0.
+  Preparing to unpack .../11-dotnet-sdk-10.0_10.0.101-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-sdk-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Selecting previously unselected package dotnet-sdk-aot-10.0.
+  Preparing to unpack .../12-dotnet-sdk-aot-10.0_10.0.101-0ubuntu1~22.04.1~ppa2_amd64.deb ...
+  Unpacking dotnet-sdk-aot-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-targeting-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up liblttng-ust-common1:amd64 (2.13.1-1ubuntu1) ...
+  Setting up aspnetcore-targeting-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up liblttng-ust-ctl5:amd64 (2.13.1-1ubuntu1) ...
+  Setting up dotnet-apphost-pack-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up liblttng-ust1:amd64 (2.13.1-1ubuntu1) ...
+  Setting up dotnet-host-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-hostfxr-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-runtime-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-templates-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Setting up aspnetcore-runtime-10.0 (10.0.1-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-sdk-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Setting up dotnet-sdk-aot-10.0 (10.0.101-0ubuntu1~22.04.1~ppa2) ...
+  Processing triggers for man-db (2.10.2-1) ...
+  Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+  val@pop-os:~$ dotnet --version
+  10.0.101
+
+Install Godot
+  Download Godot with C# support from https://godotengine.org/download/linux/ .
+    https://downloads.godotengine.org/?version=4.5.1&flavor=stable&slug=mono_linux_x86_64.zip&platform=linux.64
+  Extract into `/home/val/.local/bin/`.
+  Create `/home/val/.local/share/applications/Godot.desktop` with the following content, adjusting values of Name and Exec.
+```
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Application
+Name=Godot 4.5.1
+Exec="/home/val/.local/bin/Godot_v4.5.1-stable_mono_linux_x86_64/Godot_v4.5.1-stable_mono_linux.x86_64" %U
+Categories=Application;
+Name[en_US]=Godot
+```
