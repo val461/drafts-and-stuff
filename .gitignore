@@ -16,3 +16,30 @@
 # (Information found at https://stackoverflow.com/questions/6964297/untrack-files-from-git-temporarily/6964322#6964322 .)
 Python/GoogleAIStudio_to_markdown/Tutoriel Notebook Exploration Data.txt
 Python/GoogleAIStudio_to_markdown/tutoriel.md
+*.zip
+*.svg
+*.png
+*.wav
+*.ogg
+*.ttf
+*.bin
+*.res
+*.ctex
+*.cache
+
+# Godot 4+ specific ignores
+.godot/
+.nomedia
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_credentials.cfg
+*.tmp
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+mono_crash.*.json
