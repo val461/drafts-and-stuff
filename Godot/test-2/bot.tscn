@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bavn5hqw1gjfa"]
+
+[ext_resource type="Script" uid="uid://ddgf135rdwtdd" path="res://bot.gd" id="1_mo174"]
+[ext_resource type="Resource" uid="uid://fjb6tyolrdsk" path="res://bot_stats.tres" id="2_5unqy"]
+
+[node name="Bot" type="CharacterBody3D"]
+script = ExtResource("1_mo174")
+stats = ExtResource("2_5unqy")
