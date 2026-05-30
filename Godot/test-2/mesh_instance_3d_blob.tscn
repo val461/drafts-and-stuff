@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://enwmm0okdwd1"]
+
+[ext_resource type="Script" uid="uid://bfx5fi122f8bl" path="res://mesh_instance_3d_blob.gd" id="1_8m5vc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8m5vc"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aq2ne"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+material_overlay = SubResource("StandardMaterial3D_8m5vc")
+mesh = SubResource("ArrayMesh_aq2ne")
+script = ExtResource("1_8m5vc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.8121374, 0.49380013, 0.31079626, 0.1050039, -0.40027943, 0.91035736, 0.57394, 0.77197003, 0.27323097, 2.2340016, 2, 0.58989894)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(1.0000001, 1.4901161e-08, 7.450581e-09, -2.9802322e-08, 1.0000001, -1.4901161e-07, -7.450581e-09, 8.940697e-08, 1, 0.050533995, -0.052260637, 0.55358243)

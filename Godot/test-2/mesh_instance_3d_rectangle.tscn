@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://drpd0vn5rum6l"]
+
+[ext_resource type="Script" uid="uid://d0mv5nma1ghdj" path="res://mesh_instance_3d_rectangle.gd" id="1_oar8j"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_aq2ne"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+mesh = SubResource("ArrayMesh_aq2ne")
+script = ExtResource("1_oar8j")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.9940387, -0.069259994, 0.08420274, 0.02021153, 0.6418586, 0.7665566, -0.107137956, 0.7636888, -0.63663244, 0.34512293, 2, -2.018)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(1.0000001, 1.4901161e-08, 7.450581e-09, -2.9802322e-08, 1.0000001, -1.4901161e-07, -7.450581e-09, 8.940697e-08, 1, 0.050533995, -0.052260637, 0.55358243)
