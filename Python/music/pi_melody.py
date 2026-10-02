@@ -1,3 +1,5 @@
+# https://claude.ai/chat/75f05d7c-edbd-4244-9700-9e9324c9ebca
+
 import struct, sys
 
 BASE = int(sys.argv[1]) if len(sys.argv) > 1 else 7
@@ -26,7 +28,7 @@ digits = pi_digits(N, BASE)
 print(f"pi = 3.{''.join(map(str, digits))} (base {BASE})")
 
 # Scale expressed in half-tones
-# A natural minor / C major diatonic scale; for base 7 each digit = one scale degree
+ROOT = 57  # A
 scale = [57, 59, 60, 62, 64, 65, 67, 69, 71, 72][:BASE] if BASE <= 7 else None
 if BASE == 7:
     scale = [57, 59, 60, 62, 64, 65, 67]   # A minor: A B C D E F G
@@ -36,12 +38,14 @@ elif BASE == 5:
     # scale = [60, 62, 64, 67, 69]  # C major pentatonic: C D E G A
 elif BASE == 8:
     scale = [60, 62, 64, 65, 67, 69, 71, 72]  # C major: C D E F G A B C
+elif BASE == 11:
+    scale = list(range(57,57+11))  # A chromatic minus last note
 
 tpq = 480
 ev = b""
 for d in digits:
-    # dur = tpq if d % 2 == 0 else tpq // 2
-    dur = tpq
+    dur = tpq if d % 2 == 0 else tpq // 2
+    # dur = tpq
     n = scale[d]
     v = dur; o = [v & 0x7F]; v >>= 7
     while v: o.append((v & 0x7F) | 0x80); v >>= 7
