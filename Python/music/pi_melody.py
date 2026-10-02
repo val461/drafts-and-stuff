@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Digits -> MIDI melody.
+Option -h for help.
 Examples:
   python3 pi_melody.py --source pi --base 12 --scale chromatic
   python3 pi_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
