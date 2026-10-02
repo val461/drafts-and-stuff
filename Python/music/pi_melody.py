@@ -1,16 +1,36 @@
 #!/usr/bin/env python3
-"""Digits -> MIDI melody.
+"""
+https://claude.ai/chat/75f05d7c-edbd-4244-9700-9e9324c9ebca
+Digits -> MIDI melody.
 Option -h for help.
-Examples:
-  python3 pi_melody.py --source pi --base 12 --scale chromatic
-  python3 pi_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
-  python3 pi_melody.py --source markov --base 8 --scale octatonic --seed 3
 
 Random digits are statistically similar to pi's, so they will sound the same: pi is "random-sounding". √2, e and φ behave like pi, so they only give you different melodies, not a different character.
 For more musical results, try the Markov or logistic-map sources, or rationals and Thue–Morse for audible repetition and structure.
 
 Since you like the chromatic scale, you may be enjoying the dissonance and the lack of a tonal center. Octatonic and whole tone are good in-between options, as they are structured but not "simplistic".
-https://claude.ai/chat/75f05d7c-edbd-4244-9700-9e9324c9ebca
+
+Examples:
+python3 pi_melody.py --source pi --base 12 --scale chromatic
+python3 pi_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
+python3 pi_melody.py --source markov --base 8 --scale octatonic --seed 3
+
+# Markov: small steps, so it sounds the most "melodic"
+python3 pi_melody.py --source markov --scale octatonic
+
+# Logistic map: chaotic but deterministic, in a scale with no resolution
+python3 pi_melody.py --source logistic --scale whole_tone
+
+# Thue–Morse: fractal repetition; digits also set rhythm
+python3 pi_melody.py --source thue_morse --scale octatonic --rhythm digits
+
+# 1/7: a repeating pattern in base 6, so you hear the loop
+python3 pi_melody.py --source one_seventh --scale whole_tone --rhythm digits
+
+# Markov in Messiaen mode 3, slower and impressionist
+python3 pi_melody.py --source markov --scale messiaen3 --rhythm digits --tempo 90
+
+# Pi itself, as a random walk through the octatonic scale
+python3 pi_melody.py --source pi --scale octatonic --walk
 """
 import argparse, math, random, struct
 
