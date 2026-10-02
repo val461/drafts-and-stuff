@@ -7,6 +7,8 @@ Examples:
   python3 pi_melody.py --source markov --base 8 --scale octatonic --seed 3
 
 Random digits are statistically similar to pi's, so they will sound the same: pi is "random-sounding". For more musical results, try the Markov or logistic-map sources, or rationals and Thue–Morse for audible repetition and structure. √2, e and φ behave like pi, so they only give you different melodies, not a different character.
+
+Since you like the chromatic scale, you may be enjoying the dissonance and the lack of a tonal center. Octatonic and whole tone are good in-between options, as they are structured but not "simplistic".
 https://claude.ai/chat/75f05d7c-edbd-4244-9700-9e9324c9ebca
 """
 import argparse, math, random, struct
