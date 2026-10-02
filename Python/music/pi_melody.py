@@ -10,6 +10,7 @@ For more musical results, try the Markov or logistic-map sources, or rationals a
 Since you like the chromatic scale, you may be enjoying the dissonance and the lack of a tonal center. Octatonic and whole tone are good in-between options, as they are structured but not "simplistic".
 
 Examples:
+
 python3 pi_melody.py --source pi --base 12 --scale chromatic
 python3 pi_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
 python3 pi_melody.py --source markov --base 8 --scale octatonic --seed 3
@@ -155,7 +156,8 @@ def write_midi(path, notes, durs, tempo_bpm, tpq=480):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--source", choices=SOURCES, default="pi")
-    p.add_argument("--base", type=int, default=7)
+    p.add_argument("--base", type=int, default=None,
+                   help="number base (default: number of notes in the scale)")
     p.add_argument("-n", "--n", type=int, default=128, help="number of notes")
     p.add_argument("--scale", choices=SCALES, default="natural_minor")
     p.add_argument("--root", type=int, default=57, help="MIDI root note (57 = A3)")
@@ -167,6 +169,8 @@ def main():
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("-o", "--out")
     a = p.parse_args()
+    if a.base is None:
+        a.base = len(SCALES[a.scale])
 
     digits = SOURCES[a.source](argparse.Namespace(**{**vars(a), "n": a.n * 2}))
     pitch_digits, rhythm_digits = digits[:a.n], digits[a.n:a.n*2]
