@@ -11,30 +11,31 @@ Since you like the chromatic scale, you may be enjoying the dissonance and the l
 
 Examples:
 
-python3 pi_melody.py --source pi --base 12 --scale chromatic
-python3 pi_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
-python3 pi_melody.py --source markov --base 8 --scale octatonic --seed 3
+python3 number_melody.py --source pi --base 12 --scale chromatic
+python3 number_melody.py --source sqrt2 --base 7 --scale harmonic_minor --walk
+python3 number_melody.py --source markov --base 8 --scale octatonic --seed 3
 
 # Markov: small steps, so it sounds the most "melodic"
-python3 pi_melody.py --source markov --scale octatonic
+python3 number_melody.py --source markov --scale octatonic
 
 # Logistic map: chaotic but deterministic, in a scale with no resolution
-python3 pi_melody.py --source logistic --scale whole_tone
+python3 number_melody.py --source logistic --scale whole_tone
 
 # Thue–Morse: fractal repetition; digits also set rhythm
-python3 pi_melody.py --source thue_morse --scale octatonic --rhythm digits
+python3 number_melody.py --source thue_morse --scale octatonic --rhythm digits
 
 # 1/7: a repeating pattern, so you hear the loop
-python3 pi_melody.py --source one_seventh --scale whole_tone --rhythm digits --base 10
+python3 number_melody.py --source one_seventh --scale whole_tone --rhythm digits --base 10
 
 # Markov in Messiaen mode 3, slower and impressionist
-python3 pi_melody.py --source markov --scale messiaen3 --rhythm digits --tempo 90
+python3 number_melody.py --source markov --scale messiaen3 --rhythm digits --tempo 90
 
 # Pi itself, as a random walk through the octatonic scale
-python3 pi_melody.py --source pi --scale octatonic --walk
+python3 number_melody.py --source pi --scale octatonic --walk
 
 Valentin:
-python3 pi_melody.py --source one_seventeenth --scale chromatic --rhythm digits
+python3 number_melody.py --source one_seventeenth --scale chromatic --rhythm digits
+python3 number_melody.py --source one_seventeenth --scale harmonic_minor --rhythm digits
 """
 import argparse, math, random, struct
 
