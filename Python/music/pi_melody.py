@@ -25,17 +25,23 @@ def pi_digits(n, base):
 digits = pi_digits(N, BASE)
 print(f"pi = 3.{''.join(map(str, digits))} (base {BASE})")
 
+# Scale expressed in half-tones
 # A natural minor / C major diatonic scale; for base 7 each digit = one scale degree
 scale = [57, 59, 60, 62, 64, 65, 67, 69, 71, 72][:BASE] if BASE <= 7 else None
 if BASE == 7:
     scale = [57, 59, 60, 62, 64, 65, 67]   # A minor: A B C D E F G
+    # scale = [60, 62, 64, 65, 67, 69, 71]  # C major: C D E F G A B
+elif BASE == 5:
+    scale = [57, 60, 62, 64, 67]  # A minor pentatonic: A C D E G
+    # scale = [60, 62, 64, 67, 69]  # C major pentatonic: C D E G A
 elif BASE == 8:
-    scale = [60, 62, 64, 65, 67, 69, 71, 72]
+    scale = [60, 62, 64, 65, 67, 69, 71, 72]  # C major: C D E F G A B C
 
 tpq = 480
 ev = b""
 for d in digits:
-    dur = tpq if d % 2 == 0 else tpq // 2
+    # dur = tpq if d % 2 == 0 else tpq // 2
+    dur = tpq
     n = scale[d]
     v = dur; o = [v & 0x7F]; v >>= 7
     while v: o.append((v & 0x7F) | 0x80); v >>= 7
