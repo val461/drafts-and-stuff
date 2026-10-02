@@ -32,6 +32,9 @@ python3 pi_melody.py --source markov --scale messiaen3 --rhythm digits --tempo 9
 
 # Pi itself, as a random walk through the octatonic scale
 python3 pi_melody.py --source pi --scale octatonic --walk
+
+Valentin:
+python3 pi_melody.py --source one_seventeenth --scale chromatic --rhythm digits
 """
 import argparse, math, random, struct
 
@@ -108,6 +111,7 @@ SOURCES = {
     "sqrt3": lambda a: sqrt_digits(3, a.n, a.base),
     "random": lambda a: random_digits(a.n, a.base, a.seed),
     "one_seventh": lambda a: rational_digits(1, 7, a.n, a.base),
+    "one_seventeenth": lambda a: rational_digits(1, 17, a.n, a.base),
     "thue_morse": lambda a: thue_morse(a.n, a.base),
     "logistic": lambda a: logistic_map(a.n, a.base),
     "markov": lambda a: markov(a.n, a.base, a.seed),
