@@ -24,8 +24,8 @@ python3 pi_melody.py --source logistic --scale whole_tone
 # Thue–Morse: fractal repetition; digits also set rhythm
 python3 pi_melody.py --source thue_morse --scale octatonic --rhythm digits
 
-# 1/7: a repeating pattern in base 6, so you hear the loop
-python3 pi_melody.py --source one_seventh --scale whole_tone --rhythm digits
+# 1/7: a repeating pattern, so you hear the loop
+python3 pi_melody.py --source one_seventh --scale whole_tone --rhythm digits --base 10
 
 # Markov in Messiaen mode 3, slower and impressionist
 python3 pi_melody.py --source markov --scale messiaen3 --rhythm digits --tempo 90
