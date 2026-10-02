@@ -89,21 +89,21 @@ SOURCES = {
 
 # ---------- scales (semitone offsets) ----------
 SCALES = {
-    "chromatic": list(range(12)),
+    "chromatic": list(range(12)), # atonal
     "major": [0,2,4,5,7,9,11],
     "natural_minor": [0,2,3,5,7,8,10],
-    "harmonic_minor": [0,2,3,5,7,8,11],
-    "phrygian_dominant": [0,1,4,5,7,8,10],
-    "hungarian_minor": [0,2,3,6,7,8,11],
-    "double_harmonic": [0,1,4,5,7,8,11],
-    "whole_tone": [0,2,4,6,8,10],
+    "harmonic_minor": [0,2,3,5,7,8,11], # classical, dramatic
+    "phrygian_dominant": [0,1,4,5,7,8,10], # Spanish/Middle Eastern
+    "hungarian_minor": [0,2,3,6,7,8,11], # gypsy, tense
+    "double_harmonic": [0,1,4,5,7,8,11], # Byzantine
+    "whole_tone": [0,2,4,6,8,10], # dreamy, no resolution
     "blues": [0,3,5,6,7,10],
-    "hirajoshi": [0,2,3,7,8],
-    "in": [0,1,5,7,8],
+    "hirajoshi": [0,2,3,7,8], # Japanese, melancholic
+    "in": [0,1,5,7,8], # darker Japanese
     "minor_pentatonic": [0,3,5,7,10],
     "major_pentatonic": [0,2,4,7,9],
-    "octatonic": [0,2,3,5,6,8,9,11],
-    "messiaen3": [0,2,3,4,6,7,8,10,11],
+    "octatonic": [0,2,3,5,6,8,9,11], # jazzy, symmetrical
+    "messiaen3": [0,2,3,4,6,7,8,10,11], # impressionist
 }
 
 def build_scale(offsets, base, root):
